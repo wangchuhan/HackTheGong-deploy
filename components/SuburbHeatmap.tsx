@@ -1,16 +1,19 @@
 "use client";
 
 import { useMemo } from "react";
-import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Circle, CircleMarker, Popup } from "react-leaflet";
 import type { Report } from "@/lib/types";
 import { WOLLONGONG_CENTER } from "@/lib/types";
 import type { SuburbZone } from "@/lib/types";
 import { suburbHeatColor } from "@/lib/binUtils";
+import { isOnLandIllawarra } from "@/lib/geo";
 
 interface SuburbHeatmapProps {
   reports: Report[];
   zones: SuburbZone[];
   height?: string;
+  showReportPins?: boolean;
+  sessionReportIds?: Set<string>;
 }
 
 function HeatLegend() {
@@ -32,14 +35,21 @@ export default function SuburbHeatmap({
   reports,
   zones,
   height = "420px",
+  showReportPins = true,
+  sessionReportIds,
 }: SuburbHeatmapProps) {
+  const landReports = useMemo(
+    () => reports.filter((r) => isOnLandIllawarra(r.lat, r.lng)),
+    [reports],
+  );
+
   const suburbCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    for (const r of reports) {
+    for (const r of landReports) {
       counts[r.suburb] = (counts[r.suburb] ?? 0) + 1;
     }
     return counts;
-  }, [reports]);
+  }, [landReports]);
 
   const maxCount = Math.max(...Object.values(suburbCounts), 1);
 
@@ -55,6 +65,11 @@ export default function SuburbHeatmap({
   return (
     <div className="space-y-2">
       <HeatLegend />
+      {showReportPins && (
+        <p className="text-xs text-teal-700">
+          Dots show individual report locations · brighter dots are your session reports
+        </p>
+      )}
       <div style={{ height }} className="w-full overflow-hidden rounded-xl">
         <MapContainer
           center={[WOLLONGONG_CENTER.lat, WOLLONGONG_CENTER.lng]}
@@ -90,12 +105,39 @@ export default function SuburbHeatmap({
                 <Popup>
                   <div className="text-sm">
                     <p className="font-semibold">{zone.name}</p>
-                    <p>{zone.count} reports · {label}</p>
+                    <p>
+                      {zone.count} reports · {label}
+                    </p>
                   </div>
                 </Popup>
               </Circle>
             );
           })}
+          {showReportPins &&
+            landReports.map((r) => {
+              const isSession = sessionReportIds?.has(r.id) ?? false;
+              return (
+                <CircleMarker
+                  key={r.id}
+                  center={[r.lat, r.lng]}
+                  radius={isSession ? 7 : 5}
+                  pathOptions={{
+                    color: isSession ? "#0d9488" : "#115e59",
+                    fillColor: isSession ? "#14b8a6" : "#0f766e",
+                    fillOpacity: 0.9,
+                    weight: isSession ? 3 : 1,
+                  }}
+                >
+                  <Popup>
+                    <div className="text-sm">
+                      <p className="font-semibold">{r.suburb}</p>
+                      <p className="text-xs text-gray-600">{r.id}</p>
+                      <p className="capitalize">{r.status}</p>
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              );
+            })}
         </MapContainer>
       </div>
     </div>

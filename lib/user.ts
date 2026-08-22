@@ -1,10 +1,11 @@
 "use client";
 
-import type { Report, UserProfile } from "./types";
+import type { CleanupScheduleRequest, Report, UserProfile } from "./types";
 import { BADGES } from "./types";
 
 const USER_KEY = "vapesafe-user";
 const REPORTS_KEY = "vapesafe-session-reports";
+const CLEANUP_KEY = "vapesafe-cleanup-schedule";
 
 const DEFAULT_USER: UserProfile = {
   nickname: "EcoCitizen",
@@ -114,3 +115,29 @@ export const SUBURBS = [
   "Figtree",
   "Dapto",
 ];
+
+export function getCleanupSchedules(): CleanupScheduleRequest[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(CLEANUP_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function addCleanupSchedule(entry: CleanupScheduleRequest) {
+  const schedules = getCleanupSchedules();
+  schedules.unshift(entry);
+  localStorage.setItem(CLEANUP_KEY, JSON.stringify(schedules));
+}
+
+export function updateCleanupSchedule(
+  id: string,
+  patch: Partial<CleanupScheduleRequest>,
+) {
+  const schedules = getCleanupSchedules().map((s) =>
+    s.id === id ? { ...s, ...patch } : s,
+  );
+  localStorage.setItem(CLEANUP_KEY, JSON.stringify(schedules));
+}
