@@ -1,0 +1,102 @@
+{
+  "individuals": [
+    {
+      "rank": 1,
+      "nickname": "EcoElla",
+      "points": 1240,
+      "school": "Keira High"
+    },
+    {
+      "rank": 2,
+      "nickname": "VapeHunter",
+      "points": 1180,
+      "school": "Wollongong HS"
+    },
+    {
+      "rank": 3,
+      "nickname": "GreenGong",
+      "points": 1050,
+      "school": "Corrimal High"
+    },
+    {
+      "rank": 4,
+      "nickname": "LitterLegend",
+      "points": 980,
+      "school": null
+    },
+    {
+      "rank": 5,
+      "nickname": "CoastalClean",
+      "points": 920,
+      "school": "Bulli High"
+    },
+    {
+      "rank": 6,
+      "nickname": "PodPatrol",
+      "points": 870,
+      "school": "Keira High"
+    },
+    {
+      "rank": 7,
+      "nickname": "BinBoss",
+      "points": 810,
+      "school": "Figtree High"
+    },
+    {
+      "rank": 8,
+      "nickname": "RecycleRex",
+      "points": 760,
+      "school": null
+    },
+    {
+      "rank": 9,
+      "nickname": "SurfSaver",
+      "points": 720,
+      "school": "Thirroul High"
+    },
+    {
+      "rank": 10,
+      "nickname": "CleanCrew22",
+      "points": 680,
+      "school": "Wollongong HS"
+    }
+  ],
+  "schools": [
+    {
+      "rank": 1,
+      "name": "Keira High",
+      "points": 3420,
+      "members": 48
+    },
+    {
+      "rank": 2,
+      "name": "Wollongong HS",
+      "points": 3180,
+      "members": 52
+    },
+    {
+      "rank": 3,
+      "name": "Corrimal High",
+      "points": 2890,
+      "members": 41
+    },
+    {
+      "rank": 4,
+      "name": "Bulli High",
+      "points": 2540,
+      "members": 36
+    },
+    {
+      "rank": 5,
+      "name": "Figtree High",
+      "points": 2210,
+      "members": 33
+    }
+  ],
+  "monthlyChallenge": {
+    "title": "March Clean Coast",
+    "description": "Report 5 hotspots near the beach strip to unlock the Coastal Champion badge.",
+    "endsAt": "2026-03-31",
+    "progress": 62
+  }
+}

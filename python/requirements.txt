@@ -1,0 +1,1 @@
+# VapeSafe Python utilities — stdlib only, no pip deps required

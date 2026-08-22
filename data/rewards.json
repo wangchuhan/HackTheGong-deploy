@@ -1,0 +1,44 @@
+[
+  {
+    "id": "r1",
+    "title": "Green Bean Caf\u00e9 \u2014 15% off",
+    "cost": 200,
+    "category": "local",
+    "partner": "Green Bean Caf\u00e9"
+  },
+  {
+    "id": "r2",
+    "title": "Aqua Park Entry Voucher",
+    "cost": 500,
+    "category": "voucher",
+    "partner": "Wollongong Aqua Park"
+  },
+  {
+    "id": "r3",
+    "title": "Surf Shop Partner Offer",
+    "cost": 350,
+    "category": "partner",
+    "partner": "South Coast Surf"
+  },
+  {
+    "id": "r4",
+    "title": "VapeSafe Merch Tote",
+    "cost": 150,
+    "category": "merch",
+    "partner": "VapeSafe"
+  },
+  {
+    "id": "r5",
+    "title": "Suburb Challenge Boost",
+    "cost": 100,
+    "category": "perk",
+    "partner": "Council"
+  },
+  {
+    "id": "r6",
+    "title": "Free Pool Pass \u2014 Corrimal",
+    "cost": 400,
+    "category": "voucher",
+    "partner": "Corrimal Pool"
+  }
+]

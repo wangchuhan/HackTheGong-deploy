@@ -1,0 +1,90 @@
+[
+  {
+    "id": "BIN-001",
+    "code": "BIN-001",
+    "name": "Smart Bin 1 \u2014 Dapto",
+    "lat": -34.441208,
+    "lng": 150.864427,
+    "fillLevel": 77,
+    "temperature": 23.6,
+    "itemsCollected": 153,
+    "lastReading": "2026-08-22T06:09:24.521676"
+  },
+  {
+    "id": "BIN-002",
+    "code": "BIN-002",
+    "name": "Smart Bin 2 \u2014 Figtree",
+    "lat": -34.406113,
+    "lng": 150.935563,
+    "fillLevel": 48,
+    "temperature": 23.3,
+    "itemsCollected": 126,
+    "lastReading": "2026-08-22T05:49:24.521685"
+  },
+  {
+    "id": "BIN-003",
+    "code": "BIN-003",
+    "name": "Smart Bin 3 \u2014 Corrimal",
+    "lat": -34.442119,
+    "lng": 150.881405,
+    "fillLevel": 84,
+    "temperature": 31.2,
+    "itemsCollected": 449,
+    "lastReading": "2026-08-22T05:40:24.521691"
+  },
+  {
+    "id": "BIN-004",
+    "code": "BIN-004",
+    "name": "Smart Bin 4 \u2014 Dapto",
+    "lat": -34.465154,
+    "lng": 150.852835,
+    "fillLevel": 38,
+    "temperature": 27.4,
+    "itemsCollected": 160,
+    "lastReading": "2026-08-22T06:01:24.521696"
+  },
+  {
+    "id": "BIN-005",
+    "code": "BIN-005",
+    "name": "Smart Bin 5 \u2014 Thirroul",
+    "lat": -34.43292,
+    "lng": 150.886261,
+    "fillLevel": 61,
+    "temperature": 21.8,
+    "itemsCollected": 390,
+    "lastReading": "2026-08-22T05:46:24.521700"
+  },
+  {
+    "id": "BIN-006",
+    "code": "BIN-006",
+    "name": "Smart Bin 6 \u2014 Dapto",
+    "lat": -34.462556,
+    "lng": 150.886792,
+    "fillLevel": 66,
+    "temperature": 25.4,
+    "itemsCollected": 225,
+    "lastReading": "2026-08-22T05:59:24.521705"
+  },
+  {
+    "id": "BIN-007",
+    "code": "BIN-007",
+    "name": "Smart Bin 7 \u2014 Wollongong",
+    "lat": -34.468712,
+    "lng": 150.883674,
+    "fillLevel": 35,
+    "temperature": 20.9,
+    "itemsCollected": 386,
+    "lastReading": "2026-08-22T06:05:24.521709"
+  },
+  {
+    "id": "BIN-008",
+    "code": "BIN-008",
+    "name": "Smart Bin 8 \u2014 Corrimal",
+    "lat": -34.403739,
+    "lng": 150.916874,
+    "fillLevel": 42,
+    "temperature": 18.1,
+    "itemsCollected": 228,
+    "lastReading": "2026-08-22T05:51:24.521713"
+  }
+]

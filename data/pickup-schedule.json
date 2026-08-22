@@ -1,0 +1,25 @@
+[
+  {
+    "id": "PU-001",
+    "date": "2026-03-22",
+    "crew": "Team Alpha",
+    "bins": [
+      "BIN-003",
+      "BIN-001",
+      "BIN-006"
+    ],
+    "estimatedKg": 9.9,
+    "status": "scheduled"
+  },
+  {
+    "id": "PU-002",
+    "date": "2026-03-23",
+    "crew": "Team Beta",
+    "bins": [
+      "BIN-002",
+      "BIN-005"
+    ],
+    "estimatedKg": 18.4,
+    "status": "scheduled"
+  }
+]
