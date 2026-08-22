@@ -1,13 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { getLeaderboard } from "@/lib/data";
+import { getUser } from "@/lib/user";
 
 type Tab = "individual" | "schools" | "suburbs" | "challenges";
 
 export default function LeaderboardPage() {
   const data = getLeaderboard();
   const [tab, setTab] = useState<Tab>("individual");
+  const [weeklyProgress, setWeeklyProgress] = useState(0);
+  const [monthlyProgress, setMonthlyProgress] = useState(0);
+
+  useEffect(() => {
+    const u = getUser();
+    setWeeklyProgress(Math.round(((u.weeklyChallengeProgress ?? 0) / 3) * 100));
+    setMonthlyProgress(Math.round(((u.monthlyChallengeProgress ?? 0) / 5) * 100));
+  }, [tab]);
 
   const tabs: { id: Tab; label: string }[] = [
     { id: "individual", label: "Everyone" },
@@ -111,15 +121,21 @@ export default function LeaderboardPage() {
             title={data.weeklyChallenge.title}
             description={data.weeklyChallenge.description}
             endsAt={data.weeklyChallenge.endsAt}
-            progress={data.weeklyChallenge.progress}
+            progress={weeklyProgress}
           />
           <ChallengeCard
             label="Monthly challenge"
             title={data.monthlyChallenge.title}
             description={data.monthlyChallenge.description}
             endsAt={data.monthlyChallenge.endsAt}
-            progress={data.monthlyChallenge.progress}
+            progress={monthlyProgress}
           />
+          <Link
+            href="/schedule"
+            className="block rounded-xl bg-white py-3 text-center text-sm font-medium text-teal-700 ring-1 ring-teal-100 hover:ring-teal-300"
+          >
+            Schedule a cleanup to progress challenges →
+          </Link>
         </div>
       )}
     </div>
@@ -146,7 +162,7 @@ function ChallengeCard({
       <p className="mt-1 text-sm opacity-90">{description}</p>
       <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/30">
         <div
-          className="h-full rounded-full bg-white"
+          className="h-full rounded-full bg-white transition-all duration-500"
           style={{ width: `${progress}%` }}
         />
       </div>

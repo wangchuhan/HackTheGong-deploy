@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Award, MapPin, Recycle, Star } from "lucide-react";
+import { Award, Calendar, MapPin, Recycle, Star } from "lucide-react";
 import { getSuburbRank } from "@/lib/data";
-import { getUser, setNickname, setSuburb, SUBURBS } from "@/lib/user";
+import { getCleanupSchedules, getUser, setNickname, setSuburb, SUBURBS } from "@/lib/user";
 import { BADGES } from "@/lib/types";
 import type { UserProfile } from "@/lib/types";
 
@@ -34,6 +34,7 @@ export default function ProfilePage() {
 
   const suburbRank = user.suburb ? getSuburbRank(user.suburb) : null;
   const wasteDiverted = (user.reportsSubmitted + user.disposalsLogged) * 0.012;
+  const cleanups = getCleanupSchedules().filter((c) => c.status !== "completed");
 
   return (
     <div className="space-y-6">
@@ -89,6 +90,32 @@ export default function ProfilePage() {
           <p className="mt-2 text-sm text-teal-800">
             {user.suburb} is <strong>#{suburbRank}</strong> in the suburb challenge
           </p>
+        )}
+      </section>
+
+      <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
+        <div className="flex items-center justify-between">
+          <h2 className="flex items-center gap-2 font-semibold text-teal-950">
+            <Calendar className="h-4 w-4" />
+            My cleanups
+          </h2>
+          <Link href="/schedule" className="text-sm text-teal-600 underline">
+            Schedule →
+          </Link>
+        </div>
+        {cleanups.length === 0 ? (
+          <p className="mt-2 text-sm text-teal-700">
+            No upcoming cleanups — schedule one to earn +15 points.
+          </p>
+        ) : (
+          <ul className="mt-2 space-y-2">
+            {cleanups.slice(0, 3).map((c) => (
+              <li key={c.id} className="text-sm text-teal-800">
+                {c.suburb} · {c.date}{" "}
+                <span className="text-xs capitalize text-teal-600">({c.status})</span>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
 

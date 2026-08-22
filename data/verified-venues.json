@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Wollongong City Library",
+    "suburb": "Wollongong",
+    "lat": -34.427064,
+    "lng": 150.898741,
+    "displayName": "Wollongong City Library, Burelli Street",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Crown Street Collection Hub",
+    "suburb": "Wollongong",
+    "lat": -34.4265,
+    "lng": 150.8935,
+    "displayName": "Crown Street civic area, Wollongong",
+    "source": "nearest-community",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Keira High School",
+    "suburb": "Keiraville",
+    "lat": -34.4049,
+    "lng": 150.8754,
+    "displayName": "Keira High School, Park Avenue, Keiraville",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "University of Wollongong",
+    "suburb": "Gwynneville",
+    "lat": -34.4058,
+    "lng": 150.8822,
+    "displayName": "University of Wollongong main campus",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Corrimal Community Centre",
+    "suburb": "Corrimal",
+    "lat": -34.375513,
+    "lng": 150.898255,
+    "displayName": "Corrimal Community Centre",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Bulli Beach Kiosk Partner",
+    "suburb": "Bulli",
+    "lat": -34.3355,
+    "lng": 150.9155,
+    "displayName": "Bulli Beach, NSW",
+    "source": "nearest-community",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Thirroul Neighbourhood Store",
+    "suburb": "Thirroul",
+    "lat": -34.3155,
+    "lng": 150.9235,
+    "displayName": "Thirroul town centre",
+    "source": "nearest-community",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Figtree Grove Shopping",
+    "suburb": "Figtree",
+    "lat": -34.434986,
+    "lng": 150.862368,
+    "displayName": "Figtree Grove Shopping Centre",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Dapto Ribbonwood Centre",
+    "suburb": "Dapto",
+    "lat": -34.4965,
+    "lng": 150.7931,
+    "displayName": "Ribbonwood Centre, 93 Princes Hwy, Dapto",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "North Beach Surf Club",
+    "suburb": "North Wollongong",
+    "lat": -34.4145,
+    "lng": 150.9012,
+    "displayName": "North Beach Surf Life Saving Club",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Fairy Meadow Community Hall",
+    "suburb": "Fairy Meadow",
+    "lat": -34.3945,
+    "lng": 150.892,
+    "displayName": "Fairy Meadow community area",
+    "source": "nearest-community",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Green Bean Café Partner",
+    "suburb": "Wollongong",
+    "lat": -34.4258,
+    "lng": 150.8938,
+    "displayName": "Crown Street, Wollongong",
+    "source": "nearest-community",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Harbourfront Council Depot",
+    "suburb": "Wollongong",
+    "lat": -34.4185,
+    "lng": 150.9055,
+    "displayName": "Belmore Basin, Wollongong Harbour",
+    "source": "nearest-community",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Port Kembla Youth Hub",
+    "suburb": "Port Kembla",
+    "lat": -34.4805,
+    "lng": 150.7615,
+    "displayName": "Port Kembla community area",
+    "source": "nearest-community",
+    "lookupDate": "2026-08-22"
+  },
+  {
+    "name": "Shellharbour City Hub",
+    "suburb": "Shellharbour",
+    "lat": -34.575,
+    "lng": 150.87,
+    "displayName": "Shellharbour City Centre",
+    "source": "osm",
+    "lookupDate": "2026-08-22"
+  }
+]

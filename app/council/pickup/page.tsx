@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { CheckCircle, Truck } from "lucide-react";
+import BinStatusGauge from "@/components/BinStatusGauge";
 import { getBins, getPickupSchedule } from "@/lib/data";
 import { getCleanupSchedules } from "@/lib/user";
 import type { CleanupScheduleRequest, SmartBin } from "@/lib/types";
@@ -19,6 +20,7 @@ export default function CouncilPickupPage() {
   const [bins, setBins] = useState<SmartBin[]>([]);
   const [approved, setApproved] = useState(false);
   const [truckProgress, setTruckProgress] = useState(0);
+  const [activeStop, setActiveStop] = useState(-1);
   const [cleanupSchedules, setCleanupSchedules] = useState<CleanupScheduleRequest[]>([]);
   const schedule = getPickupSchedule();
 
@@ -36,10 +38,20 @@ export default function CouncilPickupPage() {
   useEffect(() => {
     if (!approved) return;
     const interval = setInterval(() => {
-      setTruckProgress((p) => (p >= 100 ? 0 : p + 2));
+      setTruckProgress((p) => {
+        const next = p >= 100 ? 0 : p + 2;
+        if (bins.length > 0) {
+          const stopIdx = Math.min(
+            bins.length - 1,
+            Math.floor((next / 100) * bins.length),
+          );
+          setActiveStop(stopIdx);
+        }
+        return next;
+      });
     }, 200);
     return () => clearInterval(interval);
-  }, [approved]);
+  }, [approved, bins.length]);
 
   if (!authed) return null;
 
@@ -60,6 +72,8 @@ export default function CouncilPickupPage() {
     ...schedule,
   ].sort((a, b) => a.date.localeCompare(b.date));
 
+  const kmSaved = bins.length * 4.2;
+
   return (
     <div className="space-y-6">
       <header>
@@ -68,11 +82,23 @@ export default function CouncilPickupPage() {
         </Link>
         <h1 className="mt-2 text-2xl font-bold text-teal-950">Optimised Pickup</h1>
         <p className="text-sm text-teal-800/70">
-          AI-routed collection through near-capacity bins
+          AI-routed collection through the fullest smart bins first
         </p>
       </header>
 
-      <PickupRouteMap bins={bins} />
+      <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-xl bg-red-50 p-3 text-center ring-1 ring-red-100">
+          <p className="text-xs text-red-700">Random route</p>
+          <p className="text-lg font-bold text-red-900">~{(kmSaved + 12).toFixed(0)} km</p>
+        </div>
+        <div className="rounded-xl bg-teal-50 p-3 text-center ring-1 ring-teal-200">
+          <p className="text-xs text-teal-700">Optimised route</p>
+          <p className="text-lg font-bold text-teal-900">~{kmSaved.toFixed(0)} km</p>
+          <p className="text-xs text-teal-600">saves ~12 km</p>
+        </div>
+      </div>
+
+      <PickupRouteMap bins={bins} activeStopIndex={activeStop} />
 
       {approved && (
         <div className="relative h-2 overflow-hidden rounded-full bg-gray-200">
@@ -90,19 +116,25 @@ export default function CouncilPickupPage() {
       )}
 
       <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
-        <h2 className="font-semibold text-teal-950">Route stops</h2>
-        <ol className="mt-3 space-y-2">
+        <h2 className="font-semibold text-teal-950">Route stops (fullest first)</h2>
+        <ol className="mt-3 space-y-3">
           {bins.map((b, i) => (
-            <li key={b.id} className="flex items-center gap-3 text-sm">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">
+            <li
+              key={b.id}
+              className={`flex items-center gap-3 rounded-lg p-2 text-sm ${
+                activeStop === i ? "bg-amber-50 ring-1 ring-amber-200" : ""
+              }`}
+            >
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">
                 {i + 1}
               </span>
               <div className="flex-1">
                 <p className="font-medium text-teal-900">{b.name}</p>
                 <p className="text-xs text-teal-700">
-                  {b.fillLevel}% full · ~{Math.round(b.itemsCollected * 0.012)} kg
+                  ~{Math.round(b.itemsCollected * 0.012)} kg · {b.fillLevel}% full
                 </p>
               </div>
+              <BinStatusGauge fillLevel={b.fillLevel} size="sm" />
             </li>
           ))}
         </ol>
@@ -118,10 +150,10 @@ export default function CouncilPickupPage() {
           {approved ? (
             <>
               <CheckCircle className="h-4 w-4" />
-              Route approved · pickup scheduled
+              Route approved · truck en route
             </>
           ) : (
-            "Approve route"
+            "Approve optimised route"
           )}
         </button>
       </section>

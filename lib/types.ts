@@ -17,6 +17,8 @@ export interface Report {
   createdAt: string;
   pointsAwarded: number;
   photoUrl?: string;
+  linkedBinCode?: string;
+  linkedDisposalId?: string;
 }
 
 export interface DisposalPoint {
@@ -67,6 +69,8 @@ export interface NewsItem {
   summary: string;
   type: "news" | "app" | "tip";
   date: string;
+  sourceOrg?: string;
+  homepageUrl?: string;
   url?: string;
 }
 
@@ -137,6 +141,9 @@ export interface UserProfile {
   reportsSubmitted: number;
   suburb?: string;
   disposalsLogged: number;
+  cleanupsScheduled?: number;
+  weeklyChallengeProgress?: number;
+  monthlyChallengeProgress?: number;
 }
 
 export const WOLLONGONG_CENTER = { lat: -34.4278, lng: 150.8931 };
@@ -144,6 +151,8 @@ export const WOLLONGONG_CENTER = { lat: -34.4278, lng: 150.8931 };
 export const BADGES = [
   { id: "first-report", name: "First Report", threshold: 1 },
   { id: "five-reports", name: "Hotspot Hero", threshold: 5 },
-  { id: "verified", name: "Verified Cleaner", threshold: 3 },
+  { id: "verified", name: "Verified Cleaner", threshold: 75 },
   { id: "school-champ", name: "School Champion", threshold: 100 },
+  { id: "cleanup-champion", name: "Cleanup Champion", threshold: 1 },
+  { id: "coastal-champion", name: "Coastal Champion", threshold: 3 },
 ] as const;

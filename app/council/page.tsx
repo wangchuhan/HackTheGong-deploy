@@ -16,7 +16,7 @@ import {
   getSuburbZones,
   getTrendsWithSession,
 } from "@/lib/data";
-import { getCleanupSchedules, getSessionReports } from "@/lib/user";
+import { getCleanupSchedules, getSessionReports, updateCleanupSchedule } from "@/lib/user";
 import type { CleanupScheduleRequest } from "@/lib/types";
 
 const SuburbHeatmap = dynamic(() => import("@/components/SuburbHeatmap"), {
@@ -53,6 +53,19 @@ export default function CouncilPage() {
   const zones = getSuburbZones();
   const news = getNews();
   const seedPickup = getPickupSchedule();
+
+  function approveCleanup(id: string) {
+    updateCleanupSchedule(id, { status: "scheduled" });
+    setCleanupSchedules(getCleanupSchedules());
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const citizenRequests = cleanupSchedules.filter(
+    (s) => s.status === "requested" && s.date >= today,
+  );
+  const councilScheduled = cleanupSchedules.filter(
+    (s) => s.status === "scheduled" && s.date >= today,
+  );
 
   const upcomingCleanups = useMemo(() => {
     const today = new Date().toISOString().slice(0, 10);
@@ -214,11 +227,60 @@ export default function CouncilPage() {
               <h2 className="font-semibold text-teal-950">Upcoming cleanups</h2>
               <Link
                 href="/council/schedule"
-                className="text-sm text-teal-600 underline"
+                className="rounded-lg bg-teal-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-700"
               >
-                Schedule cleanup →
+                Schedule cleanup
               </Link>
             </div>
+
+            {citizenRequests.length > 0 && (
+              <div className="mb-3">
+                <h3 className="mb-2 text-sm font-medium text-amber-800">
+                  Citizen requests ({citizenRequests.length})
+                </h3>
+                <ul className="space-y-2">
+                  {citizenRequests.map((job) => (
+                    <li
+                      key={job.id}
+                      className="flex items-center justify-between rounded-lg bg-amber-50 px-4 py-2 text-sm ring-1 ring-amber-100"
+                    >
+                      <div>
+                        <span className="font-medium text-teal-950">{job.suburb}</span>
+                        <p className="text-xs text-teal-700">{job.date}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => approveCleanup(job.id)}
+                        className="rounded-lg bg-teal-600 px-3 py-1 text-xs font-medium text-white hover:bg-teal-700"
+                      >
+                        Approve
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {councilScheduled.length > 0 && (
+              <div className="mb-3">
+                <h3 className="mb-2 text-sm font-medium text-teal-800">
+                  Council scheduled ({councilScheduled.length})
+                </h3>
+                <ul className="space-y-2">
+                  {councilScheduled.map((job) => (
+                    <li
+                      key={job.id}
+                      className="rounded-lg bg-white px-4 py-2 text-sm ring-1 ring-teal-100"
+                    >
+                      <span className="font-medium text-teal-950">{job.suburb}</span>
+                      <p className="text-xs text-teal-700">{job.date}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <h3 className="mb-2 text-sm font-medium text-teal-800">Seed pickup jobs</h3>
             <ul className="space-y-2">
               {upcomingCleanups.length === 0 ? (
                 <li className="rounded-lg bg-teal-50 px-4 py-3 text-sm text-teal-800">
@@ -274,8 +336,24 @@ export default function CouncilPage() {
           </div>
 
           <div className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
-            <p className="font-medium">Alert: {bins.filter((b) => b.fillLevel > 85).length} bins near capacity</p>
-            <p className="mt-1 text-xs opacity-80">Review pickup schedule and camera feeds.</p>
+            <p className="font-medium">
+              Alert: {bins.filter((b) => b.fillLevel >= 75).length} bins need pickup
+              ({bins.filter((b) => b.fillLevel > 85).length} near capacity)
+            </p>
+            <div className="mt-2 flex gap-2">
+              <Link
+                href="/council/bins"
+                className="text-xs font-medium text-amber-900 underline"
+              >
+                View IoT dashboard
+              </Link>
+              <Link
+                href="/council/pickup"
+                className="text-xs font-medium text-amber-900 underline"
+              >
+                Optimised pickup
+              </Link>
+            </div>
           </div>
         </>
       ) : (

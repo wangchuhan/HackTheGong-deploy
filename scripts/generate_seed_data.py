@@ -22,8 +22,12 @@ SUBURB_COORDS: dict[str, dict] = {
     "Bulli": {"lat": -34.334, "lng": 150.914, "radiusKm": 1.2},
     "Thirroul": {"lat": -34.316, "lng": 150.923, "radiusKm": 1.2},
     "Figtree": {"lat": -34.435, "lng": 150.856, "radiusKm": 1.3},
-    "Dapto": {"lat": -34.404, "lng": 150.896, "radiusKm": 1.5},
+    "Dapto": {"lat": -34.493, "lng": 150.792, "radiusKm": 1.5},
+    "Port Kembla": {"lat": -34.4805, "lng": 150.7615, "radiusKm": 1.2},
+    "Shellharbour": {"lat": -34.575, "lng": 150.87, "radiusKm": 1.3},
 }
+
+VERIFIED_VENUES_PATH = DATA_DIR / "verified-venues.json"
 
 SUBURBS = list(SUBURB_COORDS.keys())
 ACCEPTS = ["disposables", "pods", "batteries", "all"]
@@ -66,7 +70,15 @@ def generate_reports(count: int = 220) -> list[dict]:
     return reports
 
 
+def load_verified_venues() -> dict[str, dict]:
+    if VERIFIED_VENUES_PATH.exists():
+        venues = json.loads(VERIFIED_VENUES_PATH.read_text(encoding="utf-8"))
+        return {v["name"]: v for v in venues}
+    return {}
+
+
 def generate_disposal_points() -> list[dict]:
+    verified = load_verified_venues()
     names = [
         ("Wollongong City Library", "Wollongong", ["disposables", "pods", "batteries"]),
         ("Crown Street Collection Hub", "Wollongong", ["all"]),
@@ -81,13 +93,18 @@ def generate_disposal_points() -> list[dict]:
         ("Fairy Meadow Community Hall", "Fairy Meadow", ["all"]),
         ("Green Bean Café Partner", "Wollongong", ["disposables", "pods"]),
         ("Harbourfront Council Depot", "Wollongong", ["batteries", "all"]),
-        ("Port Kembla Youth Hub", "Wollongong", ["disposables"]),
-        ("Shellharbour City Hub", "Dapto", ["all"]),
+        ("Port Kembla Youth Hub", "Port Kembla", ["disposables"]),
+        ("Shellharbour City Hub", "Shellharbour", ["all"]),
     ]
     points = []
     for idx, (name, suburb, accepts) in enumerate(names, start=1):
-        lat, lng = coords_for_suburb(suburb)
-        lat, lng = jitter_around(lat, lng)
+        if name in verified:
+            v = verified[name]
+            lat, lng = v["lat"], v["lng"]
+            suburb = v.get("suburb", suburb)
+        else:
+            lat, lng = coords_for_suburb(suburb)
+            lat, lng = jitter_around(lat, lng)
         points.append(
             {
                 "id": f"DISP-WLG-{idx:02d}",
@@ -167,15 +184,17 @@ def generate_news() -> list[dict]:
             "summary": "New smart bins rolling out across the CBD and beach strip.",
             "type": "news",
             "date": "2026-03-18",
-            "url": "https://www.wollongong.nsw.gov.au/",
+            "sourceOrg": "Wollongong City Council",
+            "homepageUrl": "https://www.wollongong.nsw.gov.au/",
         },
         {
             "id": "n2",
             "title": "EPA NSW: Safe disposal of vape batteries",
             "summary": "Never put lithium batteries in household bins — use designated points.",
-            "type": "tip",
+            "type": "news",
             "date": "2026-03-15",
-            "url": "https://www.epa.nsw.gov.au/your-environment/recycling",
+            "sourceOrg": "EPA NSW",
+            "homepageUrl": "https://www.epa.nsw.gov.au/",
         },
         {
             "id": "n3",
@@ -194,7 +213,7 @@ def generate_news() -> list[dict]:
         {
             "id": "n5",
             "title": "Weekly challenge ends Sunday",
-            "summary": "Report 3 items near the beach to earn the Coastal Champion badge.",
+            "summary": "Schedule a cleanup or report 3 items near the beach to earn the Coastal Champion badge.",
             "type": "app",
             "date": "2026-03-17",
         },
@@ -204,7 +223,8 @@ def generate_news() -> list[dict]:
             "summary": "State-wide programs supporting community litter reduction.",
             "type": "news",
             "date": "2026-03-10",
-            "url": "https://www.nsw.gov.au/environment",
+            "sourceOrg": "NSW Government",
+            "homepageUrl": "https://www.nsw.gov.au/",
         },
         {
             "id": "n7",
@@ -219,6 +239,13 @@ def generate_news() -> list[dict]:
             "summary": "Snap a photo, enable GPS, and earn points for verified reports.",
             "type": "tip",
             "date": "2026-03-12",
+        },
+        {
+            "id": "n9",
+            "title": "Schedule a community cleanup",
+            "summary": "Pick a date and suburb — earn points and the Cleanup Champion badge.",
+            "type": "app",
+            "date": "2026-03-22",
         },
     ]
 
