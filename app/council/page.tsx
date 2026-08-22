@@ -5,15 +5,18 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Download, Lock } from "lucide-react";
 import StatCard from "@/components/StatCard";
+import NewsFeed from "@/components/NewsFeed";
 import {
   getBins,
   getDisposalPoints,
   getEnergyStats,
+  getNews,
   getSeedReports,
+  getSuburbZones,
   getTrends,
 } from "@/lib/data";
 
-const HeatmapView = dynamic(() => import("@/components/HeatmapView"), {
+const SuburbHeatmap = dynamic(() => import("@/components/SuburbHeatmap"), {
   ssr: false,
 });
 
@@ -25,6 +28,7 @@ export default function CouncilPage() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [tab, setTab] = useState<"overview" | "news">("overview");
 
   useEffect(() => {
     if (sessionStorage.getItem(AUTH_KEY) === "1") setAuthed(true);
@@ -35,6 +39,8 @@ export default function CouncilPage() {
   const reports = getSeedReports();
   const bins = getBins();
   const points = getDisposalPoints();
+  const zones = getSuburbZones();
+  const news = getNews();
 
   const topSuburbs = Object.entries(
     reports.reduce<Record<string, number>>((acc, r) => {
@@ -61,7 +67,7 @@ export default function CouncilPage() {
       <div className="mx-auto max-w-sm space-y-6 pt-12">
         <Lock className="mx-auto h-12 w-12 text-teal-600" />
         <h1 className="text-center text-xl font-bold text-teal-950">
-          Council Dashboard
+          Partner Login
         </h1>
         <form onSubmit={login} className="space-y-3">
           <input
@@ -101,96 +107,106 @@ export default function CouncilPage() {
           className="flex items-center gap-1 rounded-lg bg-teal-600 px-3 py-2 text-xs font-medium text-white hover:bg-teal-700"
         >
           <Download className="h-4 w-4" />
-          Export CSV
+          Export
         </a>
       </header>
 
-      <div className="grid grid-cols-2 gap-3">
-        <StatCard label="kWh saved (est.)" value={energy.kwhSaved} />
-        <StatCard label="CO₂e avoided (kg)" value={energy.co2eKgAvoided} />
-        <StatCard label="Items collected" value={energy.itemsCollected} />
-        <StatCard
-          label="E-waste diverted (L)"
-          value={energy.ewasteLitresDiverted}
-        />
+      <div className="flex gap-2">
+        {(["overview", "news"] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            onClick={() => setTab(t)}
+            className={`rounded-lg px-4 py-2 text-sm font-medium capitalize ${
+              tab === t
+                ? "bg-teal-600 text-white"
+                : "bg-white text-teal-800 ring-1 ring-teal-100"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
       </div>
 
-      <p className="text-xs text-teal-700/60">{energy.label}</p>
+      {tab === "overview" ? (
+        <>
+          <div className="grid grid-cols-2 gap-3">
+            <StatCard label="kWh saved (est.)" value={energy.kwhSaved} />
+            <StatCard label="CO₂e avoided (kg)" value={energy.co2eKgAvoided} />
+            <StatCard label="Items collected" value={energy.itemsCollected} />
+            <StatCard label="E-waste diverted (L)" value={energy.ewasteLitresDiverted} />
+          </div>
 
-      <section>
-        <h2 className="mb-2 font-semibold text-teal-950">Hotspot analysis</h2>
-        <HeatmapView reports={reports} height="280px" />
-      </section>
+          <section>
+            <h2 className="mb-2 font-semibold text-teal-950">Suburb hotspot rings</h2>
+            <SuburbHeatmap reports={reports} zones={zones} height="280px" />
+          </section>
 
-      <section>
-        <h2 className="mb-2 font-semibold text-teal-950">Top suburbs</h2>
-        <ul className="space-y-2">
-          {topSuburbs.map(([suburb, count]) => (
-            <li
-              key={suburb}
-              className="flex justify-between rounded-lg bg-white px-4 py-2 text-sm ring-1 ring-teal-100"
-            >
-              <span>{suburb}</span>
-              <span className="font-medium text-teal-700">{count} reports</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+          <section>
+            <h2 className="mb-2 font-semibold text-teal-950">Top suburbs</h2>
+            <ul className="space-y-2">
+              {topSuburbs.map(([suburb, count]) => (
+                <li
+                  key={suburb}
+                  className="flex justify-between rounded-lg bg-white px-4 py-2 text-sm ring-1 ring-teal-100"
+                >
+                  <span>{suburb}</span>
+                  <span className="font-medium text-teal-700">{count} reports</span>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-      <section>
-        <h2 className="mb-2 font-semibold text-teal-950">Performance trends</h2>
-        <div className="flex h-32 items-end gap-1 rounded-xl bg-white p-4 ring-1 ring-teal-100">
-          {recentTrend.map((t) => (
-            <div key={t.date} className="flex flex-1 flex-col items-center gap-1">
-              <div
-                className="w-full rounded-t bg-teal-500"
-                style={{ height: `${(t.reports / maxReports) * 100}%` }}
-                title={`${t.date}: ${t.reports} reports`}
-              />
-              <span className="text-[9px] text-teal-700">
-                {t.date.slice(8)}
-              </span>
+          <section>
+            <h2 className="mb-2 font-semibold text-teal-950">Performance trends</h2>
+            <div className="flex h-32 items-end gap-1 rounded-xl bg-white p-4 ring-1 ring-teal-100">
+              {recentTrend.map((t) => (
+                <div key={t.date} className="flex flex-1 flex-col items-center gap-1">
+                  <div
+                    className="w-full rounded-t bg-teal-500"
+                    style={{ height: `${(t.reports / maxReports) * 100}%` }}
+                  />
+                  <span className="text-[9px] text-teal-700">{t.date.slice(8)}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
 
-      <section>
-        <h2 className="mb-2 font-semibold text-teal-950">Collection point usage</h2>
-        <ul className="space-y-1 text-sm">
-          {points.slice(0, 5).map((p, i) => (
-            <li key={p.id} className="flex justify-between rounded-lg bg-teal-50 px-3 py-2">
-              <span className="truncate">{p.name}</span>
-              <span className="font-medium text-teal-700">
-                {120 - i * 15} scans
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
+          <section>
+            <h2 className="mb-2 font-semibold text-teal-950">Collection point usage</h2>
+            <ul className="space-y-1 text-sm">
+              {points.slice(0, 5).map((p, i) => (
+                <li key={p.id} className="flex justify-between rounded-lg bg-teal-50 px-3 py-2">
+                  <span className="truncate">{p.name}</span>
+                  <span className="font-medium text-teal-700">{120 - i * 15} scans</span>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-      <div className="grid grid-cols-2 gap-3">
-        <Link
-          href="/council/bins"
-          className="rounded-xl bg-white p-4 text-center font-medium text-teal-800 ring-1 ring-teal-100 hover:ring-teal-300"
-        >
-          Smart Bin IoT →
-        </Link>
-        <Link
-          href="/council/pickup"
-          className="rounded-xl bg-white p-4 text-center font-medium text-teal-800 ring-1 ring-teal-100 hover:ring-teal-300"
-        >
-          Optimised Pickup →
-        </Link>
-      </div>
+          <div className="grid grid-cols-2 gap-3">
+            <Link
+              href="/council/bins"
+              className="rounded-xl bg-white p-4 text-center font-medium text-teal-800 ring-1 ring-teal-100 hover:ring-teal-300"
+            >
+              Smart Bin IoT →
+            </Link>
+            <Link
+              href="/council/pickup"
+              className="rounded-xl bg-white p-4 text-center font-medium text-teal-800 ring-1 ring-teal-100 hover:ring-teal-300"
+            >
+              Optimised Pickup →
+            </Link>
+          </div>
 
-      <div className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
-        <p className="font-medium">News: CBD hotspot up 12%</p>
-        <p className="mt-1 text-xs opacity-80">
-          {bins.filter((b) => b.fillLevel > 85).length} bins near capacity —
-          review pickup schedule.
-        </p>
-      </div>
+          <div className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
+            <p className="font-medium">Alert: {bins.filter((b) => b.fillLevel > 85).length} bins near capacity</p>
+            <p className="mt-1 text-xs opacity-80">Review pickup schedule and camera feeds.</p>
+          </div>
+        </>
+      ) : (
+        <NewsFeed items={news} showLink={false} />
+      )}
     </div>
   );
 }

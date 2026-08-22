@@ -2,11 +2,14 @@ import type {
   DisposalPoint,
   EnergyStats,
   LeaderboardEntry,
+  NewsItem,
   PickupSchedule,
   Report,
   Reward,
   SchoolEntry,
   SmartBin,
+  SuburbEntry,
+  SuburbZone,
   TrendPoint,
 } from "./types";
 
@@ -14,9 +17,11 @@ import binsData from "@/data/bins.json";
 import disposalPointsData from "@/data/disposal-points.json";
 import energyStatsData from "@/data/energy-stats.json";
 import leaderboardData from "@/data/leaderboard.json";
+import newsData from "@/data/news.json";
 import pickupScheduleData from "@/data/pickup-schedule.json";
 import reportsData from "@/data/reports.json";
 import rewardsData from "@/data/rewards.json";
+import suburbZonesData from "@/data/suburb-zones.json";
 import trendsData from "@/data/trends.json";
 
 export function getSeedReports(): Report[] {
@@ -31,10 +36,22 @@ export function getBins(): SmartBin[] {
   return binsData as SmartBin[];
 }
 
+export function getSuburbZones(): SuburbZone[] {
+  return suburbZonesData as SuburbZone[];
+}
+
+export function getNews(): NewsItem[] {
+  return (newsData as NewsItem[]).sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+}
+
 export function getLeaderboard(): {
   individuals: LeaderboardEntry[];
   schools: SchoolEntry[];
+  suburbs: SuburbEntry[];
   monthlyChallenge: { title: string; description: string; endsAt: string; progress: number };
+  weeklyChallenge: { title: string; description: string; endsAt: string; progress: number };
 } {
   return leaderboardData as ReturnType<typeof getLeaderboard>;
 }
@@ -60,7 +77,14 @@ export function getDisposalPointById(id: string): DisposalPoint | undefined {
 }
 
 export function getBinByCode(code: string): SmartBin | undefined {
-  return getBins().find((b) => b.code === code || b.id === code);
+  const normalized = code.trim().toUpperCase();
+  return getBins().find((b) => b.code === normalized || b.id === normalized);
+}
+
+export function getSuburbRank(suburbName: string): number | null {
+  const suburbs = getLeaderboard().suburbs;
+  const entry = suburbs.find((s) => s.name === suburbName);
+  return entry?.rank ?? null;
 }
 
 export function getStatsSummary() {

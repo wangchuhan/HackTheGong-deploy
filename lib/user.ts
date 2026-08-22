@@ -12,6 +12,8 @@ const DEFAULT_USER: UserProfile = {
   level: 1,
   badges: [],
   reportsSubmitted: 0,
+  suburb: undefined,
+  disposalsLogged: 0,
 };
 
 export function getUser(): UserProfile {
@@ -38,16 +40,7 @@ export function getSessionReports(): Report[] {
   }
 }
 
-export function addSessionReport(report: Report): UserProfile {
-  const reports = getSessionReports();
-  reports.unshift(report);
-  localStorage.setItem(REPORTS_KEY, JSON.stringify(reports));
-
-  const user = getUser();
-  user.points += report.pointsAwarded;
-  user.reportsSubmitted += 1;
-  user.level = Math.floor(user.points / 100) + 1;
-
+function awardBadges(user: UserProfile): UserProfile {
   for (const badge of BADGES) {
     if (!user.badges.includes(badge.id)) {
       if (badge.id === "first-report" && user.reportsSubmitted >= 1) {
@@ -64,9 +57,29 @@ export function addSessionReport(report: Report): UserProfile {
       }
     }
   }
-
-  saveUser(user);
   return user;
+}
+
+export function addSessionReport(report: Report): UserProfile {
+  const reports = getSessionReports();
+  reports.unshift(report);
+  localStorage.setItem(REPORTS_KEY, JSON.stringify(reports));
+
+  const user = getUser();
+  user.points += report.pointsAwarded;
+  user.reportsSubmitted += 1;
+  user.level = Math.floor(user.points / 100) + 1;
+  saveUser(awardBadges(user));
+  return getUser();
+}
+
+export function logDisposal(): UserProfile {
+  const user = getUser();
+  user.points += 25;
+  user.disposalsLogged += 1;
+  user.level = Math.floor(user.points / 100) + 1;
+  saveUser(awardBadges(user));
+  return getUser();
 }
 
 export function redeemReward(cost: number): boolean {
@@ -82,3 +95,22 @@ export function setNickname(nickname: string) {
   user.nickname = nickname.trim() || "EcoCitizen";
   saveUser(user);
 }
+
+export function setSuburb(suburb: string) {
+  const user = getUser();
+  user.suburb = suburb;
+  saveUser(user);
+}
+
+export const SUBURBS = [
+  "Wollongong",
+  "North Wollongong",
+  "Keiraville",
+  "Gwynneville",
+  "Fairy Meadow",
+  "Corrimal",
+  "Bulli",
+  "Thirroul",
+  "Figtree",
+  "Dapto",
+];

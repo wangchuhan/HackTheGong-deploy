@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Award, Star } from "lucide-react";
-import { getUser, setNickname } from "@/lib/user";
+import { Award, MapPin, Recycle, Star } from "lucide-react";
+import { getSuburbRank } from "@/lib/data";
+import { getUser, setNickname, setSuburb, SUBURBS } from "@/lib/user";
 import { BADGES } from "@/lib/types";
 import type { UserProfile } from "@/lib/types";
 
@@ -25,6 +26,14 @@ export default function ProfilePage() {
     setUser(getUser());
     setEditing(false);
   }
+
+  function handleSuburbChange(suburb: string) {
+    setSuburb(suburb);
+    setUser(getUser());
+  }
+
+  const suburbRank = user.suburb ? getSuburbRank(user.suburb) : null;
+  const wasteDiverted = (user.reportsSubmitted + user.disposalsLogged) * 0.012;
 
   return (
     <div className="space-y-6">
@@ -59,6 +68,30 @@ export default function ProfilePage() {
         <p className="text-sm text-teal-700">Level {user.level}</p>
       </header>
 
+      <section className="rounded-xl bg-teal-50 p-4">
+        <label className="flex items-center gap-2 text-sm font-medium text-teal-900">
+          <MapPin className="h-4 w-4" />
+          Your suburb (for suburb challenge)
+        </label>
+        <select
+          value={user.suburb ?? ""}
+          onChange={(e) => handleSuburbChange(e.target.value)}
+          className="mt-2 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
+        >
+          <option value="">Select suburb…</option>
+          {SUBURBS.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        {user.suburb && suburbRank && (
+          <p className="mt-2 text-sm text-teal-800">
+            {user.suburb} is <strong>#{suburbRank}</strong> in the suburb challenge
+          </p>
+        )}
+      </section>
+
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-xl bg-white p-4 text-center shadow-sm ring-1 ring-teal-100">
           <Star className="mx-auto h-6 w-6 text-yellow-500" />
@@ -71,6 +104,19 @@ export default function ProfilePage() {
             {user.reportsSubmitted}
           </p>
           <p className="text-xs text-teal-700">Reports</p>
+        </div>
+        <div className="rounded-xl bg-white p-4 text-center shadow-sm ring-1 ring-teal-100">
+          <Recycle className="mx-auto h-6 w-6 text-green-600" />
+          <p className="mt-2 text-2xl font-bold text-teal-950">
+            {user.disposalsLogged}
+          </p>
+          <p className="text-xs text-teal-700">Disposals</p>
+        </div>
+        <div className="rounded-xl bg-white p-4 text-center shadow-sm ring-1 ring-teal-100">
+          <p className="mt-2 text-2xl font-bold text-teal-950">
+            {wasteDiverted.toFixed(1)}
+          </p>
+          <p className="text-xs text-teal-700">kg diverted (est.)</p>
         </div>
       </div>
 
@@ -89,9 +135,7 @@ export default function ProfilePage() {
                 }`}
               >
                 <p className="font-medium">{b.name}</p>
-                {!earned && (
-                  <p className="text-xs opacity-70">Locked</p>
-                )}
+                {!earned && <p className="text-xs opacity-70">Locked</p>}
               </div>
             );
           })}

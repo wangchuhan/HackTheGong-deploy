@@ -93,10 +93,66 @@
       "members": 33
     }
   ],
+  "suburbs": [
+    {
+      "rank": 1,
+      "name": "Fairy Meadow",
+      "points": 4200,
+      "members": 186
+    },
+    {
+      "rank": 2,
+      "name": "Bulli",
+      "points": 3890,
+      "members": 142
+    },
+    {
+      "rank": 3,
+      "name": "Wollongong",
+      "points": 3650,
+      "members": 210
+    },
+    {
+      "rank": 4,
+      "name": "Corrimal",
+      "points": 2980,
+      "members": 98
+    },
+    {
+      "rank": 5,
+      "name": "Thirroul",
+      "points": 2540,
+      "members": 76
+    },
+    {
+      "rank": 6,
+      "name": "Figtree",
+      "points": 2210,
+      "members": 64
+    },
+    {
+      "rank": 7,
+      "name": "Dapto",
+      "points": 1980,
+      "members": 55
+    },
+    {
+      "rank": 8,
+      "name": "Keiraville",
+      "points": 1760,
+      "members": 48
+    }
+  ],
   "monthlyChallenge": {
     "title": "March Clean Coast",
     "description": "Report 5 hotspots near the beach strip to unlock the Coastal Champion badge.",
     "endsAt": "2026-03-31",
     "progress": 62
+  },
+  "weeklyChallenge": {
+    "title": "Beach Strip Blitz",
+    "description": "Report 3 items within 500m of the coast this week.",
+    "endsAt": "2026-03-23",
+    "progress": 45
   }
 }

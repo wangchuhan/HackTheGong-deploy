@@ -30,6 +30,41 @@ export interface SmartBin {
   temperature: number;
   itemsCollected: number;
   lastReading: string;
+  cameraImage?: string;
+  aiFillEstimate?: number;
+  aiConfidence?: number;
+  aiLastScan?: string;
+  aiItemsDetected?: number;
+}
+
+export interface SuburbZone {
+  name: string;
+  lat: number;
+  lng: number;
+  radiusKm: number;
+}
+
+export interface SuburbEntry {
+  rank: number;
+  name: string;
+  points: number;
+  members: number;
+}
+
+export interface NewsItem {
+  id: string;
+  title: string;
+  summary: string;
+  type: "news" | "app" | "tip";
+  date: string;
+  url?: string;
+}
+
+export interface BinVisionResult {
+  fillEstimate: number;
+  confidence: number;
+  itemsDetected: number;
+  source: "mock" | "api";
 }
 
 export interface LeaderboardEntry {
@@ -90,6 +125,8 @@ export interface UserProfile {
   level: number;
   badges: string[];
   reportsSubmitted: number;
+  suburb?: string;
+  disposalsLogged: number;
 }
 
 export const WOLLONGONG_CENTER = { lat: -34.4278, lng: 150.8931 };
