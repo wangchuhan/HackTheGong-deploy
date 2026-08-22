@@ -22,13 +22,15 @@ Open [http://localhost:3000](http://localhost:3000)
 |-------|-------------|
 | `/` | Landing page |
 | `/scan` | QR / manual code lookup |
+| `/bins/BIN-001` | Citizen bin view (gauge + AI camera) |
 | `/map` | Disposal points map + filters |
 | `/report` | Photo report + GPS |
-| `/heatmap` | Litter hotspot heatmap |
-| `/profile` | Points, badges, level |
+| `/heatmap` | Suburb ring heatmap (red hotspots, green clean) |
+| `/news` | News & updates (council + community) |
+| `/profile` | Points, badges, suburb challenge |
 | `/leaderboard` | Individual + school rankings |
 | `/rewards` | Redeem partner offers (demo) |
-| `/council` | Council dashboard (password: `council-demo`) |
+| `/council` | Council dashboard (footer: Partner login, password: `council-demo`) |
 
 ## Repo structure
 

@@ -1,0 +1,61 @@
+[
+  {
+    "id": "n1",
+    "title": "Wollongong Council expands e-waste collection",
+    "summary": "New smart bins rolling out across the CBD and beach strip.",
+    "type": "news",
+    "date": "2026-03-18",
+    "url": "https://www.wollongong.nsw.gov.au/"
+  },
+  {
+    "id": "n2",
+    "title": "EPA NSW: Safe disposal of vape batteries",
+    "summary": "Never put lithium batteries in household bins \u2014 use designated points.",
+    "type": "tip",
+    "date": "2026-03-15",
+    "url": "https://www.epa.nsw.gov.au/your-environment/recycling"
+  },
+  {
+    "id": "n3",
+    "title": "Fairy Meadow leads suburb challenge",
+    "summary": "Your suburb is #1 this week with 420 points. Keep it up!",
+    "type": "app",
+    "date": "2026-03-20"
+  },
+  {
+    "id": "n4",
+    "title": "Bin BIN-003 emptied in Corrimal",
+    "summary": "Collection crew completed pickup \u2014 18 kg diverted from landfill.",
+    "type": "app",
+    "date": "2026-03-19"
+  },
+  {
+    "id": "n5",
+    "title": "Weekly challenge ends Sunday",
+    "summary": "Report 3 items near the beach to earn the Coastal Champion badge.",
+    "type": "app",
+    "date": "2026-03-17"
+  },
+  {
+    "id": "n6",
+    "title": "NSW Government environment initiatives",
+    "summary": "State-wide programs supporting community litter reduction.",
+    "type": "news",
+    "date": "2026-03-10",
+    "url": "https://www.nsw.gov.au/environment"
+  },
+  {
+    "id": "n7",
+    "title": "Bulli rises to #2 in suburb rankings",
+    "summary": "Close behind Fairy Meadow \u2014 38 points to take the lead.",
+    "type": "app",
+    "date": "2026-03-21"
+  },
+  {
+    "id": "n8",
+    "title": "How to report vape litter with VapeSafe",
+    "summary": "Snap a photo, enable GPS, and earn points for verified reports.",
+    "type": "tip",
+    "date": "2026-03-12"
+  }
+]

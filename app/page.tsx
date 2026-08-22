@@ -1,18 +1,17 @@
 import Link from "next/link";
-import { Camera, Flame, MapPin, QrCode, Shield } from "lucide-react";
+import { Camera, Flame, MapPin, QrCode } from "lucide-react";
 import StatCard from "@/components/StatCard";
-import { getStatsSummary } from "@/lib/data";
+import ResourceLinks from "@/components/ResourceLinks";
+import NewsFeed from "@/components/NewsFeed";
+import { getStatsSummary, getNews } from "@/lib/data";
 
 export default function HomePage() {
   const stats = getStatsSummary();
+  const news = getNews();
 
   return (
     <div className="space-y-8">
       <header className="space-y-3 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full bg-teal-100 px-3 py-1 text-xs font-medium text-teal-800">
-          <Shield className="h-3.5 w-3.5" />
-          HackTheGong · Wollongong
-        </div>
         <h1 className="text-3xl font-bold tracking-tight text-teal-950">
           VapeSafe
         </h1>
@@ -37,7 +36,7 @@ export default function HomePage() {
           <QrCode className="h-8 w-8 shrink-0" />
           <div>
             <p className="font-semibold">Scan QR Code</p>
-            <p className="text-sm text-teal-100">Check a smart bin or disposal point</p>
+            <p className="text-sm text-teal-100">Mobile scan or manual code entry</p>
           </div>
         </Link>
         <Link
@@ -67,17 +66,17 @@ export default function HomePage() {
           <Flame className="h-8 w-8 shrink-0 text-orange-500" />
           <div>
             <p className="font-semibold text-teal-900">View Heatmap</p>
-            <p className="text-sm text-teal-700/70">Hotspots guide cleanup</p>
+            <p className="text-sm text-teal-700/70">Suburb rings — red hotspots, green clean</p>
           </div>
         </Link>
       </div>
 
-      <p className="text-center text-xs text-teal-700/60">
-        Council dashboard:{" "}
-        <Link href="/council" className="underline">
-          /council
-        </Link>
-      </p>
+      <section>
+        <h2 className="mb-3 font-semibold text-teal-950">Latest updates</h2>
+        <NewsFeed items={news} limit={3} />
+      </section>
+
+      <ResourceLinks />
     </div>
   );
 }

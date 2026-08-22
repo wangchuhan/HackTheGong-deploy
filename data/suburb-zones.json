@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Wollongong",
+    "lat": -34.461865,
+    "lng": 150.890039,
+    "radiusKm": 1.2
+  },
+  {
+    "name": "North Wollongong",
+    "lat": -34.438301,
+    "lng": 150.876066,
+    "radiusKm": 1.8
+  },
+  {
+    "name": "Keiraville",
+    "lat": -34.389611,
+    "lng": 150.860324,
+    "radiusKm": 1.8
+  },
+  {
+    "name": "Gwynneville",
+    "lat": -34.437041,
+    "lng": 150.899526,
+    "radiusKm": 2.2
+  },
+  {
+    "name": "Fairy Meadow",
+    "lat": -34.408686,
+    "lng": 150.856382,
+    "radiusKm": 2.1
+  },
+  {
+    "name": "Corrimal",
+    "lat": -34.422067,
+    "lng": 150.868159,
+    "radiusKm": 1.8
+  },
+  {
+    "name": "Bulli",
+    "lat": -34.427691,
+    "lng": 150.929718,
+    "radiusKm": 1.7
+  },
+  {
+    "name": "Thirroul",
+    "lat": -34.402923,
+    "lng": 150.92009,
+    "radiusKm": 2.2
+  },
+  {
+    "name": "Figtree",
+    "lat": -34.461054,
+    "lng": 150.90479,
+    "radiusKm": 1.2
+  },
+  {
+    "name": "Dapto",
+    "lat": -34.41119,
+    "lng": 150.932379,
+    "radiusKm": 1.7
+  }
+]
