@@ -4,11 +4,11 @@
     "date": "2026-03-22",
     "crew": "Team Alpha",
     "bins": [
-      "BIN-008",
-      "BIN-004",
-      "BIN-003"
+      "BIN-007",
+      "BIN-005",
+      "BIN-008"
     ],
-    "estimatedKg": 11.4,
+    "estimatedKg": 8.0,
     "status": "scheduled"
   },
   {

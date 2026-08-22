@@ -15,6 +15,9 @@ const DEFAULT_USER: UserProfile = {
   reportsSubmitted: 0,
   suburb: undefined,
   disposalsLogged: 0,
+  cleanupsScheduled: 0,
+  weeklyChallengeProgress: 0,
+  monthlyChallengeProgress: 0,
 };
 
 export function getUser(): UserProfile {
@@ -42,6 +45,7 @@ export function getSessionReports(): Report[] {
 }
 
 function awardBadges(user: UserProfile): UserProfile {
+  const cleanups = user.cleanupsScheduled ?? 0;
   for (const badge of BADGES) {
     if (!user.badges.includes(badge.id)) {
       if (badge.id === "first-report" && user.reportsSubmitted >= 1) {
@@ -54,6 +58,12 @@ function awardBadges(user: UserProfile): UserProfile {
         user.badges.push(badge.id);
       }
       if (badge.id === "school-champ" && user.points >= 100) {
+        user.badges.push(badge.id);
+      }
+      if (badge.id === "cleanup-champion" && cleanups >= 1) {
+        user.badges.push(badge.id);
+      }
+      if (badge.id === "coastal-champion" && cleanups >= 3) {
         user.badges.push(badge.id);
       }
     }
@@ -130,6 +140,39 @@ export function addCleanupSchedule(entry: CleanupScheduleRequest) {
   const schedules = getCleanupSchedules();
   schedules.unshift(entry);
   localStorage.setItem(CLEANUP_KEY, JSON.stringify(schedules));
+}
+
+export function scheduleCleanup(
+  entry: Omit<CleanupScheduleRequest, "id" | "status"> & {
+    id?: string;
+    status?: CleanupScheduleRequest["status"];
+  },
+): UserProfile {
+  const full: CleanupScheduleRequest = {
+    id: entry.id ?? `CLN-${Date.now()}`,
+    status: entry.status ?? "requested",
+    date: entry.date,
+    suburb: entry.suburb,
+    reportIds: entry.reportIds,
+    bins: entry.bins,
+    notes: entry.notes,
+  };
+  addCleanupSchedule(full);
+
+  const user = getUser();
+  user.points += 15;
+  user.cleanupsScheduled = (user.cleanupsScheduled ?? 0) + 1;
+  user.weeklyChallengeProgress = Math.min(
+    3,
+    (user.weeklyChallengeProgress ?? 0) + 1,
+  );
+  user.monthlyChallengeProgress = Math.min(
+    5,
+    (user.monthlyChallengeProgress ?? 0) + 1,
+  );
+  user.level = Math.floor(user.points / 100) + 1;
+  saveUser(awardBadges(user));
+  return getUser();
 }
 
 export function updateCleanupSchedule(

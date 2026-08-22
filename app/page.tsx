@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Camera, Flame, MapPin, QrCode } from "lucide-react";
+import { Camera, Calendar, Flame, MapPin, QrCode } from "lucide-react";
 import StatCard from "@/components/StatCard";
 import ResourceLinks from "@/components/ResourceLinks";
 import NewsFeed from "@/components/NewsFeed";
@@ -50,13 +50,23 @@ export default function HomePage() {
           </div>
         </Link>
         <Link
+          href="/schedule"
+          className="flex items-center gap-4 rounded-2xl bg-amber-500 px-5 py-4 text-white shadow-md transition hover:bg-amber-600"
+        >
+          <Calendar className="h-8 w-8 shrink-0" />
+          <div>
+            <p className="font-semibold">Schedule a Cleanup</p>
+            <p className="text-sm text-amber-100">Pick a date · earn points & badges</p>
+          </div>
+        </Link>
+        <Link
           href="/report"
           className="flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-sm ring-1 ring-teal-100 transition hover:ring-teal-300"
         >
           <Camera className="h-8 w-8 shrink-0 text-teal-600" />
           <div>
             <p className="font-semibold text-teal-900">Report Litter</p>
-            <p className="text-sm text-teal-700/70">Photo + GPS location</p>
+            <p className="text-sm text-teal-700/70">Photo + GPS · QR link to bins</p>
           </div>
         </Link>
         <Link

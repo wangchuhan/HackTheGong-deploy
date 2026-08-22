@@ -7,13 +7,13 @@ const LINKS = [
     desc: "Local waste services & community programs",
   },
   {
-    title: "EPA NSW — Recycling",
-    href: "https://www.epa.nsw.gov.au/your-environment/recycling",
+    title: "EPA NSW",
+    href: "https://www.epa.nsw.gov.au/",
     desc: "Safe disposal of batteries & e-waste",
   },
   {
-    title: "NSW Government — Environment",
-    href: "https://www.nsw.gov.au/environment",
+    title: "NSW Government",
+    href: "https://www.nsw.gov.au/",
     desc: "State environment initiatives",
   },
 ];
@@ -23,7 +23,7 @@ export default function ResourceLinks() {
     <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-teal-100">
       <h2 className="font-semibold text-teal-950">Learn more</h2>
       <p className="mt-1 text-xs text-teal-700/70">
-        Official resources for vape litter and e-waste in NSW
+        Official homepages — see News for the latest updates and articles
       </p>
       <ul className="mt-3 space-y-2">
         {LINKS.map((link) => (

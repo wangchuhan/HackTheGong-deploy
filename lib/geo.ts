@@ -46,16 +46,15 @@ export function jitterAround(
 }
 
 export function isOnLandIllawarra(lat: number, lng: number): boolean {
-  if (lat < -34.55 || lat > -34.28) return false;
-  if (lng < 150.82 || lng > 150.94) return false;
-  // Rough coastline: points too far east for their latitude are in the ocean
+  if (lat < -34.58 || lat > -34.28) return false;
+  if (lng < 150.75 || lng > 150.94) return false;
   if (lng > 150.93 && lat < -34.32) return false;
   return true;
 }
 
 export function clampToIllawarra(lat: number, lng: number): { lat: number; lng: number } {
-  let clampedLat = Math.min(-34.28, Math.max(-34.55, lat));
-  let clampedLng = Math.min(150.93, Math.max(150.82, lng));
+  const clampedLat = Math.min(-34.28, Math.max(-34.58, lat));
+  const clampedLng = Math.min(150.93, Math.max(150.75, lng));
   if (!isOnLandIllawarra(clampedLat, clampedLng)) {
     const cbd = CENTROIDS.find((c) => c.name === "Wollongong")!;
     return { lat: cbd.lat, lng: cbd.lng };
@@ -83,6 +82,19 @@ export function getCentroidForSuburb(name: string): SuburbCentroid | undefined {
 export function formatDistance(km: number): string {
   if (km < 1) return `${Math.round(km * 1000)} m`;
   return `${km.toFixed(1)} km`;
+}
+
+const ROAD_FACTOR = 1.35;
+const AVG_SPEED_KMH = 40;
+
+export function estimateDriveMinutes(km: number): number {
+  const roadKm = km * ROAD_FACTOR;
+  return Math.max(1, Math.round((roadKm / AVG_SPEED_KMH) * 60));
+}
+
+export function formatTravelTime(km: number): string {
+  const mins = estimateDriveMinutes(km);
+  return `${formatDistance(km)} · ~${mins} min drive`;
 }
 
 export function googleMapsDirectionsUrl(lat: number, lng: number): string {

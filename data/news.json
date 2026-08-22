@@ -5,15 +5,17 @@
     "summary": "New smart bins rolling out across the CBD and beach strip.",
     "type": "news",
     "date": "2026-03-18",
-    "url": "https://www.wollongong.nsw.gov.au/"
+    "sourceOrg": "Wollongong City Council",
+    "homepageUrl": "https://www.wollongong.nsw.gov.au/"
   },
   {
     "id": "n2",
     "title": "EPA NSW: Safe disposal of vape batteries",
     "summary": "Never put lithium batteries in household bins \u2014 use designated points.",
-    "type": "tip",
+    "type": "news",
     "date": "2026-03-15",
-    "url": "https://www.epa.nsw.gov.au/your-environment/recycling"
+    "sourceOrg": "EPA NSW",
+    "homepageUrl": "https://www.epa.nsw.gov.au/"
   },
   {
     "id": "n3",
@@ -32,7 +34,7 @@
   {
     "id": "n5",
     "title": "Weekly challenge ends Sunday",
-    "summary": "Report 3 items near the beach to earn the Coastal Champion badge.",
+    "summary": "Schedule a cleanup or report 3 items near the beach to earn the Coastal Champion badge.",
     "type": "app",
     "date": "2026-03-17"
   },
@@ -42,7 +44,8 @@
     "summary": "State-wide programs supporting community litter reduction.",
     "type": "news",
     "date": "2026-03-10",
-    "url": "https://www.nsw.gov.au/environment"
+    "sourceOrg": "NSW Government",
+    "homepageUrl": "https://www.nsw.gov.au/"
   },
   {
     "id": "n7",
@@ -57,5 +60,12 @@
     "summary": "Snap a photo, enable GPS, and earn points for verified reports.",
     "type": "tip",
     "date": "2026-03-12"
+  },
+  {
+    "id": "n9",
+    "title": "Schedule a community cleanup",
+    "summary": "Pick a date and suburb \u2014 earn points and the Cleanup Champion badge.",
+    "type": "app",
+    "date": "2026-03-22"
   }
 ]

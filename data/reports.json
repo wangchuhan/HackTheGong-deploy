@@ -1,29 +1,29 @@
 [
   {
     "id": "VS-2026-0001",
-    "lat": -34.41485,
-    "lng": 150.89265,
-    "suburb": "North Wollongong",
+    "lat": -34.482832,
+    "lng": 150.762949,
+    "suburb": "Port Kembla",
     "status": "verified",
-    "createdAt": "2026-01-20T01:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0002",
-    "lat": -34.41094,
-    "lng": 150.896353,
-    "suburb": "North Wollongong",
-    "status": "collected",
-    "createdAt": "2026-01-08T10:00:00",
+    "createdAt": "2026-01-21T21:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0003",
-    "lat": -34.430238,
-    "lng": 150.891496,
-    "suburb": "Wollongong",
+    "id": "VS-2026-0002",
+    "lat": -34.577385,
+    "lng": 150.871444,
+    "suburb": "Shellharbour",
     "status": "pending",
-    "createdAt": "2026-02-21T08:00:00",
+    "createdAt": "2026-02-16T12:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0003",
+    "lat": -34.336809,
+    "lng": 150.911562,
+    "suburb": "Bulli",
+    "status": "pending",
+    "createdAt": "2026-01-20T20:00:00",
     "pointsAwarded": 25
   },
   {
@@ -37,8 +37,8 @@
   },
   {
     "id": "VS-2026-0005",
-    "lat": -34.405331,
-    "lng": 150.898216,
+    "lat": -34.494331,
+    "lng": 150.794216,
     "suburb": "Dapto",
     "status": "verified",
     "createdAt": "2026-03-06T18:00:00",
@@ -64,20 +64,20 @@
   },
   {
     "id": "VS-2026-0008",
-    "lat": -34.315783,
-    "lng": 150.925839,
-    "suburb": "Thirroul",
-    "status": "pending",
-    "createdAt": "2026-02-02T07:00:00",
-    "pointsAwarded": 25
+    "lat": -34.575243,
+    "lng": 150.867749,
+    "suburb": "Shellharbour",
+    "status": "collected",
+    "createdAt": "2026-03-20T16:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0009",
-    "lat": -34.394024,
-    "lng": 150.893711,
-    "suburb": "Fairy Meadow",
+    "lat": -34.436241,
+    "lng": 150.856772,
+    "suburb": "Figtree",
     "status": "verified",
-    "createdAt": "2026-03-15T12:00:00",
+    "createdAt": "2026-03-17T13:00:00",
     "pointsAwarded": 25
   },
   {
@@ -109,42 +109,51 @@
   },
   {
     "id": "VS-2026-0013",
-    "lat": -34.403795,
-    "lng": 150.875469,
-    "suburb": "Keiraville",
+    "lat": -34.482473,
+    "lng": 150.762875,
+    "suburb": "Port Kembla",
     "status": "collected",
-    "createdAt": "2026-02-09T10:00:00",
+    "createdAt": "2026-01-14T22:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0014",
-    "lat": -34.436682,
-    "lng": 150.854946,
-    "suburb": "Figtree",
-    "status": "pending",
-    "createdAt": "2026-03-07T13:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0015",
-    "lat": -34.42597,
-    "lng": 150.892507,
-    "suburb": "Wollongong",
+    "lat": -34.393063,
+    "lng": 150.89384,
+    "suburb": "Fairy Meadow",
     "status": "verified",
-    "createdAt": "2026-01-06T15:00:00",
+    "createdAt": "2026-02-17T12:00:00",
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0016",
-    "lat": -34.373724,
-    "lng": 150.898995,
+    "id": "VS-2026-0015",
+    "lat": -34.369943,
+    "lng": 150.900656,
     "suburb": "Corrimal",
-    "status": "collected",
-    "createdAt": "2026-03-17T11:00:00",
+    "status": "pending",
+    "createdAt": "2026-01-20T13:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0016",
+    "lat": -34.335394,
+    "lng": 150.912266,
+    "suburb": "Bulli",
+    "status": "verified",
+    "createdAt": "2026-03-22T11:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0017",
+    "lat": -34.480505,
+    "lng": 150.763808,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-02-24T20:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0018",
     "lat": -34.398162,
     "lng": 150.89447,
     "suburb": "Fairy Meadow",
@@ -153,16 +162,16 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0018",
-    "lat": -34.404429,
-    "lng": 150.896501,
+    "id": "VS-2026-0019",
+    "lat": -34.493429,
+    "lng": 150.792501,
     "suburb": "Dapto",
     "status": "verified",
     "createdAt": "2026-01-31T21:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0019",
+    "id": "VS-2026-0020",
     "lat": -34.435039,
     "lng": 150.857535,
     "suburb": "Figtree",
@@ -171,142 +180,151 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0020",
-    "lat": -34.402248,
-    "lng": 150.876533,
-    "suburb": "Keiraville",
-    "status": "collected",
-    "createdAt": "2026-01-06T10:00:00",
-    "pointsAwarded": 10
-  },
-  {
     "id": "VS-2026-0021",
-    "lat": -34.401023,
-    "lng": 150.896175,
-    "suburb": "Dapto",
+    "lat": -34.48254,
+    "lng": 150.762583,
+    "suburb": "Port Kembla",
     "status": "pending",
-    "createdAt": "2026-03-24T20:00:00",
-    "pointsAwarded": 25
+    "createdAt": "2026-02-20T21:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0022",
-    "lat": -34.41091,
-    "lng": 150.894222,
-    "suburb": "North Wollongong",
-    "status": "verified",
-    "createdAt": "2026-01-23T18:00:00",
-    "pointsAwarded": 10
+    "lat": -34.333425,
+    "lng": 150.913808,
+    "suburb": "Bulli",
+    "status": "pending",
+    "createdAt": "2026-01-22T10:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0023",
-    "lat": -34.396391,
-    "lng": 150.892722,
-    "suburb": "Fairy Meadow",
+    "lat": -34.577313,
+    "lng": 150.872309,
+    "suburb": "Shellharbour",
     "status": "verified",
-    "createdAt": "2026-03-23T09:00:00",
+    "createdAt": "2026-03-06T01:00:00",
     "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0024",
-    "lat": -34.403954,
-    "lng": 150.874638,
-    "suburb": "Keiraville",
-    "status": "verified",
-    "createdAt": "2026-02-23T08:00:00",
+    "lat": -34.374331,
+    "lng": 150.898609,
+    "suburb": "Corrimal",
+    "status": "pending",
+    "createdAt": "2026-02-08T17:00:00",
     "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0025",
-    "lat": -34.434346,
-    "lng": 150.853917,
-    "suburb": "Figtree",
-    "status": "verified",
-    "createdAt": "2026-03-07T01:00:00",
+    "lat": -34.57642,
+    "lng": 150.870004,
+    "suburb": "Shellharbour",
+    "status": "pending",
+    "createdAt": "2026-01-16T05:00:00",
     "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0026",
-    "lat": -34.432489,
-    "lng": 150.856594,
-    "suburb": "Figtree",
-    "status": "pending",
-    "createdAt": "2026-02-11T16:00:00",
+    "lat": -34.39395,
+    "lng": 150.893046,
+    "suburb": "Fairy Meadow",
+    "status": "verified",
+    "createdAt": "2026-01-17T23:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0027",
-    "lat": -34.369728,
-    "lng": 150.90099,
-    "suburb": "Corrimal",
-    "status": "verified",
-    "createdAt": "2026-01-27T05:00:00",
-    "pointsAwarded": 10
+    "lat": -34.403764,
+    "lng": 150.878672,
+    "suburb": "Keiraville",
+    "status": "pending",
+    "createdAt": "2026-02-15T06:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0028",
-    "lat": -34.414732,
-    "lng": 150.880682,
-    "suburb": "Gwynneville",
-    "status": "collected",
-    "createdAt": "2026-01-08T07:00:00",
+    "lat": -34.372068,
+    "lng": 150.896671,
+    "suburb": "Corrimal",
+    "status": "verified",
+    "createdAt": "2026-01-31T23:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0029",
-    "lat": -34.433405,
-    "lng": 150.85377,
-    "suburb": "Figtree",
-    "status": "verified",
-    "createdAt": "2026-02-10T13:00:00",
-    "pointsAwarded": 10
+    "lat": -34.429355,
+    "lng": 150.893504,
+    "suburb": "Wollongong",
+    "status": "pending",
+    "createdAt": "2026-01-07T17:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0030",
-    "lat": -34.432765,
-    "lng": 150.855539,
-    "suburb": "Figtree",
+    "lat": -34.314104,
+    "lng": 150.925868,
+    "suburb": "Thirroul",
     "status": "verified",
-    "createdAt": "2026-01-19T01:00:00",
-    "pointsAwarded": 25
+    "createdAt": "2026-02-15T10:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0031",
-    "lat": -34.396606,
-    "lng": 150.89403,
-    "suburb": "Fairy Meadow",
+    "lat": -34.480648,
+    "lng": 150.761799,
+    "suburb": "Port Kembla",
     "status": "collected",
-    "createdAt": "2026-02-01T20:00:00",
-    "pointsAwarded": 25
+    "createdAt": "2026-01-23T14:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0032",
-    "lat": -34.318274,
-    "lng": 150.921348,
-    "suburb": "Thirroul",
-    "status": "pending",
-    "createdAt": "2026-01-29T20:00:00",
-    "pointsAwarded": 25
+    "lat": -34.433468,
+    "lng": 150.857139,
+    "suburb": "Figtree",
+    "status": "verified",
+    "createdAt": "2026-03-02T20:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0033",
-    "lat": -34.436619,
-    "lng": 150.854321,
-    "suburb": "Figtree",
-    "status": "pending",
-    "createdAt": "2026-01-07T01:00:00",
+    "lat": -34.479601,
+    "lng": 150.761129,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-02-14T03:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0034",
-    "lat": -34.409567,
-    "lng": 150.896158,
-    "suburb": "North Wollongong",
+    "lat": -34.418652,
+    "lng": 150.877029,
+    "suburb": "Gwynneville",
     "status": "verified",
-    "createdAt": "2026-01-07T01:00:00",
-    "pointsAwarded": 10
+    "createdAt": "2026-02-20T04:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0035",
+    "lat": -34.419957,
+    "lng": 150.879247,
+    "suburb": "Gwynneville",
+    "status": "verified",
+    "createdAt": "2026-01-06T00:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0036",
+    "lat": -34.425642,
+    "lng": 150.890525,
+    "suburb": "Wollongong",
+    "status": "verified",
+    "createdAt": "2026-01-21T07:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0037",
     "lat": -34.317715,
     "lng": 150.920794,
     "suburb": "Thirroul",
@@ -315,7 +333,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0036",
+    "id": "VS-2026-0038",
     "lat": -34.314155,
     "lng": 150.921142,
     "suburb": "Thirroul",
@@ -324,7 +342,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0037",
+    "id": "VS-2026-0039",
     "lat": -34.334533,
     "lng": 150.916183,
     "suburb": "Bulli",
@@ -333,7 +351,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0038",
+    "id": "VS-2026-0040",
     "lat": -34.332631,
     "lng": 150.915804,
     "suburb": "Bulli",
@@ -342,7 +360,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0039",
+    "id": "VS-2026-0041",
     "lat": -34.416782,
     "lng": 150.875841,
     "suburb": "Gwynneville",
@@ -351,7 +369,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0040",
+    "id": "VS-2026-0042",
     "lat": -34.414753,
     "lng": 150.875452,
     "suburb": "Gwynneville",
@@ -360,34 +378,34 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0041",
-    "lat": -34.432984,
-    "lng": 150.858814,
-    "suburb": "Figtree",
-    "status": "verified",
-    "createdAt": "2026-03-21T01:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0042",
-    "lat": -34.334086,
-    "lng": 150.912282,
-    "suburb": "Bulli",
-    "status": "pending",
-    "createdAt": "2026-02-04T05:00:00",
-    "pointsAwarded": 10
-  },
-  {
     "id": "VS-2026-0043",
-    "lat": -34.336987,
-    "lng": 150.913343,
-    "suburb": "Bulli",
-    "status": "collected",
-    "createdAt": "2026-03-21T01:00:00",
+    "lat": -34.477504,
+    "lng": 150.763516,
+    "suburb": "Port Kembla",
+    "status": "pending",
+    "createdAt": "2026-03-24T16:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0044",
+    "lat": -34.404562,
+    "lng": 150.876888,
+    "suburb": "Keiraville",
+    "status": "collected",
+    "createdAt": "2026-03-15T18:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0045",
+    "lat": -34.404726,
+    "lng": 150.879912,
+    "suburb": "Keiraville",
+    "status": "collected",
+    "createdAt": "2026-01-23T15:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0046",
     "lat": -34.33282,
     "lng": 150.915383,
     "suburb": "Bulli",
@@ -396,7 +414,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0045",
+    "id": "VS-2026-0047",
     "lat": -34.41822,
     "lng": 150.880812,
     "suburb": "Gwynneville",
@@ -405,7 +423,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0046",
+    "id": "VS-2026-0048",
     "lat": -34.374657,
     "lng": 150.899505,
     "suburb": "Corrimal",
@@ -414,7 +432,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0047",
+    "id": "VS-2026-0049",
     "lat": -34.437519,
     "lng": 150.854115,
     "suburb": "Figtree",
@@ -423,7 +441,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0048",
+    "id": "VS-2026-0050",
     "lat": -34.417577,
     "lng": 150.88065,
     "suburb": "Gwynneville",
@@ -432,16 +450,16 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0049",
-    "lat": -34.406762,
-    "lng": 150.893492,
+    "id": "VS-2026-0051",
+    "lat": -34.495762,
+    "lng": 150.789492,
     "suburb": "Dapto",
     "status": "verified",
     "createdAt": "2026-02-26T02:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0050",
+    "id": "VS-2026-0052",
     "lat": -34.415982,
     "lng": 150.876885,
     "suburb": "Gwynneville",
@@ -450,16 +468,16 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0051",
-    "lat": -34.396257,
-    "lng": 150.895574,
-    "suburb": "Fairy Meadow",
+    "id": "VS-2026-0053",
+    "lat": -34.479627,
+    "lng": 150.761243,
+    "suburb": "Port Kembla",
     "status": "pending",
-    "createdAt": "2026-03-21T20:00:00",
+    "createdAt": "2026-03-21T06:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0052",
+    "id": "VS-2026-0054",
     "lat": -34.315273,
     "lng": 150.923378,
     "suburb": "Thirroul",
@@ -468,7 +486,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0053",
+    "id": "VS-2026-0055",
     "lat": -34.416965,
     "lng": 150.875795,
     "suburb": "Gwynneville",
@@ -477,7 +495,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0054",
+    "id": "VS-2026-0056",
     "lat": -34.37329,
     "lng": 150.898629,
     "suburb": "Corrimal",
@@ -486,70 +504,70 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0055",
-    "lat": -34.437953,
-    "lng": 150.857903,
-    "suburb": "Figtree",
-    "status": "pending",
-    "createdAt": "2026-01-26T13:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0056",
-    "lat": -34.398307,
-    "lng": 150.890642,
-    "suburb": "Fairy Meadow",
-    "status": "verified",
-    "createdAt": "2026-02-17T05:00:00",
-    "pointsAwarded": 10
-  },
-  {
     "id": "VS-2026-0057",
-    "lat": -34.395371,
-    "lng": 150.894306,
-    "suburb": "Fairy Meadow",
+    "lat": -34.480326,
+    "lng": 150.762507,
+    "suburb": "Port Kembla",
     "status": "verified",
-    "createdAt": "2026-01-18T08:00:00",
+    "createdAt": "2026-02-17T07:00:00",
     "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0058",
-    "lat": -34.317493,
-    "lng": 150.925449,
-    "suburb": "Thirroul",
+    "lat": -34.409366,
+    "lng": 150.891806,
+    "suburb": "North Wollongong",
     "status": "pending",
-    "createdAt": "2026-01-05T08:00:00",
+    "createdAt": "2026-01-10T20:00:00",
     "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0059",
-    "lat": -34.332024,
-    "lng": 150.911265,
-    "suburb": "Bulli",
+    "lat": -34.437067,
+    "lng": 150.854691,
+    "suburb": "Figtree",
     "status": "verified",
-    "createdAt": "2026-01-29T11:00:00",
-    "pointsAwarded": 25
+    "createdAt": "2026-01-18T23:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0060",
-    "lat": -34.398031,
-    "lng": 150.892651,
-    "suburb": "Fairy Meadow",
-    "status": "collected",
-    "createdAt": "2026-03-02T05:00:00",
-    "pointsAwarded": 25
+    "lat": -34.479695,
+    "lng": 150.760084,
+    "suburb": "Port Kembla",
+    "status": "verified",
+    "createdAt": "2026-02-11T16:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0061",
-    "lat": -34.430129,
-    "lng": 150.89577,
-    "suburb": "Wollongong",
-    "status": "verified",
-    "createdAt": "2026-02-28T23:00:00",
-    "pointsAwarded": 25
+    "lat": -34.411194,
+    "lng": 150.895976,
+    "suburb": "North Wollongong",
+    "status": "pending",
+    "createdAt": "2026-01-04T18:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0062",
+    "lat": -34.403177,
+    "lng": 150.875572,
+    "suburb": "Keiraville",
+    "status": "collected",
+    "createdAt": "2026-03-05T06:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0063",
+    "lat": -34.575434,
+    "lng": 150.867058,
+    "suburb": "Shellharbour",
+    "status": "verified",
+    "createdAt": "2026-01-07T10:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0064",
     "lat": -34.425792,
     "lng": 150.893595,
     "suburb": "Wollongong",
@@ -558,7 +576,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0063",
+    "id": "VS-2026-0065",
     "lat": -34.42895,
     "lng": 150.895494,
     "suburb": "Wollongong",
@@ -567,7 +585,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0064",
+    "id": "VS-2026-0066",
     "lat": -34.415908,
     "lng": 150.879002,
     "suburb": "Gwynneville",
@@ -576,97 +594,106 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0065",
-    "lat": -34.401445,
-    "lng": 150.87542,
-    "suburb": "Keiraville",
-    "status": "verified",
-    "createdAt": "2026-01-14T20:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0066",
-    "lat": -34.429724,
-    "lng": 150.895647,
-    "suburb": "Wollongong",
-    "status": "collected",
-    "createdAt": "2026-03-08T18:00:00",
-    "pointsAwarded": 25
-  },
-  {
     "id": "VS-2026-0067",
-    "lat": -34.418399,
-    "lng": 150.879724,
-    "suburb": "Gwynneville",
-    "status": "collected",
-    "createdAt": "2026-01-10T05:00:00",
+    "lat": -34.577073,
+    "lng": 150.872579,
+    "suburb": "Shellharbour",
+    "status": "verified",
+    "createdAt": "2026-03-15T18:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0068",
-    "lat": -34.317665,
-    "lng": 150.9249,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-02-09T06:00:00",
-    "pointsAwarded": 10
+    "lat": -34.336851,
+    "lng": 150.915419,
+    "suburb": "Bulli",
+    "status": "collected",
+    "createdAt": "2026-01-29T08:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0069",
-    "lat": -34.418662,
-    "lng": 150.87896,
-    "suburb": "Gwynneville",
-    "status": "verified",
-    "createdAt": "2026-02-04T00:00:00",
+    "lat": -34.573136,
+    "lng": 150.868601,
+    "suburb": "Shellharbour",
+    "status": "pending",
+    "createdAt": "2026-03-09T04:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0070",
-    "lat": -34.409199,
-    "lng": 150.892675,
-    "suburb": "North Wollongong",
+    "lat": -34.425648,
+    "lng": 150.891435,
+    "suburb": "Wollongong",
     "status": "collected",
-    "createdAt": "2026-02-24T17:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0071",
-    "lat": -34.436013,
-    "lng": 150.853166,
-    "suburb": "Figtree",
-    "status": "verified",
-    "createdAt": "2026-03-16T20:00:00",
+    "createdAt": "2026-03-11T16:00:00",
     "pointsAwarded": 10
   },
   {
+    "id": "VS-2026-0071",
+    "lat": -34.394077,
+    "lng": 150.895228,
+    "suburb": "Fairy Meadow",
+    "status": "pending",
+    "createdAt": "2026-01-20T00:00:00",
+    "pointsAwarded": 25
+  },
+  {
     "id": "VS-2026-0072",
-    "lat": -34.401225,
-    "lng": 150.894593,
-    "suburb": "Dapto",
-    "status": "collected",
-    "createdAt": "2026-01-10T06:00:00",
+    "lat": -34.417609,
+    "lng": 150.876672,
+    "suburb": "Gwynneville",
+    "status": "verified",
+    "createdAt": "2026-01-06T22:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0073",
-    "lat": -34.372382,
-    "lng": 150.901905,
-    "suburb": "Corrimal",
-    "status": "collected",
-    "createdAt": "2026-01-10T20:00:00",
-    "pointsAwarded": 25
+    "lat": -34.480444,
+    "lng": 150.762577,
+    "suburb": "Port Kembla",
+    "status": "verified",
+    "createdAt": "2026-03-13T23:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0074",
-    "lat": -34.418472,
-    "lng": 150.879253,
-    "suburb": "Gwynneville",
+    "lat": -34.409738,
+    "lng": 150.892567,
+    "suburb": "North Wollongong",
     "status": "verified",
-    "createdAt": "2026-01-01T03:00:00",
+    "createdAt": "2026-02-19T13:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0075",
+    "lat": -34.411421,
+    "lng": 150.893074,
+    "suburb": "North Wollongong",
+    "status": "verified",
+    "createdAt": "2026-03-09T02:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0076",
+    "lat": -34.490095,
+    "lng": 150.789694,
+    "suburb": "Dapto",
+    "status": "verified",
+    "createdAt": "2026-03-18T18:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0077",
+    "lat": -34.426547,
+    "lng": 150.89011,
+    "suburb": "Wollongong",
+    "status": "verified",
+    "createdAt": "2026-03-20T23:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0078",
     "lat": -34.33658,
     "lng": 150.914985,
     "suburb": "Bulli",
@@ -675,7 +702,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0076",
+    "id": "VS-2026-0079",
     "lat": -34.410681,
     "lng": 150.892802,
     "suburb": "North Wollongong",
@@ -684,7 +711,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0077",
+    "id": "VS-2026-0080",
     "lat": -34.332817,
     "lng": 150.914326,
     "suburb": "Bulli",
@@ -693,7 +720,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0078",
+    "id": "VS-2026-0081",
     "lat": -34.332936,
     "lng": 150.916417,
     "suburb": "Bulli",
@@ -702,7 +729,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0079",
+    "id": "VS-2026-0082",
     "lat": -34.432998,
     "lng": 150.854823,
     "suburb": "Figtree",
@@ -711,16 +738,16 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0080",
-    "lat": -34.403072,
-    "lng": 150.89579,
+    "id": "VS-2026-0083",
+    "lat": -34.492072,
+    "lng": 150.79179,
     "suburb": "Dapto",
     "status": "verified",
     "createdAt": "2026-02-07T17:00:00",
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0081",
+    "id": "VS-2026-0084",
     "lat": -34.314238,
     "lng": 150.925759,
     "suburb": "Thirroul",
@@ -729,7 +756,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0082",
+    "id": "VS-2026-0085",
     "lat": -34.413297,
     "lng": 150.894983,
     "suburb": "North Wollongong",
@@ -738,7 +765,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0083",
+    "id": "VS-2026-0086",
     "lat": -34.415963,
     "lng": 150.876348,
     "suburb": "Gwynneville",
@@ -747,7 +774,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0084",
+    "id": "VS-2026-0087",
     "lat": -34.429331,
     "lng": 150.892951,
     "suburb": "Wollongong",
@@ -756,7 +783,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0085",
+    "id": "VS-2026-0088",
     "lat": -34.331683,
     "lng": 150.914454,
     "suburb": "Bulli",
@@ -765,7 +792,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0086",
+    "id": "VS-2026-0089",
     "lat": -34.335536,
     "lng": 150.914936,
     "suburb": "Bulli",
@@ -774,7 +801,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0087",
+    "id": "VS-2026-0090",
     "lat": -34.418945,
     "lng": 150.880748,
     "suburb": "Gwynneville",
@@ -783,7 +810,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0088",
+    "id": "VS-2026-0091",
     "lat": -34.436505,
     "lng": 150.85809,
     "suburb": "Figtree",
@@ -792,79 +819,79 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0089",
-    "lat": -34.432073,
-    "lng": 150.856573,
-    "suburb": "Figtree",
-    "status": "collected",
-    "createdAt": "2026-03-23T01:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0090",
-    "lat": -34.43544,
-    "lng": 150.858441,
-    "suburb": "Figtree",
-    "status": "verified",
-    "createdAt": "2026-02-08T01:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0091",
-    "lat": -34.3163,
-    "lng": 150.924511,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-03-13T16:00:00",
-    "pointsAwarded": 25
-  },
-  {
     "id": "VS-2026-0092",
-    "lat": -34.31524,
-    "lng": 150.921648,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-01-07T14:00:00",
-    "pointsAwarded": 10
+    "lat": -34.480313,
+    "lng": 150.761854,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-01-28T01:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0093",
-    "lat": -34.396985,
-    "lng": 150.895358,
-    "suburb": "Fairy Meadow",
-    "status": "verified",
-    "createdAt": "2026-01-07T21:00:00",
+    "lat": -34.572648,
+    "lng": 150.86956,
+    "suburb": "Shellharbour",
+    "status": "collected",
+    "createdAt": "2026-03-19T09:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0094",
-    "lat": -34.417702,
-    "lng": 150.875917,
-    "suburb": "Gwynneville",
-    "status": "pending",
-    "createdAt": "2026-01-19T06:00:00",
-    "pointsAwarded": 10
+    "lat": -34.572831,
+    "lng": 150.8697,
+    "suburb": "Shellharbour",
+    "status": "verified",
+    "createdAt": "2026-03-06T03:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0095",
-    "lat": -34.335015,
-    "lng": 150.913796,
-    "suburb": "Bulli",
+    "lat": -34.394405,
+    "lng": 150.893128,
+    "suburb": "Fairy Meadow",
     "status": "verified",
-    "createdAt": "2026-01-06T07:00:00",
+    "createdAt": "2026-02-23T11:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0096",
-    "lat": -34.331571,
-    "lng": 150.914504,
-    "suburb": "Bulli",
-    "status": "pending",
-    "createdAt": "2026-03-01T08:00:00",
-    "pointsAwarded": 25
+    "lat": -34.318535,
+    "lng": 150.921714,
+    "suburb": "Thirroul",
+    "status": "verified",
+    "createdAt": "2026-01-24T04:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0097",
+    "lat": -34.437517,
+    "lng": 150.853905,
+    "suburb": "Figtree",
+    "status": "verified",
+    "createdAt": "2026-02-02T16:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0098",
+    "lat": -34.419615,
+    "lng": 150.877446,
+    "suburb": "Gwynneville",
+    "status": "collected",
+    "createdAt": "2026-02-16T07:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0099",
+    "lat": -34.429559,
+    "lng": 150.892621,
+    "suburb": "Wollongong",
+    "status": "pending",
+    "createdAt": "2026-03-19T05:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0100",
     "lat": -34.334138,
     "lng": 150.916656,
     "suburb": "Bulli",
@@ -873,7 +900,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0098",
+    "id": "VS-2026-0101",
     "lat": -34.433515,
     "lng": 150.856277,
     "suburb": "Figtree",
@@ -882,7 +909,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0099",
+    "id": "VS-2026-0102",
     "lat": -34.418362,
     "lng": 150.877914,
     "suburb": "Gwynneville",
@@ -891,43 +918,43 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0100",
-    "lat": -34.332655,
-    "lng": 150.916043,
-    "suburb": "Bulli",
-    "status": "verified",
-    "createdAt": "2026-03-20T11:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0101",
-    "lat": -34.437838,
-    "lng": 150.855364,
-    "suburb": "Figtree",
-    "status": "pending",
-    "createdAt": "2026-02-18T03:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0102",
-    "lat": -34.336186,
-    "lng": 150.91377,
-    "suburb": "Bulli",
-    "status": "verified",
-    "createdAt": "2026-01-05T06:00:00",
-    "pointsAwarded": 10
-  },
-  {
     "id": "VS-2026-0103",
-    "lat": -34.37373,
-    "lng": 150.897961,
-    "suburb": "Corrimal",
+    "lat": -34.478711,
+    "lng": 150.762845,
+    "suburb": "Port Kembla",
     "status": "collected",
-    "createdAt": "2026-03-06T22:00:00",
+    "createdAt": "2026-03-13T17:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0104",
+    "lat": -34.492795,
+    "lng": 150.794442,
+    "suburb": "Dapto",
+    "status": "pending",
+    "createdAt": "2026-02-20T12:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0105",
+    "lat": -34.480928,
+    "lng": 150.763701,
+    "suburb": "Port Kembla",
+    "status": "pending",
+    "createdAt": "2026-01-16T12:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0106",
+    "lat": -34.335036,
+    "lng": 150.913728,
+    "suburb": "Bulli",
+    "status": "collected",
+    "createdAt": "2026-01-29T19:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0107",
     "lat": -34.335486,
     "lng": 150.911491,
     "suburb": "Bulli",
@@ -936,7 +963,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0105",
+    "id": "VS-2026-0108",
     "lat": -34.416099,
     "lng": 150.879687,
     "suburb": "Gwynneville",
@@ -945,7 +972,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0106",
+    "id": "VS-2026-0109",
     "lat": -34.418804,
     "lng": 150.875122,
     "suburb": "Gwynneville",
@@ -954,7 +981,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0107",
+    "id": "VS-2026-0110",
     "lat": -34.314983,
     "lng": 150.923384,
     "suburb": "Thirroul",
@@ -963,7 +990,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0108",
+    "id": "VS-2026-0111",
     "lat": -34.394399,
     "lng": 150.891007,
     "suburb": "Fairy Meadow",
@@ -972,7 +999,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0109",
+    "id": "VS-2026-0112",
     "lat": -34.398351,
     "lng": 150.890154,
     "suburb": "Fairy Meadow",
@@ -981,52 +1008,61 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0110",
-    "lat": -34.419544,
-    "lng": 150.879144,
-    "suburb": "Gwynneville",
-    "status": "verified",
-    "createdAt": "2026-02-23T12:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0111",
-    "lat": -34.393898,
-    "lng": 150.893602,
-    "suburb": "Fairy Meadow",
-    "status": "pending",
-    "createdAt": "2026-01-11T07:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0112",
-    "lat": -34.43543,
-    "lng": 150.855223,
-    "suburb": "Figtree",
-    "status": "verified",
-    "createdAt": "2026-02-13T04:00:00",
-    "pointsAwarded": 10
-  },
-  {
     "id": "VS-2026-0113",
-    "lat": -34.332066,
-    "lng": 150.911633,
-    "suburb": "Bulli",
+    "lat": -34.57681,
+    "lng": 150.870553,
+    "suburb": "Shellharbour",
     "status": "verified",
-    "createdAt": "2026-03-23T23:00:00",
-    "pointsAwarded": 25
+    "createdAt": "2026-03-12T21:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0114",
-    "lat": -34.314756,
-    "lng": 150.922613,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-03-04T14:00:00",
+    "lat": -34.573365,
+    "lng": 150.872102,
+    "suburb": "Shellharbour",
+    "status": "pending",
+    "createdAt": "2026-02-21T05:00:00",
     "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0115",
+    "lat": -34.428717,
+    "lng": 150.89267,
+    "suburb": "Wollongong",
+    "status": "pending",
+    "createdAt": "2026-02-01T14:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0116",
+    "lat": -34.481453,
+    "lng": 150.763597,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-03-12T04:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0117",
+    "lat": -34.331235,
+    "lng": 150.914814,
+    "suburb": "Bulli",
+    "status": "collected",
+    "createdAt": "2026-03-12T17:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0118",
+    "lat": -34.404387,
+    "lng": 150.878403,
+    "suburb": "Keiraville",
+    "status": "verified",
+    "createdAt": "2026-03-24T09:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0119",
     "lat": -34.433352,
     "lng": 150.855789,
     "suburb": "Figtree",
@@ -1035,7 +1071,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0116",
+    "id": "VS-2026-0120",
     "lat": -34.415016,
     "lng": 150.87552,
     "suburb": "Gwynneville",
@@ -1044,7 +1080,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0117",
+    "id": "VS-2026-0121",
     "lat": -34.315581,
     "lng": 150.924009,
     "suburb": "Thirroul",
@@ -1053,7 +1089,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0118",
+    "id": "VS-2026-0122",
     "lat": -34.373909,
     "lng": 150.897273,
     "suburb": "Corrimal",
@@ -1062,7 +1098,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0119",
+    "id": "VS-2026-0123",
     "lat": -34.393718,
     "lng": 150.894207,
     "suburb": "Fairy Meadow",
@@ -1071,7 +1107,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0120",
+    "id": "VS-2026-0124",
     "lat": -34.419486,
     "lng": 150.87932,
     "suburb": "Gwynneville",
@@ -1080,7 +1116,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0121",
+    "id": "VS-2026-0125",
     "lat": -34.315125,
     "lng": 150.922945,
     "suburb": "Thirroul",
@@ -1089,7 +1125,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0122",
+    "id": "VS-2026-0126",
     "lat": -34.39767,
     "lng": 150.894151,
     "suburb": "Fairy Meadow",
@@ -1098,7 +1134,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0123",
+    "id": "VS-2026-0127",
     "lat": -34.434814,
     "lng": 150.855553,
     "suburb": "Figtree",
@@ -1107,25 +1143,25 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0124",
-    "lat": -34.317375,
-    "lng": 150.921508,
-    "suburb": "Thirroul",
+    "id": "VS-2026-0128",
+    "lat": -34.575278,
+    "lng": 150.86884,
+    "suburb": "Shellharbour",
+    "status": "pending",
+    "createdAt": "2026-01-20T16:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0129",
+    "lat": -34.418107,
+    "lng": 150.879457,
+    "suburb": "Gwynneville",
     "status": "verified",
-    "createdAt": "2026-01-11T07:00:00",
+    "createdAt": "2026-03-23T03:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0125",
-    "lat": -34.410543,
-    "lng": 150.896705,
-    "suburb": "North Wollongong",
-    "status": "verified",
-    "createdAt": "2026-02-28T21:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0126",
+    "id": "VS-2026-0130",
     "lat": -34.415568,
     "lng": 150.876659,
     "suburb": "Gwynneville",
@@ -1134,7 +1170,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0127",
+    "id": "VS-2026-0131",
     "lat": -34.418223,
     "lng": 150.877165,
     "suburb": "Gwynneville",
@@ -1143,7 +1179,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0128",
+    "id": "VS-2026-0132",
     "lat": -34.437241,
     "lng": 150.853273,
     "suburb": "Figtree",
@@ -1152,7 +1188,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0129",
+    "id": "VS-2026-0133",
     "lat": -34.403173,
     "lng": 150.878517,
     "suburb": "Keiraville",
@@ -1161,7 +1197,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0130",
+    "id": "VS-2026-0134",
     "lat": -34.396184,
     "lng": 150.892643,
     "suburb": "Fairy Meadow",
@@ -1170,7 +1206,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0131",
+    "id": "VS-2026-0135",
     "lat": -34.318315,
     "lng": 150.920392,
     "suburb": "Thirroul",
@@ -1179,16 +1215,16 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0132",
-    "lat": -34.42989,
-    "lng": 150.894967,
-    "suburb": "Wollongong",
+    "id": "VS-2026-0136",
+    "lat": -34.479381,
+    "lng": 150.75941,
+    "suburb": "Port Kembla",
     "status": "verified",
-    "createdAt": "2026-03-22T23:00:00",
+    "createdAt": "2026-03-11T05:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0133",
+    "id": "VS-2026-0137",
     "lat": -34.419289,
     "lng": 150.879587,
     "suburb": "Gwynneville",
@@ -1197,7 +1233,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0134",
+    "id": "VS-2026-0138",
     "lat": -34.334297,
     "lng": 150.913656,
     "suburb": "Bulli",
@@ -1206,34 +1242,34 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0135",
-    "lat": -34.403274,
-    "lng": 150.896658,
+    "id": "VS-2026-0139",
+    "lat": -34.492274,
+    "lng": 150.792658,
     "suburb": "Dapto",
     "status": "pending",
     "createdAt": "2026-03-05T03:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0136",
-    "lat": -34.418412,
-    "lng": 150.875487,
-    "suburb": "Gwynneville",
+    "id": "VS-2026-0140",
+    "lat": -34.482234,
+    "lng": 150.762463,
+    "suburb": "Port Kembla",
     "status": "verified",
-    "createdAt": "2026-01-21T11:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0137",
-    "lat": -34.414061,
-    "lng": 150.893451,
-    "suburb": "North Wollongong",
-    "status": "collected",
-    "createdAt": "2026-02-28T19:00:00",
+    "createdAt": "2026-01-14T09:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0138",
+    "id": "VS-2026-0141",
+    "lat": -34.43755,
+    "lng": 150.853016,
+    "suburb": "Figtree",
+    "status": "collected",
+    "createdAt": "2026-02-08T10:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0142",
     "lat": -34.429411,
     "lng": 150.894342,
     "suburb": "Wollongong",
@@ -1242,16 +1278,16 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0139",
-    "lat": -34.414457,
-    "lng": 150.879727,
-    "suburb": "Gwynneville",
+    "id": "VS-2026-0143",
+    "lat": -34.482099,
+    "lng": 150.760087,
+    "suburb": "Port Kembla",
     "status": "verified",
-    "createdAt": "2026-02-23T08:00:00",
+    "createdAt": "2026-03-09T12:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0140",
+    "id": "VS-2026-0144",
     "lat": -34.411733,
     "lng": 150.894886,
     "suburb": "North Wollongong",
@@ -1260,7 +1296,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0141",
+    "id": "VS-2026-0145",
     "lat": -34.414642,
     "lng": 150.895756,
     "suburb": "North Wollongong",
@@ -1269,7 +1305,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0142",
+    "id": "VS-2026-0146",
     "lat": -34.412188,
     "lng": 150.892825,
     "suburb": "North Wollongong",
@@ -1278,7 +1314,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0143",
+    "id": "VS-2026-0147",
     "lat": -34.435037,
     "lng": 150.853483,
     "suburb": "Figtree",
@@ -1287,7 +1323,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0144",
+    "id": "VS-2026-0148",
     "lat": -34.371378,
     "lng": 150.896155,
     "suburb": "Corrimal",
@@ -1296,7 +1332,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0145",
+    "id": "VS-2026-0149",
     "lat": -34.395543,
     "lng": 150.894579,
     "suburb": "Fairy Meadow",
@@ -1305,16 +1341,16 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0146",
-    "lat": -34.313504,
-    "lng": 150.921089,
-    "suburb": "Thirroul",
+    "id": "VS-2026-0150",
+    "lat": -34.480847,
+    "lng": 150.760169,
+    "suburb": "Port Kembla",
     "status": "collected",
     "createdAt": "2026-02-19T22:00:00",
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0147",
+    "id": "VS-2026-0151",
     "lat": -34.313186,
     "lng": 150.92282,
     "suburb": "Thirroul",
@@ -1323,106 +1359,106 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0148",
-    "lat": -34.409854,
-    "lng": 150.892979,
-    "suburb": "North Wollongong",
-    "status": "collected",
-    "createdAt": "2026-03-01T04:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0149",
-    "lat": -34.332119,
-    "lng": 150.914301,
-    "suburb": "Bulli",
-    "status": "pending",
-    "createdAt": "2026-02-08T19:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0150",
-    "lat": -34.39706,
-    "lng": 150.895821,
-    "suburb": "Fairy Meadow",
-    "status": "pending",
-    "createdAt": "2026-02-04T11:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0151",
-    "lat": -34.435228,
-    "lng": 150.853325,
-    "suburb": "Figtree",
-    "status": "verified",
-    "createdAt": "2026-02-14T05:00:00",
-    "pointsAwarded": 25
-  },
-  {
     "id": "VS-2026-0152",
-    "lat": -34.315248,
-    "lng": 150.92456,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-01-18T08:00:00",
-    "pointsAwarded": 25
+    "lat": -34.482872,
+    "lng": 150.759465,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-02-05T03:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0153",
-    "lat": -34.401434,
-    "lng": 150.876629,
-    "suburb": "Keiraville",
-    "status": "collected",
-    "createdAt": "2026-03-01T14:00:00",
+    "lat": -34.477829,
+    "lng": 150.763381,
+    "suburb": "Port Kembla",
+    "status": "pending",
+    "createdAt": "2026-02-16T22:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0154",
-    "lat": -34.424961,
-    "lng": 150.893753,
-    "suburb": "Wollongong",
-    "status": "verified",
-    "createdAt": "2026-01-21T10:00:00",
-    "pointsAwarded": 10
+    "lat": -34.413113,
+    "lng": 150.89294,
+    "suburb": "North Wollongong",
+    "status": "collected",
+    "createdAt": "2026-03-24T18:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0155",
-    "lat": -34.437918,
-    "lng": 150.855448,
-    "suburb": "Figtree",
+    "lat": -34.426854,
+    "lng": 150.893356,
+    "suburb": "Wollongong",
     "status": "pending",
-    "createdAt": "2026-01-20T04:00:00",
+    "createdAt": "2026-02-05T06:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0156",
-    "lat": -34.411114,
-    "lng": 150.891924,
-    "suburb": "North Wollongong",
-    "status": "verified",
-    "createdAt": "2026-03-21T14:00:00",
-    "pointsAwarded": 25
+    "lat": -34.435829,
+    "lng": 150.857539,
+    "suburb": "Figtree",
+    "status": "collected",
+    "createdAt": "2026-02-23T08:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0157",
-    "lat": -34.396507,
-    "lng": 150.892895,
-    "suburb": "Fairy Meadow",
-    "status": "verified",
-    "createdAt": "2026-02-10T07:00:00",
-    "pointsAwarded": 10
+    "lat": -34.418398,
+    "lng": 150.875786,
+    "suburb": "Gwynneville",
+    "status": "collected",
+    "createdAt": "2026-01-25T13:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0158",
-    "lat": -34.437132,
-    "lng": 150.854144,
-    "suburb": "Figtree",
+    "lat": -34.318271,
+    "lng": 150.925839,
+    "suburb": "Thirroul",
     "status": "verified",
-    "createdAt": "2026-02-21T03:00:00",
-    "pointsAwarded": 10
+    "createdAt": "2026-02-21T22:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0159",
+    "lat": -34.405135,
+    "lng": 150.874082,
+    "suburb": "Keiraville",
+    "status": "pending",
+    "createdAt": "2026-02-04T19:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0160",
+    "lat": -34.412231,
+    "lng": 150.891705,
+    "suburb": "North Wollongong",
+    "status": "verified",
+    "createdAt": "2026-03-13T00:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0161",
+    "lat": -34.576249,
+    "lng": 150.871232,
+    "suburb": "Shellharbour",
+    "status": "collected",
+    "createdAt": "2026-02-05T10:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0162",
+    "lat": -34.417259,
+    "lng": 150.875868,
+    "suburb": "Gwynneville",
+    "status": "verified",
+    "createdAt": "2026-01-17T06:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0163",
     "lat": -34.394364,
     "lng": 150.895126,
     "suburb": "Fairy Meadow",
@@ -1431,7 +1467,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0160",
+    "id": "VS-2026-0164",
     "lat": -34.394644,
     "lng": 150.895025,
     "suburb": "Fairy Meadow",
@@ -1440,7 +1476,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0161",
+    "id": "VS-2026-0165",
     "lat": -34.315769,
     "lng": 150.922071,
     "suburb": "Thirroul",
@@ -1449,7 +1485,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0162",
+    "id": "VS-2026-0166",
     "lat": -34.369782,
     "lng": 150.901885,
     "suburb": "Corrimal",
@@ -1458,7 +1494,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0163",
+    "id": "VS-2026-0167",
     "lat": -34.336738,
     "lng": 150.915468,
     "suburb": "Bulli",
@@ -1467,160 +1503,178 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0164",
-    "lat": -34.404028,
-    "lng": 150.874222,
-    "suburb": "Keiraville",
-    "status": "verified",
-    "createdAt": "2026-02-12T20:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0165",
-    "lat": -34.318402,
-    "lng": 150.925463,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-01-02T07:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0166",
-    "lat": -34.406551,
-    "lng": 150.878689,
-    "suburb": "Keiraville",
-    "status": "verified",
-    "createdAt": "2026-01-23T14:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0167",
-    "lat": -34.333101,
-    "lng": 150.916111,
-    "suburb": "Bulli",
-    "status": "collected",
-    "createdAt": "2026-03-14T17:00:00",
-    "pointsAwarded": 10
-  },
-  {
     "id": "VS-2026-0168",
-    "lat": -34.313766,
-    "lng": 150.920215,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-01-06T20:00:00",
-    "pointsAwarded": 25
+    "lat": -34.478746,
+    "lng": 150.762412,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-01-13T23:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0169",
-    "lat": -34.393015,
-    "lng": 150.894481,
-    "suburb": "Fairy Meadow",
+    "lat": -34.403986,
+    "lng": 150.877541,
+    "suburb": "Keiraville",
     "status": "pending",
-    "createdAt": "2026-02-07T00:00:00",
-    "pointsAwarded": 25
+    "createdAt": "2026-03-16T05:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0170",
-    "lat": -34.412338,
-    "lng": 150.895164,
+    "lat": -34.411844,
+    "lng": 150.893742,
     "suburb": "North Wollongong",
-    "status": "pending",
-    "createdAt": "2026-03-19T02:00:00",
+    "status": "verified",
+    "createdAt": "2026-03-03T15:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0171",
-    "lat": -34.370223,
-    "lng": 150.89776,
-    "suburb": "Corrimal",
-    "status": "collected",
-    "createdAt": "2026-02-01T23:00:00",
+    "lat": -34.47768,
+    "lng": 150.758949,
+    "suburb": "Port Kembla",
+    "status": "verified",
+    "createdAt": "2026-03-08T16:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0172",
-    "lat": -34.416813,
-    "lng": 150.878396,
-    "suburb": "Gwynneville",
+    "lat": -34.491844,
+    "lng": 150.792899,
+    "suburb": "Dapto",
     "status": "verified",
-    "createdAt": "2026-03-09T15:00:00",
-    "pointsAwarded": 10
+    "createdAt": "2026-03-14T16:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0173",
-    "lat": -34.406526,
-    "lng": 150.879225,
-    "suburb": "Keiraville",
-    "status": "verified",
-    "createdAt": "2026-02-22T21:00:00",
-    "pointsAwarded": 10
+    "lat": -34.43572,
+    "lng": 150.8549,
+    "suburb": "Figtree",
+    "status": "collected",
+    "createdAt": "2026-03-03T07:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0174",
-    "lat": -34.406141,
-    "lng": 150.895767,
-    "suburb": "Dapto",
-    "status": "collected",
-    "createdAt": "2026-01-22T16:00:00",
+    "lat": -34.427095,
+    "lng": 150.891509,
+    "suburb": "Wollongong",
+    "status": "verified",
+    "createdAt": "2026-02-28T09:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0175",
-    "lat": -34.425407,
-    "lng": 150.892892,
-    "suburb": "Wollongong",
-    "status": "verified",
-    "createdAt": "2026-01-25T13:00:00",
+    "lat": -34.577458,
+    "lng": 150.87287,
+    "suburb": "Shellharbour",
+    "status": "pending",
+    "createdAt": "2026-03-06T21:00:00",
     "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0176",
-    "lat": -34.313329,
-    "lng": 150.925926,
-    "suburb": "Thirroul",
-    "status": "collected",
-    "createdAt": "2026-01-26T12:00:00",
-    "pointsAwarded": 25
+    "lat": -34.402836,
+    "lng": 150.879421,
+    "suburb": "Keiraville",
+    "status": "verified",
+    "createdAt": "2026-01-04T22:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0177",
-    "lat": -34.396259,
-    "lng": 150.891813,
+    "lat": -34.396849,
+    "lng": 150.892584,
     "suburb": "Fairy Meadow",
     "status": "collected",
-    "createdAt": "2026-02-02T19:00:00",
-    "pointsAwarded": 10
+    "createdAt": "2026-01-21T20:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0178",
-    "lat": -34.417712,
-    "lng": 150.877154,
-    "suburb": "Gwynneville",
-    "status": "verified",
-    "createdAt": "2026-01-26T05:00:00",
-    "pointsAwarded": 10
+    "lat": -34.478745,
+    "lng": 150.75952,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-01-07T17:00:00",
+    "pointsAwarded": 25
   },
   {
     "id": "VS-2026-0179",
-    "lat": -34.335353,
-    "lng": 150.914396,
-    "suburb": "Bulli",
-    "status": "pending",
-    "createdAt": "2026-02-28T12:00:00",
-    "pointsAwarded": 25
+    "lat": -34.482055,
+    "lng": 150.763977,
+    "suburb": "Port Kembla",
+    "status": "verified",
+    "createdAt": "2026-01-13T05:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0180",
-    "lat": -34.314003,
-    "lng": 150.925418,
-    "suburb": "Thirroul",
-    "status": "verified",
-    "createdAt": "2026-03-08T04:00:00",
-    "pointsAwarded": 25
+    "lat": -34.481976,
+    "lng": 150.760032,
+    "suburb": "Port Kembla",
+    "status": "collected",
+    "createdAt": "2026-01-01T19:00:00",
+    "pointsAwarded": 10
   },
   {
     "id": "VS-2026-0181",
+    "lat": -34.48022,
+    "lng": 150.758943,
+    "suburb": "Port Kembla",
+    "status": "verified",
+    "createdAt": "2026-03-22T15:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0182",
+    "lat": -34.395166,
+    "lng": 150.892546,
+    "suburb": "Fairy Meadow",
+    "status": "collected",
+    "createdAt": "2026-01-22T08:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0183",
+    "lat": -34.414004,
+    "lng": 150.88012,
+    "suburb": "Gwynneville",
+    "status": "verified",
+    "createdAt": "2026-01-10T02:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0184",
+    "lat": -34.493846,
+    "lng": 150.790775,
+    "suburb": "Dapto",
+    "status": "verified",
+    "createdAt": "2026-03-01T16:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0185",
+    "lat": -34.481125,
+    "lng": 150.758549,
+    "suburb": "Port Kembla",
+    "status": "pending",
+    "createdAt": "2026-03-15T19:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0186",
+    "lat": -34.57502,
+    "lng": 150.872425,
+    "suburb": "Shellharbour",
+    "status": "verified",
+    "createdAt": "2026-01-25T10:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0187",
     "lat": -34.373686,
     "lng": 150.897141,
     "suburb": "Corrimal",
@@ -1629,7 +1683,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0182",
+    "id": "VS-2026-0188",
     "lat": -34.40958,
     "lng": 150.894878,
     "suburb": "North Wollongong",
@@ -1638,25 +1692,25 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0183",
-    "lat": -34.404811,
-    "lng": 150.893788,
+    "id": "VS-2026-0189",
+    "lat": -34.493811,
+    "lng": 150.789788,
     "suburb": "Dapto",
     "status": "verified",
     "createdAt": "2026-03-19T14:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0184",
-    "lat": -34.335946,
-    "lng": 150.911793,
-    "suburb": "Bulli",
+    "id": "VS-2026-0190",
+    "lat": -34.575507,
+    "lng": 150.868205,
+    "suburb": "Shellharbour",
     "status": "verified",
-    "createdAt": "2026-02-16T00:00:00",
+    "createdAt": "2026-03-09T02:00:00",
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0185",
+    "id": "VS-2026-0191",
     "lat": -34.432519,
     "lng": 150.857983,
     "suburb": "Figtree",
@@ -1665,61 +1719,61 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0186",
-    "lat": -34.370175,
-    "lng": 150.89881,
-    "suburb": "Corrimal",
-    "status": "verified",
-    "createdAt": "2026-01-07T10:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0187",
-    "lat": -34.331196,
-    "lng": 150.915828,
-    "suburb": "Bulli",
-    "status": "pending",
-    "createdAt": "2026-02-01T05:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0188",
-    "lat": -34.429213,
-    "lng": 150.890842,
-    "suburb": "Wollongong",
-    "status": "verified",
-    "createdAt": "2026-02-01T10:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0189",
-    "lat": -34.332065,
-    "lng": 150.916642,
-    "suburb": "Bulli",
-    "status": "verified",
-    "createdAt": "2026-01-10T05:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0190",
-    "lat": -34.427083,
-    "lng": 150.895759,
-    "suburb": "Wollongong",
-    "status": "verified",
-    "createdAt": "2026-01-28T23:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0191",
-    "lat": -34.411188,
-    "lng": 150.893786,
-    "suburb": "North Wollongong",
-    "status": "verified",
-    "createdAt": "2026-03-01T19:00:00",
-    "pointsAwarded": 25
-  },
-  {
     "id": "VS-2026-0192",
+    "lat": -34.572778,
+    "lng": 150.871825,
+    "suburb": "Shellharbour",
+    "status": "pending",
+    "createdAt": "2026-02-09T23:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0193",
+    "lat": -34.414839,
+    "lng": 150.879345,
+    "suburb": "Gwynneville",
+    "status": "verified",
+    "createdAt": "2026-02-03T21:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0194",
+    "lat": -34.336916,
+    "lng": 150.914219,
+    "suburb": "Bulli",
+    "status": "verified",
+    "createdAt": "2026-02-08T19:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0195",
+    "lat": -34.573966,
+    "lng": 150.870507,
+    "suburb": "Shellharbour",
+    "status": "verified",
+    "createdAt": "2026-03-12T04:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0196",
+    "lat": -34.482097,
+    "lng": 150.75865,
+    "suburb": "Port Kembla",
+    "status": "verified",
+    "createdAt": "2026-03-17T10:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0197",
+    "lat": -34.416114,
+    "lng": 150.878812,
+    "suburb": "Gwynneville",
+    "status": "verified",
+    "createdAt": "2026-02-09T14:00:00",
+    "pointsAwarded": 25
+  },
+  {
+    "id": "VS-2026-0198",
     "lat": -34.3363,
     "lng": 150.911272,
     "suburb": "Bulli",
@@ -1728,7 +1782,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0193",
+    "id": "VS-2026-0199",
     "lat": -34.414417,
     "lng": 150.896324,
     "suburb": "North Wollongong",
@@ -1737,7 +1791,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0194",
+    "id": "VS-2026-0200",
     "lat": -34.370977,
     "lng": 150.900459,
     "suburb": "Corrimal",
@@ -1746,25 +1800,25 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0195",
-    "lat": -34.401688,
-    "lng": 150.87793,
-    "suburb": "Keiraville",
-    "status": "collected",
-    "createdAt": "2026-03-13T03:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0196",
-    "lat": -34.331366,
-    "lng": 150.912678,
-    "suburb": "Bulli",
-    "status": "verified",
-    "createdAt": "2026-02-28T21:00:00",
+    "id": "VS-2026-0201",
+    "lat": -34.57364,
+    "lng": 150.872312,
+    "suburb": "Shellharbour",
+    "status": "pending",
+    "createdAt": "2026-02-25T21:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0197",
+    "id": "VS-2026-0202",
+    "lat": -34.493551,
+    "lng": 150.794709,
+    "suburb": "Dapto",
+    "status": "verified",
+    "createdAt": "2026-01-03T19:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0203",
     "lat": -34.316332,
     "lng": 150.921417,
     "suburb": "Thirroul",
@@ -1773,7 +1827,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0198",
+    "id": "VS-2026-0204",
     "lat": -34.371733,
     "lng": 150.901867,
     "suburb": "Corrimal",
@@ -1782,7 +1836,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0199",
+    "id": "VS-2026-0205",
     "lat": -34.397861,
     "lng": 150.890733,
     "suburb": "Fairy Meadow",
@@ -1791,52 +1845,52 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0200",
-    "lat": -34.41615,
-    "lng": 150.878583,
-    "suburb": "Gwynneville",
+    "id": "VS-2026-0206",
+    "lat": -34.482227,
+    "lng": 150.762337,
+    "suburb": "Port Kembla",
     "status": "pending",
-    "createdAt": "2026-01-02T19:00:00",
+    "createdAt": "2026-03-24T20:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0201",
-    "lat": -34.414067,
-    "lng": 150.879722,
-    "suburb": "Gwynneville",
-    "status": "pending",
-    "createdAt": "2026-01-18T12:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0202",
-    "lat": -34.416482,
-    "lng": 150.879878,
-    "suburb": "Gwynneville",
+    "id": "VS-2026-0207",
+    "lat": -34.373539,
+    "lng": 150.896756,
+    "suburb": "Corrimal",
     "status": "verified",
-    "createdAt": "2026-01-20T21:00:00",
+    "createdAt": "2026-02-18T04:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0203",
-    "lat": -34.406983,
-    "lng": 150.89815,
-    "suburb": "Dapto",
+    "id": "VS-2026-0208",
+    "lat": -34.436757,
+    "lng": 150.854296,
+    "suburb": "Figtree",
     "status": "verified",
-    "createdAt": "2026-01-13T08:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0204",
-    "lat": -34.394209,
-    "lng": 150.89066,
-    "suburb": "Fairy Meadow",
-    "status": "pending",
-    "createdAt": "2026-03-15T22:00:00",
+    "createdAt": "2026-03-16T05:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0205",
+    "id": "VS-2026-0209",
+    "lat": -34.402268,
+    "lng": 150.877576,
+    "suburb": "Keiraville",
+    "status": "verified",
+    "createdAt": "2026-01-24T15:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0210",
+    "lat": -34.436496,
+    "lng": 150.854047,
+    "suburb": "Figtree",
+    "status": "pending",
+    "createdAt": "2026-02-26T09:00:00",
+    "pointsAwarded": 10
+  },
+  {
+    "id": "VS-2026-0211",
     "lat": -34.428651,
     "lng": 150.894831,
     "suburb": "Wollongong",
@@ -1845,7 +1899,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0206",
+    "id": "VS-2026-0212",
     "lat": -34.405408,
     "lng": 150.874761,
     "suburb": "Keiraville",
@@ -1854,7 +1908,7 @@
     "pointsAwarded": 25
   },
   {
-    "id": "VS-2026-0207",
+    "id": "VS-2026-0213",
     "lat": -34.412143,
     "lng": 150.895668,
     "suburb": "North Wollongong",
@@ -1863,7 +1917,7 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0208",
+    "id": "VS-2026-0214",
     "lat": -34.436671,
     "lng": 150.856691,
     "suburb": "Figtree",
@@ -1872,111 +1926,57 @@
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0209",
-    "lat": -34.430435,
-    "lng": 150.892974,
-    "suburb": "Wollongong",
+    "id": "VS-2026-0215",
+    "lat": -34.477716,
+    "lng": 150.758865,
+    "suburb": "Port Kembla",
     "status": "collected",
-    "createdAt": "2026-02-04T06:00:00",
-    "pointsAwarded": 25
+    "createdAt": "2026-02-10T20:00:00",
+    "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0210",
-    "lat": -34.412058,
-    "lng": 150.896458,
-    "suburb": "North Wollongong",
+    "id": "VS-2026-0216",
+    "lat": -34.482852,
+    "lng": 150.762774,
+    "suburb": "Port Kembla",
     "status": "pending",
-    "createdAt": "2026-01-07T06:00:00",
+    "createdAt": "2026-02-07T20:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0211",
-    "lat": -34.40611,
-    "lng": 150.893757,
-    "suburb": "Dapto",
+    "id": "VS-2026-0217",
+    "lat": -34.37135,
+    "lng": 150.896394,
+    "suburb": "Corrimal",
     "status": "verified",
-    "createdAt": "2026-02-23T06:00:00",
+    "createdAt": "2026-01-24T11:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0212",
-    "lat": -34.403817,
-    "lng": 150.895722,
+    "id": "VS-2026-0218",
+    "lat": -34.492817,
+    "lng": 150.791722,
     "suburb": "Dapto",
     "status": "collected",
     "createdAt": "2026-02-21T15:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0213",
-    "lat": -34.409883,
-    "lng": 150.894905,
-    "suburb": "North Wollongong",
+    "id": "VS-2026-0219",
+    "lat": -34.577314,
+    "lng": 150.870928,
+    "suburb": "Shellharbour",
     "status": "verified",
-    "createdAt": "2026-03-07T14:00:00",
+    "createdAt": "2026-03-16T21:00:00",
     "pointsAwarded": 10
   },
   {
-    "id": "VS-2026-0214",
+    "id": "VS-2026-0220",
     "lat": -34.313671,
     "lng": 150.922483,
     "suburb": "Thirroul",
     "status": "collected",
     "createdAt": "2026-03-12T14:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0215",
-    "lat": -34.332622,
-    "lng": 150.912875,
-    "suburb": "Bulli",
-    "status": "verified",
-    "createdAt": "2026-01-27T16:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0216",
-    "lat": -34.402879,
-    "lng": 150.876846,
-    "suburb": "Keiraville",
-    "status": "pending",
-    "createdAt": "2026-01-08T18:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0217",
-    "lat": -34.336421,
-    "lng": 150.915433,
-    "suburb": "Bulli",
-    "status": "verified",
-    "createdAt": "2026-03-11T06:00:00",
-    "pointsAwarded": 25
-  },
-  {
-    "id": "VS-2026-0218",
-    "lat": -34.427281,
-    "lng": 150.89347,
-    "suburb": "Wollongong",
-    "status": "pending",
-    "createdAt": "2026-01-29T03:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0219",
-    "lat": -34.369758,
-    "lng": 150.901647,
-    "suburb": "Corrimal",
-    "status": "pending",
-    "createdAt": "2026-02-06T02:00:00",
-    "pointsAwarded": 10
-  },
-  {
-    "id": "VS-2026-0220",
-    "lat": -34.405125,
-    "lng": 150.893622,
-    "suburb": "Dapto",
-    "status": "verified",
-    "createdAt": "2026-02-13T07:00:00",
     "pointsAwarded": 10
   }
 ]

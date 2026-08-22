@@ -1,11 +1,11 @@
 import Link from "next/link";
 import {
+  Calendar,
   Camera,
   Flame,
   Home,
   MapPin,
   Newspaper,
-  Trophy,
   User,
 } from "lucide-react";
 
@@ -13,8 +13,8 @@ const links = [
   { href: "/", label: "Home", icon: Home },
   { href: "/map", label: "Map", icon: MapPin },
   { href: "/report", label: "Report", icon: Camera },
-  { href: "/heatmap", label: "Heatmap", icon: Flame },
-  { href: "/news", label: "News", icon: Newspaper },
+  { href: "/schedule", label: "Schedule", icon: Calendar },
+  { href: "/heatmap", label: "Heat", icon: Flame },
   { href: "/profile", label: "Profile", icon: User },
 ];
 
@@ -33,11 +33,11 @@ export default function Nav() {
           </Link>
         ))}
         <Link
-          href="/leaderboard"
+          href="/news"
           className="flex flex-col items-center gap-0.5 px-1 py-1 text-[10px] text-teal-800/70 transition hover:text-teal-600"
         >
-          <Trophy className="h-5 w-5" />
-          <span>Ranks</span>
+          <Newspaper className="h-5 w-5" />
+          <span>News</span>
         </Link>
       </div>
     </nav>

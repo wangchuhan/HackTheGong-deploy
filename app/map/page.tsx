@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { getDisposalPoints } from "@/lib/data";
-import { formatDistance, haversineKm, googleMapsDirectionsUrl } from "@/lib/geo";
+import { formatTravelTime, haversineKm, googleMapsDirectionsUrl } from "@/lib/geo";
 import type { DisposalPoint } from "@/lib/types";
 
 const MapView = dynamic(() => import("@/components/MapView"), { ssr: false });
@@ -13,7 +13,7 @@ const ACCEPT_FILTERS = ["all", "disposables", "pods", "batteries"] as const;
 export default function MapPage() {
   const allPoints = getDisposalPoints();
   const [userPos, setUserPos] = useState<{ lat: number; lng: number } | null>(null);
-  const [maxKm, setMaxKm] = useState(15);
+  const [maxKm, setMaxKm] = useState(25);
   const [openOnly, setOpenOnly] = useState(false);
   const [acceptFilter, setAcceptFilter] = useState<string>("all");
 
@@ -27,9 +27,13 @@ export default function MapPage() {
   }, []);
 
   const filtered = useMemo(() => {
-    return allPoints.filter((p: DisposalPoint) => {
+    const list = allPoints.filter((p: DisposalPoint) => {
       if (openOnly && !p.openNow) return false;
-      if (acceptFilter !== "all" && !p.accepts.includes(acceptFilter) && !p.accepts.includes("all"))
+      if (
+        acceptFilter !== "all" &&
+        !p.accepts.includes(acceptFilter) &&
+        !p.accepts.includes("all")
+      )
         return false;
       if (userPos) {
         const d = haversineKm(userPos.lat, userPos.lng, p.lat, p.lng);
@@ -37,6 +41,15 @@ export default function MapPage() {
       }
       return true;
     });
+
+    if (userPos) {
+      return [...list].sort(
+        (a, b) =>
+          haversineKm(userPos.lat, userPos.lng, a.lat, a.lng) -
+          haversineKm(userPos.lat, userPos.lng, b.lat, b.lng),
+      );
+    }
+    return list;
   }, [allPoints, openOnly, acceptFilter, maxKm, userPos]);
 
   return (
@@ -45,6 +58,7 @@ export default function MapPage() {
         <h1 className="text-2xl font-bold text-teal-950">Disposal Points</h1>
         <p className="mt-1 text-sm text-teal-800/70">
           {filtered.length} locations in Wollongong / Illawarra
+          {userPos ? " · sorted by distance" : ""}
         </p>
       </header>
 
@@ -75,7 +89,7 @@ export default function MapPage() {
         >
           <option value={5}>Within 5 km</option>
           <option value={10}>Within 10 km</option>
-          <option value={15}>Within 15 km</option>
+          <option value={25}>Within 25 km</option>
           <option value={50}>Any distance</option>
         </select>
       </div>
@@ -86,11 +100,16 @@ export default function MapPage() {
         userLng={userPos?.lng}
       />
 
+      <p className="text-xs text-teal-600/70">
+        Drive times are estimated (road distance, ~40 km/h average).
+      </p>
+
       <ul className="space-y-3">
         {filtered.map((p) => {
-          const dist =
-            userPos &&
-            formatDistance(haversineKm(userPos.lat, userPos.lng, p.lat, p.lng));
+          const km = userPos
+            ? haversineKm(userPos.lat, userPos.lng, p.lat, p.lng)
+            : null;
+          const dist = km != null ? formatTravelTime(km) : null;
           return (
             <li
               key={p.id}
@@ -107,7 +126,11 @@ export default function MapPage() {
                     {p.accepts.join(", ")}
                   </p>
                 </div>
-                {dist && <span className="text-xs text-teal-600">{dist}</span>}
+                {dist && (
+                  <span className="shrink-0 text-right text-xs text-teal-600">
+                    {dist}
+                  </span>
+                )}
               </div>
               <a
                 href={googleMapsDirectionsUrl(p.lat, p.lng)}

@@ -3,21 +3,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Calendar, CheckCircle, Loader2, MapPin } from "lucide-react";
+import { Calendar, CheckCircle, ChevronDown, ChevronUp, Loader2, MapPin } from "lucide-react";
 import {
   clampToIllawarra,
   generateReportId,
   nearestSuburb,
   nextWeekdayDate,
 } from "@/lib/geo";
-import { addCleanupSchedule, addSessionReport } from "@/lib/user";
-import type { Report } from "@/lib/types";
+import { addSessionReport, scheduleCleanup } from "@/lib/user";
+import type { DisposalPoint, Report } from "@/lib/types";
 import { WOLLONGONG_CENTER } from "@/lib/types";
 
 const ReportLocationPicker = dynamic(
   () => import("@/components/ReportLocationPicker"),
   { ssr: false },
 );
+const PhoneHandoffQr = dynamic(() => import("@/components/PhoneHandoffQr"), {
+  ssr: false,
+});
+const CodeLookup = dynamic(() => import("@/components/CodeLookup"), {
+  ssr: false,
+});
 
 export default function ReportPage() {
   const [photo, setPhoto] = useState<string | null>(null);
@@ -27,7 +33,9 @@ export default function ReportPage() {
   const [gpsStatus, setGpsStatus] = useState("Locating…");
   const [submitted, setSubmitted] = useState<Report | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [cleanupRequested, setCleanupRequested] = useState(false);
+  const [showCodeLookup, setShowCodeLookup] = useState(false);
+  const [linkedBinCode, setLinkedBinCode] = useState<string | undefined>();
+  const [linkedDisposalId, setLinkedDisposalId] = useState<string | undefined>();
   const isSubmittingRef = useRef(false);
 
   useEffect(() => {
@@ -82,22 +90,11 @@ export default function ReportPage() {
       createdAt: new Date().toISOString(),
       pointsAwarded: 10,
       photoUrl: photo ?? undefined,
+      linkedBinCode,
+      linkedDisposalId,
     };
     addSessionReport(report);
     setSubmitted(report);
-  }
-
-  function handleRequestCleanup() {
-    if (!submitted) return;
-    addCleanupSchedule({
-      id: `CLN-${Date.now()}`,
-      date: nextWeekdayDate(),
-      suburb: submitted.suburb,
-      reportIds: [submitted.id],
-      status: "requested",
-      notes: "Citizen request from report flow",
-    });
-    setCleanupRequested(true);
   }
 
   if (submitted) {
@@ -117,21 +114,13 @@ export default function ReportPage() {
           <p className="mt-2 text-sm text-teal-700">+10 points earned</p>
         </div>
         <div className="flex flex-col gap-2">
-          {!cleanupRequested ? (
-            <button
-              type="button"
-              onClick={handleRequestCleanup}
-              className="flex items-center justify-center gap-2 rounded-xl bg-amber-500 py-3 font-medium text-white hover:bg-amber-600"
-            >
-              <Calendar className="h-4 w-4" />
-              Request cleanup for this area
-            </button>
-          ) : (
-            <p className="rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
-              Cleanup requested for {submitted.suburb} on {nextWeekdayDate()}.
-              Council will review your request.
-            </p>
-          )}
+          <Link
+            href={`/schedule?suburb=${encodeURIComponent(submitted.suburb)}&reportId=${submitted.id}`}
+            className="flex items-center justify-center gap-2 rounded-xl bg-amber-500 py-3 font-medium text-white hover:bg-amber-600"
+          >
+            <Calendar className="h-4 w-4" />
+            Schedule cleanup for this area (+15 pts)
+          </Link>
           <Link
             href="/heatmap"
             className="rounded-xl bg-teal-600 py-3 font-medium text-white hover:bg-teal-700"
@@ -151,9 +140,11 @@ export default function ReportPage() {
       <header>
         <h1 className="text-2xl font-bold text-teal-950">Report Litter</h1>
         <p className="mt-1 text-sm text-teal-800/70">
-          Take a photo and we&apos;ll record your GPS location automatically.
+          Take a photo, set your location, or link a nearby bin / disposal point.
         </p>
       </header>
+
+      <PhoneHandoffQr path="/report" />
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
@@ -175,6 +166,42 @@ export default function ReportPage() {
           )}
         </div>
 
+        <div className="rounded-xl border border-teal-100 bg-white">
+          <button
+            type="button"
+            onClick={() => setShowCodeLookup((v) => !v)}
+            className="flex w-full items-center justify-between px-4 py-3 text-sm font-medium text-teal-900"
+          >
+            Link nearby bin or disposal point (QR / manual)
+            {showCodeLookup ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </button>
+          {showCodeLookup && (
+            <div className="border-t border-teal-100 px-4 pb-4">
+              <CodeLookup
+                compact
+                onBinFound={(code) => {
+                  setLinkedBinCode(code);
+                  setLinkedDisposalId(undefined);
+                }}
+                onDisposalFound={(point: DisposalPoint) => {
+                  setLinkedDisposalId(point.id);
+                  setLinkedBinCode(undefined);
+                  handleLocationChange(point.lat, point.lng);
+                }}
+              />
+              {(linkedBinCode || linkedDisposalId) && (
+                <p className="mt-2 text-xs text-teal-700">
+                  Linked: {linkedBinCode ?? linkedDisposalId}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+
         <div className="rounded-xl bg-teal-50 p-4">
           <div className="flex items-center gap-2 text-sm font-medium text-teal-800">
             <MapPin className="h-4 w-4" />
@@ -192,41 +219,11 @@ export default function ReportPage() {
           <label className="block text-sm font-medium text-teal-900">
             Adjust location on map
           </label>
-          <p className="mt-1 text-xs text-teal-700">
-            Drag the pin to place your report on land
-          </p>
           <div className="mt-2">
             <ReportLocationPicker
               lat={lat}
               lng={lng}
               onChange={handleLocationChange}
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="text-xs text-teal-700">Latitude</label>
-            <input
-              type="number"
-              step="0.00001"
-              value={lat}
-              onChange={(e) =>
-                handleLocationChange(Number(e.target.value), lng)
-              }
-              className="mt-1 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
-            />
-          </div>
-          <div>
-            <label className="text-xs text-teal-700">Longitude</label>
-            <input
-              type="number"
-              step="0.00001"
-              value={lng}
-              onChange={(e) =>
-                handleLocationChange(lat, Number(e.target.value))
-              }
-              className="mt-1 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
             />
           </div>
         </div>

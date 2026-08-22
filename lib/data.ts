@@ -1,6 +1,5 @@
 import { trendsLastNDays } from "./analytics";
 import type {
-  CleanupScheduleRequest,
   DisposalPoint,
   EnergyStats,
   LeaderboardEntry,

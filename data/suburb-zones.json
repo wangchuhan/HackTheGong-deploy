@@ -55,8 +55,20 @@
   },
   {
     "name": "Dapto",
-    "lat": -34.404,
-    "lng": 150.896,
+    "lat": -34.493,
+    "lng": 150.792,
     "radiusKm": 1.5
+  },
+  {
+    "name": "Port Kembla",
+    "lat": -34.4805,
+    "lng": 150.7615,
+    "radiusKm": 1.2
+  },
+  {
+    "name": "Shellharbour",
+    "lat": -34.575,
+    "lng": 150.87,
+    "radiusKm": 1.3
   }
 ]

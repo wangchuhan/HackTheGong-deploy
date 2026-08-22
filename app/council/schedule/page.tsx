@@ -8,6 +8,7 @@ import {
   SUBURBS,
   addCleanupSchedule,
   getCleanupSchedules,
+  updateCleanupSchedule,
 } from "@/lib/user";
 
 const AUTH_KEY = "vapesafe-council-auth";
@@ -68,6 +69,15 @@ export default function CouncilSchedulePage() {
     .filter((s) => s.status !== "completed" && s.date >= today)
     .sort((a, b) => a.date.localeCompare(b.date));
 
+  const citizenRequests = upcoming.filter((s) => s.status === "requested");
+
+  function approveRequest(job: (typeof upcoming)[0]) {
+    updateCleanupSchedule(job.id, { status: "scheduled" });
+    setSuburb(job.suburb);
+    setDate(job.date);
+    setSchedules(getCleanupSchedules());
+  }
+
   return (
     <div className="space-y-6">
       <header>
@@ -82,6 +92,34 @@ export default function CouncilSchedulePage() {
           Plan litter collection for a suburb and optional smart bins
         </p>
       </header>
+
+      {citizenRequests.length > 0 && (
+        <section className="rounded-xl bg-amber-50 p-4 ring-1 ring-amber-100">
+          <h2 className="font-semibold text-amber-900">
+            Citizen requests ({citizenRequests.length})
+          </h2>
+          <ul className="mt-2 space-y-2">
+            {citizenRequests.map((job) => (
+              <li
+                key={job.id}
+                className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-sm"
+              >
+                <div>
+                  <p className="font-medium">{job.suburb}</p>
+                  <p className="text-xs text-teal-700">{job.date}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => approveRequest(job)}
+                  className="rounded-lg bg-teal-600 px-3 py-1 text-xs font-medium text-white"
+                >
+                  Approve & schedule
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4 rounded-xl bg-white p-4 ring-1 ring-teal-100">
         <div>

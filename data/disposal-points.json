@@ -2,8 +2,8 @@
   {
     "id": "DISP-WLG-01",
     "name": "Wollongong City Library",
-    "lat": -34.42686,
-    "lng": 150.891445,
+    "lat": -34.427064,
+    "lng": 150.898741,
     "suburb": "Wollongong",
     "accepts": [
       "disposables",
@@ -16,8 +16,8 @@
   {
     "id": "DISP-WLG-02",
     "name": "Crown Street Collection Hub",
-    "lat": -34.430151,
-    "lng": 150.895172,
+    "lat": -34.4265,
+    "lng": 150.8935,
     "suburb": "Wollongong",
     "accepts": [
       "all"
@@ -28,8 +28,8 @@
   {
     "id": "DISP-WLG-03",
     "name": "Keira High School",
-    "lat": -34.404795,
-    "lng": 150.878576,
+    "lat": -34.4049,
+    "lng": 150.8754,
     "suburb": "Keiraville",
     "accepts": [
       "disposables",
@@ -41,8 +41,8 @@
   {
     "id": "DISP-WLG-04",
     "name": "University of Wollongong",
-    "lat": -34.416555,
-    "lng": 150.879843,
+    "lat": -34.4058,
+    "lng": 150.8822,
     "suburb": "Gwynneville",
     "accepts": [
       "all"
@@ -53,8 +53,8 @@
   {
     "id": "DISP-WLG-05",
     "name": "Corrimal Community Centre",
-    "lat": -34.369929,
-    "lng": 150.901847,
+    "lat": -34.375513,
+    "lng": 150.898255,
     "suburb": "Corrimal",
     "accepts": [
       "disposables",
@@ -66,8 +66,8 @@
   {
     "id": "DISP-WLG-06",
     "name": "Bulli Beach Kiosk Partner",
-    "lat": -34.332089,
-    "lng": 150.914681,
+    "lat": -34.3355,
+    "lng": 150.9155,
     "suburb": "Bulli",
     "accepts": [
       "disposables"
@@ -78,8 +78,8 @@
   {
     "id": "DISP-WLG-07",
     "name": "Thirroul Neighbourhood Store",
-    "lat": -34.315144,
-    "lng": 150.920158,
+    "lat": -34.3155,
+    "lng": 150.9235,
     "suburb": "Thirroul",
     "accepts": [
       "pods",
@@ -91,8 +91,8 @@
   {
     "id": "DISP-WLG-08",
     "name": "Figtree Grove Shopping",
-    "lat": -34.432425,
-    "lng": 150.857977,
+    "lat": -34.434986,
+    "lng": 150.862368,
     "suburb": "Figtree",
     "accepts": [
       "all"
@@ -103,8 +103,8 @@
   {
     "id": "DISP-WLG-09",
     "name": "Dapto Ribbonwood Centre",
-    "lat": -34.405395,
-    "lng": 150.894082,
+    "lat": -34.4965,
+    "lng": 150.7931,
     "suburb": "Dapto",
     "accepts": [
       "disposables",
@@ -116,8 +116,8 @@
   {
     "id": "DISP-WLG-10",
     "name": "North Beach Surf Club",
-    "lat": -34.410784,
-    "lng": 150.892854,
+    "lat": -34.4145,
+    "lng": 150.9012,
     "suburb": "North Wollongong",
     "accepts": [
       "disposables"
@@ -128,8 +128,8 @@
   {
     "id": "DISP-WLG-11",
     "name": "Fairy Meadow Community Hall",
-    "lat": -34.396961,
-    "lng": 150.890037,
+    "lat": -34.3945,
+    "lng": 150.892,
     "suburb": "Fairy Meadow",
     "accepts": [
       "all"
@@ -140,8 +140,8 @@
   {
     "id": "DISP-WLG-12",
     "name": "Green Bean Caf\u00e9 Partner",
-    "lat": -34.425581,
-    "lng": 150.893498,
+    "lat": -34.4258,
+    "lng": 150.8938,
     "suburb": "Wollongong",
     "accepts": [
       "disposables",
@@ -153,8 +153,8 @@
   {
     "id": "DISP-WLG-13",
     "name": "Harbourfront Council Depot",
-    "lat": -34.428395,
-    "lng": 150.890951,
+    "lat": -34.4185,
+    "lng": 150.9055,
     "suburb": "Wollongong",
     "accepts": [
       "batteries",
@@ -166,9 +166,9 @@
   {
     "id": "DISP-WLG-14",
     "name": "Port Kembla Youth Hub",
-    "lat": -34.427001,
-    "lng": 150.890284,
-    "suburb": "Wollongong",
+    "lat": -34.4805,
+    "lng": 150.7615,
+    "suburb": "Port Kembla",
     "accepts": [
       "disposables"
     ],
@@ -178,9 +178,9 @@
   {
     "id": "DISP-WLG-15",
     "name": "Shellharbour City Hub",
-    "lat": -34.402523,
-    "lng": 150.894291,
-    "suburb": "Dapto",
+    "lat": -34.575,
+    "lng": 150.87,
+    "suburb": "Shellharbour",
     "accepts": [
       "all"
     ],

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline, Popup, CircleMarker } from "react-leaflet";
 import L from "leaflet";
 import { WOLLONGONG_CENTER } from "@/lib/types";
 import type { SmartBin } from "@/lib/types";
@@ -14,7 +14,13 @@ const markerIcon = L.icon({
   iconAnchor: [12, 41],
 });
 
-export default function PickupRouteMap({ bins }: { bins: SmartBin[] }) {
+export default function PickupRouteMap({
+  bins,
+  activeStopIndex = -1,
+}: {
+  bins: SmartBin[];
+  activeStopIndex?: number;
+}) {
   const route = useMemo(
     () => bins.map((b) => [b.lat, b.lng] as [number, number]),
     [bins],
@@ -39,6 +45,18 @@ export default function PickupRouteMap({ bins }: { bins: SmartBin[] }) {
           </Popup>
         </Marker>
       ))}
+      {activeStopIndex >= 0 && bins[activeStopIndex] && (
+        <CircleMarker
+          center={[bins[activeStopIndex].lat, bins[activeStopIndex].lng]}
+          radius={14}
+          pathOptions={{
+            color: "#f59e0b",
+            fillColor: "#fbbf24",
+            fillOpacity: 0.5,
+            weight: 3,
+          }}
+        />
+      )}
     </MapContainer>
   );
 }
