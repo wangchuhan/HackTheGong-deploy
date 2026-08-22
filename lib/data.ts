@@ -1,4 +1,6 @@
+import { trendsLastNDays } from "./analytics";
 import type {
+  CleanupScheduleRequest,
   DisposalPoint,
   EnergyStats,
   LeaderboardEntry,
@@ -22,7 +24,6 @@ import pickupScheduleData from "@/data/pickup-schedule.json";
 import reportsData from "@/data/reports.json";
 import rewardsData from "@/data/rewards.json";
 import suburbZonesData from "@/data/suburb-zones.json";
-import trendsData from "@/data/trends.json";
 
 export function getSeedReports(): Report[] {
   return reportsData as Report[];
@@ -65,7 +66,15 @@ export function getEnergyStats(): EnergyStats {
 }
 
 export function getTrends(): TrendPoint[] {
-  return trendsData as TrendPoint[];
+  return trendsLastNDays(getSeedReports(), 80);
+}
+
+export function getTrendsWithSession(sessionReports: Report[]): TrendPoint[] {
+  return trendsLastNDays([...sessionReports, ...getSeedReports()], 30);
+}
+
+export function getAllReportsWithSession(sessionReports: Report[]): Report[] {
+  return [...sessionReports, ...getSeedReports()];
 }
 
 export function getPickupSchedule(): PickupSchedule[] {

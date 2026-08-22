@@ -5,7 +5,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { CheckCircle, Truck } from "lucide-react";
 import { getBins, getPickupSchedule } from "@/lib/data";
-import type { SmartBin } from "@/lib/types";
+import { getCleanupSchedules } from "@/lib/user";
+import type { CleanupScheduleRequest, SmartBin } from "@/lib/types";
 
 const PickupRouteMap = dynamic(() => import("@/components/PickupRouteMap"), {
   ssr: false,
@@ -18,6 +19,7 @@ export default function CouncilPickupPage() {
   const [bins, setBins] = useState<SmartBin[]>([]);
   const [approved, setApproved] = useState(false);
   const [truckProgress, setTruckProgress] = useState(0);
+  const [cleanupSchedules, setCleanupSchedules] = useState<CleanupScheduleRequest[]>([]);
   const schedule = getPickupSchedule();
 
   useEffect(() => {
@@ -28,6 +30,7 @@ export default function CouncilPickupPage() {
     setAuthed(true);
     const all = getBins();
     setBins([...all].sort((a, b) => b.fillLevel - a.fillLevel).slice(0, 3));
+    setCleanupSchedules(getCleanupSchedules());
   }, []);
 
   useEffect(() => {
@@ -41,6 +44,21 @@ export default function CouncilPickupPage() {
   if (!authed) return null;
 
   const totalKg = schedule[0]?.estimatedKg ?? 0;
+  const today = new Date().toISOString().slice(0, 10);
+  const mergedSchedule = [
+    ...cleanupSchedules
+      .filter((s) => s.status !== "completed" && s.date >= today)
+      .map((s) => ({
+        id: s.id,
+        date: s.date,
+        crew: s.status === "requested" ? "Pending review" : "Cleanup crew",
+        bins: s.bins ?? [],
+        estimatedKg: (s.bins?.length ?? 1) * 8,
+        status: s.status,
+        suburb: s.suburb,
+      })),
+    ...schedule,
+  ].sort((a, b) => a.date.localeCompare(b.date));
 
   return (
     <div className="space-y-6">
@@ -111,7 +129,7 @@ export default function CouncilPickupPage() {
       <section>
         <h2 className="mb-2 font-semibold text-teal-950">Pickup schedule</h2>
         <ul className="space-y-3">
-          {schedule.map((job) => (
+          {mergedSchedule.map((job) => (
             <li key={job.id} className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
               <div className="flex justify-between">
                 <p className="font-medium text-teal-950">{job.id}</p>
@@ -119,9 +137,11 @@ export default function CouncilPickupPage() {
               </div>
               <p className="mt-1 text-sm text-teal-800">
                 {job.date} · {job.crew}
+                {"suburb" in job && job.suburb ? ` · ${job.suburb}` : ""}
               </p>
               <p className="text-xs text-teal-700">
-                Bins: {job.bins.join(", ")} · ~{job.estimatedKg} kg
+                {job.bins.length ? `Bins: ${job.bins.join(", ")} · ` : ""}
+                ~{job.estimatedKg} kg
               </p>
             </li>
           ))}

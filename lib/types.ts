@@ -1,3 +1,13 @@
+export interface CleanupScheduleRequest {
+  id: string;
+  date: string;
+  suburb: string;
+  reportIds?: string[];
+  bins?: string[];
+  status: "requested" | "scheduled" | "completed";
+  notes?: string;
+}
+
 export interface Report {
   id: string;
   lat: number;

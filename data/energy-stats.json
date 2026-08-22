@@ -1,9 +1,9 @@
 {
-  "itemsCollected": 2515,
-  "batteryKg": 17.61,
-  "kwhSaved": 29.9,
-  "co2eKgAvoided": 24.5,
-  "ewasteLitresDiverted": 30.18,
+  "itemsCollected": 2292,
+  "batteryKg": 16.04,
+  "kwhSaved": 27.3,
+  "co2eKgAvoided": 22.4,
+  "ewasteLitresDiverted": 27.5,
   "label": "Estimated impact (demo model)",
   "formula": {
     "batteryKgPerItem": 0.007,

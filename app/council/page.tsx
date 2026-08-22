@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Download, Lock } from "lucide-react";
 import StatCard from "@/components/StatCard";
 import NewsFeed from "@/components/NewsFeed";
 import {
+  getAllReportsWithSession,
   getBins,
   getDisposalPoints,
   getEnergyStats,
   getNews,
-  getSeedReports,
+  getPickupSchedule,
   getSuburbZones,
-  getTrends,
+  getTrendsWithSession,
 } from "@/lib/data";
+import { getCleanupSchedules, getSessionReports } from "@/lib/user";
+import type { CleanupScheduleRequest } from "@/lib/types";
 
 const SuburbHeatmap = dynamic(() => import("@/components/SuburbHeatmap"), {
   ssr: false,
@@ -29,18 +32,43 @@ export default function CouncilPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [tab, setTab] = useState<"overview" | "news">("overview");
+  const [sessionReports, setSessionReports] = useState<ReturnType<typeof getSessionReports>>([]);
+  const [cleanupSchedules, setCleanupSchedules] = useState<CleanupScheduleRequest[]>([]);
 
   useEffect(() => {
     if (sessionStorage.getItem(AUTH_KEY) === "1") setAuthed(true);
+    setSessionReports(getSessionReports());
+    setCleanupSchedules(getCleanupSchedules());
   }, []);
 
   const energy = getEnergyStats();
-  const trends = getTrends();
-  const reports = getSeedReports();
+  const trends = getTrendsWithSession(sessionReports);
+  const reports = getAllReportsWithSession(sessionReports);
+  const sessionIds = useMemo(
+    () => new Set(sessionReports.map((r) => r.id)),
+    [sessionReports],
+  );
   const bins = getBins();
   const points = getDisposalPoints();
   const zones = getSuburbZones();
   const news = getNews();
+  const seedPickup = getPickupSchedule();
+
+  const upcomingCleanups = useMemo(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const local = cleanupSchedules.filter(
+      (s) => s.status !== "completed" && s.date >= today,
+    );
+    const seed = seedPickup.map((p) => ({
+      id: p.id,
+      date: p.date,
+      suburb: p.bins[0] ?? "Multi-bin route",
+      status: "scheduled" as const,
+      notes: `${p.crew} · ~${p.estimatedKg} kg`,
+      bins: p.bins,
+    }));
+    return [...local, ...seed].sort((a, b) => a.date.localeCompare(b.date));
+  }, [cleanupSchedules, seedPickup]);
 
   const topSuburbs = Object.entries(
     reports.reduce<Record<string, number>>((acc, r) => {
@@ -139,7 +167,13 @@ export default function CouncilPage() {
 
           <section>
             <h2 className="mb-2 font-semibold text-teal-950">Suburb hotspot rings</h2>
-            <SuburbHeatmap reports={reports} zones={zones} height="280px" />
+            <SuburbHeatmap
+              reports={reports}
+              zones={zones}
+              height="280px"
+              showReportPins
+              sessionReportIds={sessionIds}
+            />
           </section>
 
           <section>
@@ -159,6 +193,9 @@ export default function CouncilPage() {
 
           <section>
             <h2 className="mb-2 font-semibold text-teal-950">Performance trends</h2>
+            <p className="mb-2 text-xs text-teal-700">
+              Daily report volume from seed data and live session reports
+            </p>
             <div className="flex h-32 items-end gap-1 rounded-xl bg-white p-4 ring-1 ring-teal-100">
               {recentTrend.map((t) => (
                 <div key={t.date} className="flex flex-1 flex-col items-center gap-1">
@@ -170,6 +207,43 @@ export default function CouncilPage() {
                 </div>
               ))}
             </div>
+          </section>
+
+          <section>
+            <div className="mb-2 flex items-center justify-between">
+              <h2 className="font-semibold text-teal-950">Upcoming cleanups</h2>
+              <Link
+                href="/council/schedule"
+                className="text-sm text-teal-600 underline"
+              >
+                Schedule cleanup →
+              </Link>
+            </div>
+            <ul className="space-y-2">
+              {upcomingCleanups.length === 0 ? (
+                <li className="rounded-lg bg-teal-50 px-4 py-3 text-sm text-teal-800">
+                  No cleanups scheduled yet.
+                </li>
+              ) : (
+                upcomingCleanups.slice(0, 5).map((job) => (
+                  <li
+                    key={job.id}
+                    className="rounded-lg bg-white px-4 py-2 text-sm ring-1 ring-teal-100"
+                  >
+                    <div className="flex justify-between">
+                      <span className="font-medium text-teal-950">{job.suburb}</span>
+                      <span className="text-xs capitalize text-teal-600">
+                        {job.status}
+                      </span>
+                    </div>
+                    <p className="text-xs text-teal-700">
+                      {job.date}
+                      {job.notes ? ` · ${job.notes}` : ""}
+                    </p>
+                  </li>
+                ))
+              )}
+            </ul>
           </section>
 
           <section>

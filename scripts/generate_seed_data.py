@@ -5,48 +5,59 @@ from __future__ import annotations
 
 import json
 import random
+from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 
-# Wollongong CBD center
-CENTER_LAT = -34.4278
-CENTER_LNG = 150.8931
+SUBURB_COORDS: dict[str, dict] = {
+    "Wollongong": {"lat": -34.4278, "lng": 150.8931, "radiusKm": 1.5},
+    "North Wollongong": {"lat": -34.412, "lng": 150.894, "radiusKm": 1.2},
+    "Keiraville": {"lat": -34.404, "lng": 150.877, "radiusKm": 1.2},
+    "Gwynneville": {"lat": -34.417, "lng": 150.878, "radiusKm": 1.2},
+    "Fairy Meadow": {"lat": -34.396, "lng": 150.893, "radiusKm": 1.4},
+    "Corrimal": {"lat": -34.372, "lng": 150.899, "radiusKm": 1.3},
+    "Bulli": {"lat": -34.334, "lng": 150.914, "radiusKm": 1.2},
+    "Thirroul": {"lat": -34.316, "lng": 150.923, "radiusKm": 1.2},
+    "Figtree": {"lat": -34.435, "lng": 150.856, "radiusKm": 1.3},
+    "Dapto": {"lat": -34.404, "lng": 150.896, "radiusKm": 1.5},
+}
 
-SUBURBS = [
-    "Wollongong",
-    "North Wollongong",
-    "Keiraville",
-    "Gwynneville",
-    "Fairy Meadow",
-    "Corrimal",
-    "Bulli",
-    "Thirroul",
-    "Figtree",
-    "Dapto",
-]
-
+SUBURBS = list(SUBURB_COORDS.keys())
 ACCEPTS = ["disposables", "pods", "batteries", "all"]
 
+# ~300m spread in degrees at Illawarra latitude
+JITTER_DEG = 0.003
 
-def jitter(lat: float, lng: float, spread: float = 0.04) -> tuple[float, float]:
-    return lat + random.uniform(-spread, spread), lng + random.uniform(-spread, spread)
+
+def jitter_around(lat: float, lng: float) -> tuple[float, float]:
+    return (
+        lat + random.uniform(-JITTER_DEG, JITTER_DEG),
+        lng + random.uniform(-JITTER_DEG, JITTER_DEG),
+    )
+
+
+def coords_for_suburb(suburb: str) -> tuple[float, float]:
+    c = SUBURB_COORDS.get(suburb, SUBURB_COORDS["Wollongong"])
+    return c["lat"], c["lng"]
 
 
 def generate_reports(count: int = 220) -> list[dict]:
     reports = []
     base = datetime(2026, 1, 1)
     for i in range(count):
-        lat, lng = jitter(CENTER_LAT, CENTER_LNG, 0.06)
+        suburb = random.choice(SUBURBS)
+        lat, lng = coords_for_suburb(suburb)
+        lat, lng = jitter_around(lat, lng)
         created = base + timedelta(hours=random.randint(0, 2000))
         reports.append(
             {
                 "id": f"VS-2026-{i + 1:04d}",
                 "lat": round(lat, 6),
                 "lng": round(lng, 6),
-                "suburb": random.choice(SUBURBS),
+                "suburb": suburb,
                 "status": random.choice(["pending", "verified", "verified", "collected"]),
                 "createdAt": created.isoformat(),
                 "pointsAwarded": random.choice([10, 10, 25]),
@@ -70,12 +81,13 @@ def generate_disposal_points() -> list[dict]:
         ("Fairy Meadow Community Hall", "Fairy Meadow", ["all"]),
         ("Green Bean Café Partner", "Wollongong", ["disposables", "pods"]),
         ("Harbourfront Council Depot", "Wollongong", ["batteries", "all"]),
-        ("Port Kembla Youth Hub", "Port Kembla", ["disposables"]),
-        ("Shellharbour City Hub", "Shellharbour", ["all"]),
+        ("Port Kembla Youth Hub", "Wollongong", ["disposables"]),
+        ("Shellharbour City Hub", "Dapto", ["all"]),
     ]
     points = []
     for idx, (name, suburb, accepts) in enumerate(names, start=1):
-        lat, lng = jitter(CENTER_LAT, CENTER_LNG, 0.05)
+        lat, lng = coords_for_suburb(suburb)
+        lat, lng = jitter_around(lat, lng)
         points.append(
             {
                 "id": f"DISP-WLG-{idx:02d}",
@@ -93,15 +105,19 @@ def generate_disposal_points() -> list[dict]:
 
 def generate_bins() -> list[dict]:
     bins = []
+    suburb_list = SUBURBS.copy()
+    random.shuffle(suburb_list)
     for i in range(1, 9):
-        lat, lng = jitter(CENTER_LAT, CENTER_LNG, 0.045)
+        suburb = suburb_list[(i - 1) % len(suburb_list)]
+        lat, lng = coords_for_suburb(suburb)
+        lat, lng = jitter_around(lat, lng)
         items = random.randint(80, 450)
         fill = random.randint(35, 95)
         bins.append(
             {
                 "id": f"BIN-{i:03d}",
                 "code": f"BIN-{i:03d}",
-                "name": f"Smart Bin {i} — {random.choice(SUBURBS)}",
+                "name": f"Smart Bin {i} — {suburb}",
                 "lat": round(lat, 6),
                 "lng": round(lng, 6),
                 "fillLevel": fill,
@@ -119,16 +135,28 @@ def generate_bins() -> list[dict]:
 
 
 def generate_suburb_zones() -> list[dict]:
-    zones = []
-    for suburb in SUBURBS:
-        lat, lng = jitter(CENTER_LAT, CENTER_LNG, 0.04)
-        zones.append({
-            "name": suburb,
-            "lat": round(lat, 6),
-            "lng": round(lng, 6),
-            "radiusKm": round(random.uniform(1.2, 2.2), 1),
-        })
-    return zones
+    return [
+        {
+            "name": name,
+            "lat": coords["lat"],
+            "lng": coords["lng"],
+            "radiusKm": coords["radiusKm"],
+        }
+        for name, coords in SUBURB_COORDS.items()
+    ]
+
+
+def generate_trends_from_reports(reports: list[dict]) -> list[dict]:
+    by_date: dict[str, dict] = defaultdict(lambda: {"reports": 0, "collections": 0})
+    for r in reports:
+        date = r["createdAt"][:10]
+        by_date[date]["reports"] += 1
+        if r["status"] in ("verified", "collected"):
+            by_date[date]["collections"] += 1
+    return [
+        {"date": date, **counts}
+        for date, counts in sorted(by_date.items())
+    ]
 
 
 def generate_news() -> list[dict]:
@@ -267,18 +295,6 @@ def generate_rewards() -> list[dict]:
     ]
 
 
-def generate_trends() -> list[dict]:
-    base = datetime(2026, 2, 1)
-    return [
-        {
-            "date": (base + timedelta(days=i)).strftime("%Y-%m-%d"),
-            "reports": random.randint(8, 28),
-            "collections": random.randint(5, 22),
-        }
-        for i in range(30)
-    ]
-
-
 def generate_pickup_schedule(bins: list[dict]) -> list[dict]:
     near_full = sorted(bins, key=lambda b: b["fillLevel"], reverse=True)[:3]
     return [
@@ -310,10 +326,15 @@ def main() -> None:
     bins = generate_bins()
     leaderboard = generate_leaderboard()
     rewards = generate_rewards()
-    trends = generate_trends()
+    trends = generate_trends_from_reports(reports)
     pickup = generate_pickup_schedule(bins)
     suburb_zones = generate_suburb_zones()
     news = generate_news()
+
+    # Write canonical suburb coordinates for app
+    suburb_coords = [
+        {"name": name, **coords} for name, coords in SUBURB_COORDS.items()
+    ]
 
     files = {
         "reports.json": reports,
@@ -324,6 +345,7 @@ def main() -> None:
         "trends.json": trends,
         "pickup-schedule.json": pickup,
         "suburb-zones.json": suburb_zones,
+        "suburb-coordinates.json": suburb_coords,
         "news.json": news,
     }
 
