@@ -1,91 +1,86 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Truck } from "lucide-react";
-import { getPickupSchedule } from "@/lib/data";
+import { getBins, getPickupSchedule } from "@/lib/data";
+import type { SmartBin } from "@/lib/types";
 
-export default async function CouncilPickupPage() {
-  const cookieStore = await cookies();
-  if (cookieStore.get("council-auth")?.value !== "1") {
-    redirect("/council");
-  }
+const AUTH_KEY = "vapesafe-council-auth";
 
+export default function CouncilPickupPage() {
+  const [authed, setAuthed] = useState(false);
+  const [bins, setBins] = useState<SmartBin[]>([]);
   const schedule = getPickupSchedule();
 
+  useEffect(() => {
+    if (sessionStorage.getItem(AUTH_KEY) !== "1") {
+      window.location.href = "/council";
+      return;
+    }
+    setAuthed(true);
+    setBins(getBins());
+  }, []);
+
+  if (!authed) return null;
+
+  const nearFull = [...bins].sort((a, b) => b.fillLevel - a.fillLevel).slice(0, 3);
+
   return (
-    <div className="mx-auto max-w-4xl space-y-6 pb-8">
-      <CouncilNav active="pickup" />
+    <div className="space-y-6">
       <header>
-        <div className="flex items-center gap-2">
-          <Truck className="h-6 w-6 text-slate-700" />
-          <h1 className="text-2xl font-bold text-slate-900">Pickup schedule</h1>
-        </div>
-        <p className="text-sm text-slate-600">Crew routes for smart-bin servicing</p>
+        <Link href="/council" className="text-sm text-teal-600 underline">
+          ← Dashboard
+        </Link>
+        <h1 className="mt-2 text-2xl font-bold text-teal-950">Optimised Pickup</h1>
+        <p className="text-sm text-teal-800/70">
+          Scheduled collection through hotspot bins — efficient &amp; safe
+        </p>
       </header>
 
-      <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 text-slate-600">
-            <tr>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3">Crew</th>
-              <th className="px-4 py-3">Bins</th>
-              <th className="px-4 py-3">Est. kg</th>
-              <th className="px-4 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {schedule.map((job) => (
-              <tr key={job.id} className="border-t border-slate-100">
-                <td className="px-4 py-3 font-medium text-slate-900">{job.date}</td>
-                <td className="px-4 py-3">{job.crew}</td>
-                <td className="px-4 py-3 font-mono text-xs">{job.bins.join(", ")}</td>
-                <td className="px-4 py-3">{job.estimatedKg}</td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                      job.status === "completed"
-                        ? "bg-green-100 text-green-800"
-                        : job.status === "in-progress"
-                          ? "bg-amber-100 text-amber-800"
-                          : "bg-slate-100 text-slate-700"
-                    }`}
-                  >
-                    {job.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-function CouncilNav({ active }: { active: "overview" | "bins" | "pickup" | "energy" }) {
-  const links = [
-    { href: "/council/dashboard", key: "overview", label: "Overview" },
-    { href: "/council/bins", key: "bins", label: "Smart bins" },
-    { href: "/council/pickup", key: "pickup", label: "Pickup schedule" },
-    { href: "/council/energy", key: "energy", label: "Energy impact" },
-  ] as const;
-
-  return (
-    <nav className="flex flex-wrap gap-2 text-sm">
-      {links.map((link) => (
-        <Link
-          key={link.key}
-          href={link.href}
-          className={`rounded-full px-3 py-1 ${
-            active === link.key
-              ? "bg-slate-800 text-white"
-              : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-          }`}
+      <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
+        <h2 className="font-semibold text-teal-950">Suggested route (near capacity)</h2>
+        <ol className="mt-3 space-y-2">
+          {nearFull.map((b, i) => (
+            <li key={b.id} className="flex items-center gap-3 text-sm">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">
+                {i + 1}
+              </span>
+              <div className="flex-1">
+                <p className="font-medium text-teal-900">{b.name}</p>
+                <p className="text-xs text-teal-700">{b.fillLevel}% full</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <button
+          type="button"
+          className="mt-4 w-full rounded-xl bg-teal-600 py-2 text-sm font-medium text-white hover:bg-teal-700"
+          onClick={() => alert("Demo: route approved for collection crew.")}
         >
-          {link.label}
-        </Link>
-      ))}
-    </nav>
+          Approve route
+        </button>
+      </section>
+
+      <section>
+        <h2 className="mb-2 font-semibold text-teal-950">Pickup schedule</h2>
+        <ul className="space-y-3">
+          {schedule.map((job) => (
+            <li
+              key={job.id}
+              className="rounded-xl bg-white p-4 ring-1 ring-teal-100"
+            >
+              <div className="flex justify-between">
+                <p className="font-medium text-teal-950">{job.id}</p>
+                <span className="text-xs capitalize text-teal-600">{job.status}</span>
+              </div>
+              <p className="mt-1 text-sm text-teal-800">{job.date} · {job.crew}</p>
+              <p className="text-xs text-teal-700">
+                Bins: {job.bins.join(", ")} · ~{job.estimatedKg} kg
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
   );
 }

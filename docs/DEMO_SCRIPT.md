@@ -1,78 +1,46 @@
-# VapeSafe — HackTheGong Demo Script (~5 min)
+# VapeSafe — 3-minute judge demo script
 
-## Setup (before judges arrive)
+## 1. Landing (`/`)
+- Explain the problem: vape litter hotspots across Wollongong
+- Point to stats: reports, bins monitored, kg diverted, kWh saved (estimated)
 
-1. `npm run dev` — app at http://localhost:3000
-2. Optional: clear browser localStorage for a fresh citizen session
-3. Have `/council` ready in a second tab (password: `council-demo`)
+## 2. Scan QR (`/scan`)
+- Enter `BIN-001` → shows smart bin status
+- Or `DISP-WLG-01` → disposal point details
 
-## Act 1 — Citizen problem (90 sec)
+## 3. Disposal map (`/map`)
+- Filter by "open now" and accepted item type
+- Tap a location → Get directions link
+- Show distance filtering
 
-**Landing (`/`)**
+## 4. Report litter (`/report`)
+- Take/upload a photo
+- GPS auto-captures (or manual pin adjust)
+- Submit → receive report ID `VS-2026-XXXX` and +10 points
 
-- "Vape litter is lithium battery e-waste in our parks and beaches."
-- Point to live stats: reports, smart bins, kg diverted, kWh saved.
+## 5. Heatmap (`/heatmap`)
+- Show seeded hotspots across Illawarra suburbs
+- New report appears as additional heat on the map
 
-**Report litter (`/report`)**
+## 6. Profile & leaderboard (`/profile`, `/leaderboard`)
+- Points, level, badges unlocked
+- School vs individual challenge rankings
 
-- Take/upload a photo → GPS locks automatically.
-- Submit → show **report ID** (e.g. `VS-2026-4521`) and +25 points.
-- "Every report feeds council's heatmap in real time."
+## 7. Council dashboard (`/council`)
+- Password: `council-demo`
+- Energy impact cards (kWh, CO₂e — from `python/energy_savings.py`)
+- Hotspot heatmap, suburb breakdown, trends chart
+- Export CSV
 
-**Heatmap (`/heatmap`)**
+## 8. Smart Bin IoT (`/council/bins`)
+- Live fill % and temperature (simulated tick every 30s)
+- Near-capacity alerts
 
-- Zoom the Wollongong heat layer — your session report appears with seed data.
-- "Hotspots drive bin placement and school outreach."
+## 9. Optimised pickup (`/council/pickup`)
+- Suggested route through top 3 near-full bins
+- Approve route + scheduled pickup table
 
-## Act 2 — Positive behaviour (90 sec)
-
-**Scan bin (`/scan`)**
-
-- Tap demo code `BIN-001` (enable GPS if prompted).
-- Successful disposal log → points + collected status.
-
-**Map (`/map`)**
-
-- Filter by suburb / accepts type / open now.
-- "Citizens find the nearest safe disposal — not the general bin."
-
-**Profile & gamification (`/profile`, `/leaderboard`, `/rewards`)**
-
-- Show badges unlocking, school leaderboard, redeem a reward.
-
-## Act 3 — Council IoT (90 sec)
-
-**Login (`/council`)**
-
-- Password `council-demo` → operations dashboard.
-
-**Dashboard (`/council/dashboard`)**
-
-- Trends table, critical bins count, CSV export buttons.
-- Download reports CSV — "open in Excel for ops planning."
-
-**Smart bins (`/council/bins`)**
-
-- Fill levels, temperature telemetry, high-fill alerts.
-
-**Pickup (`/council/pickup`)**
-
-- Crew routes and estimated kg.
-
-**Energy (`/council/energy`)**
-
-- Show Python formula from `python/energy_savings.py`.
-- "We quantify kWh saved vs landfill — not just litter counts."
-
-## Closing line
-
-"VapeSafe connects citizen reports, IoT bins, and council analytics — turning vape waste into measurable energy recovery for Wollongong."
-
-## Troubleshooting
-
-| Issue | Fix |
-|-------|-----|
-| Map blank | Wait for client hydration; refresh page |
-| GPS denied | Demo still works with Wollongong centre fallback |
-| Scan "too far" | Move slider: allow location or use `/map` first |
-| Council 401 | Password `council-demo` or set `COUNCIL_PASSWORD` |
+## Demo codes
+- Bins: `BIN-001`, `BIN-003`
+- Disposal: `DISP-WLG-01`, `DISP-WLG-05`
+- Council password: `council-demo`

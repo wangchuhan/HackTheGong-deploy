@@ -1,88 +1,93 @@
-import { Trophy, Users } from "lucide-react";
+"use client";
+
+import { useState } from "react";
 import { getLeaderboard } from "@/lib/data";
 
 export default function LeaderboardPage() {
-  const { individuals, schools, monthlyChallenge } = getLeaderboard();
+  const data = getLeaderboard();
+  const [tab, setTab] = useState<"individual" | "schools">("individual");
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <header>
-        <div className="flex items-center gap-2">
-          <Trophy className="h-6 w-6 text-amber-500" />
-          <h1 className="text-xl font-bold text-teal-900">Leaderboard</h1>
-        </div>
-        <p className="text-sm text-teal-700/70">Wollongong schools & citizens competing to clean up</p>
+        <h1 className="text-2xl font-bold text-teal-950">Leaderboard</h1>
+        <p className="mt-1 text-sm text-teal-800/70">
+          Individual rankings and school challenges
+        </p>
       </header>
 
-      <div className="rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 p-4 ring-1 ring-amber-200">
-        <p className="text-xs font-semibold uppercase tracking-wide text-amber-800">
-          Monthly challenge
-        </p>
-        <p className="mt-1 font-semibold text-amber-900">{monthlyChallenge.title}</p>
-        <p className="text-sm text-amber-800/80">{monthlyChallenge.description}</p>
-        <div className="mt-3">
-          <div className="h-2 overflow-hidden rounded-full bg-amber-200">
-            <div
-              className="h-full rounded-full bg-amber-500"
-              style={{ width: `${monthlyChallenge.progress}%` }}
-            />
-          </div>
-          <p className="mt-1 text-xs text-amber-700">
-            {monthlyChallenge.progress}% · ends {new Date(monthlyChallenge.endsAt).toLocaleDateString()}
-          </p>
+      <div className="rounded-2xl bg-gradient-to-r from-teal-600 to-teal-500 p-5 text-white">
+        <p className="text-xs font-medium uppercase opacity-80">Monthly challenge</p>
+        <p className="mt-1 text-lg font-bold">{data.monthlyChallenge.title}</p>
+        <p className="mt-1 text-sm opacity-90">{data.monthlyChallenge.description}</p>
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/30">
+          <div
+            className="h-full rounded-full bg-white"
+            style={{ width: `${data.monthlyChallenge.progress}%` }}
+          />
         </div>
+        <p className="mt-1 text-xs opacity-80">
+          {data.monthlyChallenge.progress}% complete · ends{" "}
+          {data.monthlyChallenge.endsAt}
+        </p>
       </div>
 
-      <section>
-        <h2 className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase text-teal-800/70">
-          <Trophy className="h-4 w-4" /> Top citizens
-        </h2>
+      <div className="flex gap-2">
+        {(["individual", "schools"] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            onClick={() => setTab(t)}
+            className={`flex-1 rounded-xl py-2 text-sm font-medium ${
+              tab === t
+                ? "bg-teal-600 text-white"
+                : "bg-white text-teal-800 ring-1 ring-teal-100"
+            }`}
+          >
+            {t === "individual" ? "Individual" : "Schools"}
+          </button>
+        ))}
+      </div>
+
+      {tab === "individual" ? (
         <ol className="space-y-2">
-          {individuals.slice(0, 10).map((entry) => (
+          {data.individuals.map((entry) => (
             <li
               key={entry.rank}
-              className="flex items-center gap-3 rounded-lg bg-white p-3 shadow-sm ring-1 ring-teal-100"
+              className="flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-teal-100"
             >
-              <span
-                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-                  entry.rank <= 3 ? "bg-amber-100 text-amber-800" : "bg-teal-100 text-teal-800"
-                }`}
-              >
+              <span className="w-6 text-center font-bold text-teal-600">
                 {entry.rank}
               </span>
               <div className="flex-1">
-                <p className="font-semibold text-teal-900">{entry.nickname}</p>
+                <p className="font-medium text-teal-950">{entry.nickname}</p>
                 {entry.school && (
-                  <p className="text-xs text-teal-700/60">{entry.school}</p>
+                  <p className="text-xs text-teal-700/70">{entry.school}</p>
                 )}
               </div>
-              <p className="font-bold text-teal-800">{entry.points}</p>
+              <span className="font-semibold text-teal-800">{entry.points} pts</span>
             </li>
           ))}
         </ol>
-      </section>
-
-      <section>
-        <h2 className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase text-teal-800/70">
-          <Users className="h-4 w-4" /> School standings
-        </h2>
+      ) : (
         <ol className="space-y-2">
-          {schools.map((school) => (
+          {data.schools.map((school) => (
             <li
               key={school.rank}
-              className="flex items-center justify-between rounded-lg bg-white p-3 shadow-sm ring-1 ring-teal-100"
+              className="flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-teal-100"
             >
-              <div>
-                <p className="font-semibold text-teal-900">
-                  #{school.rank} {school.name}
-                </p>
-                <p className="text-xs text-teal-700/60">{school.members} members</p>
+              <span className="w-6 text-center font-bold text-teal-600">
+                {school.rank}
+              </span>
+              <div className="flex-1">
+                <p className="font-medium text-teal-950">{school.name}</p>
+                <p className="text-xs text-teal-700/70">{school.members} members</p>
               </div>
-              <p className="font-bold text-teal-800">{school.points}</p>
+              <span className="font-semibold text-teal-800">{school.points} pts</span>
             </li>
           ))}
         </ol>
-      </section>
+      )}
     </div>
   );
 }
