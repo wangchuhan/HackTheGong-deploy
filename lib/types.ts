@@ -1,0 +1,102 @@
+export interface Report {
+  id: string;
+  lat: number;
+  lng: number;
+  suburb: string;
+  status: string;
+  createdAt: string;
+  pointsAwarded: number;
+  photoUrl?: string;
+}
+
+export interface DisposalPoint {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  suburb: string;
+  accepts: string[];
+  hours: string;
+  openNow: boolean;
+}
+
+export interface SmartBin {
+  id: string;
+  code: string;
+  name: string;
+  lat: number;
+  lng: number;
+  fillLevel: number;
+  temperature: number;
+  itemsCollected: number;
+  lastReading: string;
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  nickname: string;
+  points: number;
+  school: string | null;
+}
+
+export interface SchoolEntry {
+  rank: number;
+  name: string;
+  points: number;
+  members: number;
+}
+
+export interface Reward {
+  id: string;
+  title: string;
+  cost: number;
+  category: string;
+  partner: string;
+}
+
+export interface EnergyStats {
+  itemsCollected: number;
+  batteryKg: number;
+  kwhSaved: number;
+  co2eKgAvoided: number;
+  ewasteLitresDiverted: number;
+  label: string;
+  formula?: {
+    batteryKgPerItem: number;
+    landfillKwhPerKg: number;
+    recyclingKwhPerKg: number;
+    gridCo2ePerKwh: number;
+  };
+}
+
+export interface TrendPoint {
+  date: string;
+  reports: number;
+  collections: number;
+}
+
+export interface PickupSchedule {
+  id: string;
+  date: string;
+  crew: string;
+  bins: string[];
+  estimatedKg: number;
+  status: string;
+}
+
+export interface UserProfile {
+  nickname: string;
+  points: number;
+  level: number;
+  badges: string[];
+  reportsSubmitted: number;
+}
+
+export const WOLLONGONG_CENTER = { lat: -34.4278, lng: 150.8931 };
+
+export const BADGES = [
+  { id: "first-report", name: "First Report", threshold: 1 },
+  { id: "five-reports", name: "Hotspot Hero", threshold: 5 },
+  { id: "verified", name: "Verified Cleaner", threshold: 3 },
+  { id: "school-champ", name: "School Champion", threshold: 100 },
+] as const;
