@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
+import PointsToast from "@/components/PointsToast";
+import CelebrationModal from "@/components/CelebrationModal";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,9 +41,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col pb-20">
-        <main className="mx-auto w-full max-w-lg flex-1 px-4 py-6">{children}</main>
+        <main className="mx-auto w-full max-w-lg flex-1 px-4 py-6">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
         <Nav />
+        <PointsToast />
+        <CelebrationModal />
       </body>
     </html>
   );

@@ -10,7 +10,7 @@ import {
   nearestSuburb,
   nextWeekdayDate,
 } from "@/lib/geo";
-import { addSessionReport, scheduleCleanup } from "@/lib/user";
+import { addSessionReport } from "@/lib/user";
 import type { DisposalPoint, Report } from "@/lib/types";
 import { WOLLONGONG_CENTER } from "@/lib/types";
 
@@ -36,6 +36,8 @@ export default function ReportPage() {
   const [showCodeLookup, setShowCodeLookup] = useState(false);
   const [linkedBinCode, setLinkedBinCode] = useState<string | undefined>();
   const [linkedDisposalId, setLinkedDisposalId] = useState<string | undefined>();
+  const [locationPinned, setLocationPinned] = useState(false);
+  const [validationError, setValidationError] = useState("");
   const isSubmittingRef = useRef(false);
 
   useEffect(() => {
@@ -51,6 +53,7 @@ export default function ReportPage() {
         );
         setLat(clamped.lat);
         setLng(clamped.lng);
+        setLocationPinned(true);
         setGpsStatus("GPS location captured — drag pin to fine-tune");
       },
       () => setGpsStatus("GPS denied — drag pin on map to set location"),
@@ -65,6 +68,7 @@ export default function ReportPage() {
     const clamped = clampToIllawarra(newLat, newLng);
     setLat(clamped.lat);
     setLng(clamped.lng);
+    setLocationPinned(true);
   }, []);
 
   function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
@@ -78,6 +82,22 @@ export default function ReportPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (isSubmittingRef.current) return;
+
+    const atDefaultCbd =
+      !locationPinned &&
+      Math.abs(lat - WOLLONGONG_CENTER.lat) < 0.001 &&
+      Math.abs(lng - WOLLONGONG_CENTER.lng) < 0.001;
+
+    if (!photo && !linkedBinCode && !linkedDisposalId) {
+      setValidationError("Add a photo or link a bin / disposal code before submitting.");
+      return;
+    }
+    if (atDefaultCbd && !linkedBinCode && !linkedDisposalId) {
+      setValidationError("Move the map pin to your report location, or link a nearby bin.");
+      return;
+    }
+
+    setValidationError("");
     isSubmittingRef.current = true;
     setSubmitting(true);
 
@@ -227,6 +247,12 @@ export default function ReportPage() {
             />
           </div>
         </div>
+
+        {validationError && (
+          <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+            {validationError}
+          </p>
+        )}
 
         <button
           type="submit"

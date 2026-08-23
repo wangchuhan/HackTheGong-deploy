@@ -1,13 +1,13 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { CheckCircle, MapPin, Recycle } from "lucide-react";
+import { CheckCircle, MapPin, Minus, Plus, Recycle } from "lucide-react";
 import BinStatusGauge from "@/components/BinStatusGauge";
 import BinCameraView from "@/components/BinCameraView";
+import { mockAnalyzeBin } from "@/lib/binVision";
 import { getBinByCode } from "@/lib/data";
-import { logDisposal } from "@/lib/user";
-import { analyzeBinImage } from "@/lib/binVision";
+import { getBinDisposalLog, getItemsLoggedToday, logDisposal } from "@/lib/user";
 import type { BinVisionResult } from "@/lib/types";
 
 export default function BinPage({
@@ -17,9 +17,61 @@ export default function BinPage({
 }) {
   const { code } = use(params);
   const bin = getBinByCode(code);
-  const [disposed, setDisposed] = useState(false);
+  const [itemCount, setItemCount] = useState(1);
   const [vision, setVision] = useState<BinVisionResult | null>(null);
-  const [scanning, setScanning] = useState(false);
+  const [scanning, setScanning] = useState(true);
+  const [scanLabel, setScanLabel] = useState("Connecting to bin sensor…");
+  const [disposeResult, setDisposeResult] = useState<{
+    points: number;
+    items: number;
+  } | null>(null);
+  const [disposeError, setDisposeError] = useState("");
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountedRef = useRef(false);
+
+  const runScan = useCallback(
+    async (opts: {
+      previewItems?: number;
+      durationMs?: number;
+      label?: string;
+    } = {}) => {
+      if (!bin) return;
+      const { previewItems, durationMs = 1500, label = "Syncing sensor…" } = opts;
+      setScanLabel(label);
+      setScanning(true);
+      await new Promise((r) => setTimeout(r, durationMs));
+      const itemsLoggedToday = getItemsLoggedToday(bin.code);
+      const result = mockAnalyzeBin(bin, {
+        previewItems,
+        itemsLoggedToday,
+        lastLoggedItemCount: disposeResult?.items,
+      });
+      setVision(result);
+      setScanning(false);
+    },
+    [bin, disposeResult?.items],
+  );
+
+  useEffect(() => {
+    if (!bin || mountedRef.current) return;
+    mountedRef.current = true;
+    runScan({ durationMs: 1500, label: "Connecting to bin sensor…" });
+  }, [bin, runScan]);
+
+  useEffect(() => {
+    if (!bin || !mountedRef.current || disposeResult) return;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      runScan({
+        previewItems: itemCount,
+        durationMs: 800,
+        label: "Updating item count…",
+      });
+    }, 400);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [itemCount, bin, runScan, disposeResult]);
 
   if (!bin) {
     return (
@@ -32,23 +84,24 @@ export default function BinPage({
     );
   }
 
-  function handleDispose() {
-    logDisposal();
-    setDisposed(true);
-  }
+  const visitLog = getBinDisposalLog(bin.code);
+  const visitsToday = visitLog?.visits.length ?? 0;
+  const canDispose = visitsToday < 2 && !disposeResult;
 
-  async function handleRefreshScan() {
+  function handleDispose() {
     if (!bin) return;
-    setScanning(true);
-    try {
-      const res = await fetch(bin.cameraImage ?? "/bins/bin-default.svg");
-      const blob = await res.blob();
-      const file = new File([blob], "bin.jpg", { type: blob.type });
-      const result = await analyzeBinImage(file);
-      setVision(result);
-    } finally {
-      setScanning(false);
+    setDisposeError("");
+    const result = logDisposal(bin.code, itemCount);
+    if (!result.success) {
+      setDisposeError(result.error ?? "Could not log disposal.");
+      return;
     }
+    setDisposeResult({ points: result.totalPoints, items: itemCount });
+    runScan({
+      previewItems: itemCount,
+      durationMs: 1500,
+      label: "Confirming disposal…",
+    });
   }
 
   return (
@@ -62,14 +115,17 @@ export default function BinPage({
       </header>
 
       <div className="flex justify-center">
-        <BinStatusGauge fillLevel={vision?.fillEstimate ?? bin.fillLevel} />
+        <BinStatusGauge
+          fillLevel={vision?.fillEstimate ?? bin.fillLevel}
+          animate
+        />
       </div>
 
       <BinCameraView
         bin={bin}
         visionResult={vision}
         scanning={scanning}
-        onRefresh={handleRefreshScan}
+        scanLabel={scanLabel}
       />
 
       <div className="grid grid-cols-2 gap-3 text-center text-sm">
@@ -83,22 +139,58 @@ export default function BinPage({
         </div>
       </div>
 
+      {!disposeResult ? (
+        <div className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
+          <p className="text-sm font-medium text-teal-900">
+            How many items did you drop?
+          </p>
+          <p className="mt-1 text-xs text-teal-600">
+            +10 pts each · max 5 per visit · {visitsToday}/2 visits today
+          </p>
+          <div className="mt-3 flex items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => setItemCount((c) => Math.max(1, c - 1))}
+              className="rounded-full bg-teal-100 p-2 text-teal-800"
+              aria-label="Decrease"
+            >
+              <Minus className="h-5 w-5" />
+            </button>
+            <span className="text-3xl font-bold text-teal-950">{itemCount}</span>
+            <button
+              type="button"
+              onClick={() => setItemCount((c) => Math.min(5, c + 1))}
+              className="rounded-full bg-teal-100 p-2 text-teal-800"
+              aria-label="Increase"
+            >
+              <Plus className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {disposeError && (
+        <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+          {disposeError}
+        </p>
+      )}
+
       <div className="grid gap-3">
         <button
           type="button"
           onClick={handleDispose}
-          disabled={disposed}
+          disabled={!canDispose}
           className="flex items-center justify-center gap-2 rounded-xl bg-teal-600 py-3 font-medium text-white hover:bg-teal-700 disabled:opacity-60"
         >
-          {disposed ? (
+          {disposeResult ? (
             <>
               <CheckCircle className="h-5 w-5" />
-              Disposal logged · +25 pts
+              {disposeResult.items} vapes logged · +{disposeResult.points} pts
             </>
           ) : (
             <>
               <Recycle className="h-5 w-5" />
-              I disposed here (+25 pts)
+              Log {itemCount} item{itemCount > 1 ? "s" : ""} (+{itemCount * 10} pts)
             </>
           )}
         </button>

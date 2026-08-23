@@ -2,8 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Award, Calendar, MapPin, Recycle, Star } from "lucide-react";
-import { getSuburbRank } from "@/lib/data";
+import { Award, Calendar, Flame, MapPin, Recycle, Star } from "lucide-react";
+import LevelBadge from "@/components/LevelBadge";
+import { getSuburbRank, getLeaderboard } from "@/lib/data";
+import {
+  getSchoolRivalryNudge,
+  getRankNudge,
+  hasStreakFlame,
+} from "@/lib/gamification";
 import { getCleanupSchedules, getUser, setNickname, setSuburb, SUBURBS } from "@/lib/user";
 import { BADGES } from "@/lib/types";
 import type { UserProfile } from "@/lib/types";
@@ -12,11 +18,15 @@ export default function ProfilePage() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState("");
+  const [rankNudge, setRankNudge] = useState<string | null>(null);
+  const [schoolNudge, setSchoolNudge] = useState<string | null>(null);
 
   useEffect(() => {
     const u = getUser();
     setUser(u);
     setNameInput(u.nickname);
+    setRankNudge(getRankNudge(u.points));
+    setSchoolNudge(getSchoolRivalryNudge());
   }, []);
 
   if (!user) return null;
@@ -35,12 +45,17 @@ export default function ProfilePage() {
   const suburbRank = user.suburb ? getSuburbRank(user.suburb) : null;
   const wasteDiverted = (user.reportsSubmitted + user.disposalsLogged) * 0.012;
   const cleanups = getCleanupSchedules().filter((c) => c.status !== "completed");
+  const onFire = hasStreakFlame();
+  const schools = getLeaderboard().schools;
 
   return (
     <div className="space-y-6">
       <header className="text-center">
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-teal-600 text-2xl font-bold text-white">
+        <div className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-teal-600 text-2xl font-bold text-white">
           {user.nickname.charAt(0).toUpperCase()}
+          {onFire && (
+            <Flame className="absolute -right-1 -top-1 h-6 w-6 text-orange-400" />
+          )}
         </div>
         {editing ? (
           <div className="mt-3 flex justify-center gap-2">
@@ -66,8 +81,19 @@ export default function ProfilePage() {
             {user.nickname}
           </button>
         )}
-        <p className="text-sm text-teal-700">Level {user.level}</p>
+        <div className="mt-2">
+          <LevelBadge level={user.level} points={user.points} />
+        </div>
+        {rankNudge && (
+          <p className="mt-2 text-xs text-amber-800">{rankNudge}</p>
+        )}
       </header>
+
+      {schoolNudge && schools.length >= 2 && (
+        <p className="rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          {schoolNudge}
+        </p>
+      )}
 
       <section className="rounded-xl bg-teal-50 p-4">
         <label className="flex items-center gap-2 text-sm font-medium text-teal-900">
@@ -137,7 +163,7 @@ export default function ProfilePage() {
           <p className="mt-2 text-2xl font-bold text-teal-950">
             {user.disposalsLogged}
           </p>
-          <p className="text-xs text-teal-700">Disposals</p>
+          <p className="text-xs text-teal-700">Items disposed</p>
         </div>
         <div className="rounded-xl bg-white p-4 text-center shadow-sm ring-1 ring-teal-100">
           <p className="mt-2 text-2xl font-bold text-teal-950">

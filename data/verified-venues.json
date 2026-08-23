@@ -100,10 +100,10 @@
   },
   {
     "name": "Green Bean Café Partner",
-    "suburb": "Wollongong",
-    "lat": -34.4258,
-    "lng": 150.8938,
-    "displayName": "Crown Street, Wollongong",
+    "suburb": "Corrimal",
+    "lat": -34.3727,
+    "lng": 150.9065,
+    "displayName": "Railway Street, Corrimal",
     "source": "nearest-community",
     "lookupDate": "2026-08-22"
   },
@@ -119,9 +119,9 @@
   {
     "name": "Port Kembla Youth Hub",
     "suburb": "Port Kembla",
-    "lat": -34.4805,
-    "lng": 150.7615,
-    "displayName": "Port Kembla community area",
+    "lat": -34.4815,
+    "lng": 150.7590,
+    "displayName": "Allan St & Kembla St, Port Kembla",
     "source": "nearest-community",
     "lookupDate": "2026-08-22"
   },

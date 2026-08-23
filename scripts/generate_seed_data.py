@@ -91,7 +91,7 @@ def generate_disposal_points() -> list[dict]:
         ("Dapto Ribbonwood Centre", "Dapto", ["disposables", "pods"]),
         ("North Beach Surf Club", "North Wollongong", ["disposables"]),
         ("Fairy Meadow Community Hall", "Fairy Meadow", ["all"]),
-        ("Green Bean Café Partner", "Wollongong", ["disposables", "pods"]),
+        ("Green Bean Café Partner", "Corrimal", ["disposables", "pods"]),
         ("Harbourfront Council Depot", "Wollongong", ["batteries", "all"]),
         ("Port Kembla Youth Hub", "Port Kembla", ["disposables"]),
         ("Shellharbour City Hub", "Shellharbour", ["all"]),
@@ -284,23 +284,39 @@ def generate_leaderboard() -> dict:
         {"rank": 5, "name": "Thirroul", "points": 2540, "members": 76},
         {"rank": 6, "name": "Figtree", "points": 2210, "members": 64},
         {"rank": 7, "name": "Dapto", "points": 1980, "members": 55},
-        {"rank": 8, "name": "Keiraville", "points": 1760, "members": 48},
+        {"rank": 8, "name": "Port Kembla", "points": 1840, "members": 52},
+        {"rank": 9, "name": "Keiraville", "points": 1760, "members": 48},
+        {"rank": 10, "name": "Shellharbour", "points": 1620, "members": 44},
     ]
+    from datetime import datetime, timedelta
+
+    today = datetime.now()
+    days_until_sunday = (6 - today.weekday()) % 7
+    if days_until_sunday == 0 and today.weekday() != 6:
+        days_until_sunday = 7
+    week_end = (today + timedelta(days=days_until_sunday)).strftime("%Y-%m-%d")
+    month_end = (today.replace(day=28) + timedelta(days=4)).replace(day=1) - timedelta(days=1)
+    month_end_str = month_end.strftime("%Y-%m-%d")
+
     return {
         "individuals": individuals,
         "schools": schools,
         "suburbs": suburbs_lb,
         "monthlyChallenge": {
-            "title": "March Clean Coast",
-            "description": "Report 5 hotspots near the beach strip to unlock the Coastal Champion badge.",
-            "endsAt": "2026-03-31",
+            "title": "Illawarra Clean Coast",
+            "description": "Boss challenge: 10 reports, 3 cleanups scheduled, and 20 items disposed this month.",
+            "endsAt": month_end_str,
             "progress": 62,
+            "goals": {"reports": 10, "cleanups": 3, "disposalItems": 20},
+            "mode": "and",
         },
         "weeklyChallenge": {
             "title": "Beach Strip Blitz",
-            "description": "Report 3 items within 500m of the coast this week.",
-            "endsAt": "2026-03-23",
+            "description": "Report 3 hotspots OR dispose 2+ items at a smart bin this week.",
+            "endsAt": week_end,
             "progress": 45,
+            "goals": {"reports": 3, "disposalItems": 2},
+            "mode": "or",
         },
     }
 

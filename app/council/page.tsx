@@ -8,6 +8,7 @@ import StatCard from "@/components/StatCard";
 import NewsFeed from "@/components/NewsFeed";
 import {
   getAllReportsWithSession,
+  getBinByCode,
   getBins,
   getDisposalPoints,
   getEnergyStats,
@@ -17,6 +18,7 @@ import {
   getTrendsWithSession,
 } from "@/lib/data";
 import { getCleanupSchedules, getSessionReports, updateCleanupSchedule } from "@/lib/user";
+import { nearestSuburb } from "@/lib/geo";
 import type { CleanupScheduleRequest } from "@/lib/types";
 
 const SuburbHeatmap = dynamic(() => import("@/components/SuburbHeatmap"), {
@@ -72,14 +74,20 @@ export default function CouncilPage() {
     const local = cleanupSchedules.filter(
       (s) => s.status !== "completed" && s.date >= today,
     );
-    const seed = seedPickup.map((p) => ({
-      id: p.id,
-      date: p.date,
-      suburb: p.bins[0] ?? "Multi-bin route",
-      status: "scheduled" as const,
-      notes: `${p.crew} · ~${p.estimatedKg} kg`,
-      bins: p.bins,
-    }));
+    const seed = seedPickup.map((p) => {
+      const firstBin = p.bins[0] ? getBinByCode(p.bins[0]) : undefined;
+      const suburb = firstBin
+        ? nearestSuburb(firstBin.lat, firstBin.lng)
+        : "Multi-bin route";
+      return {
+        id: p.id,
+        date: p.date,
+        suburb,
+        status: "scheduled" as const,
+        notes: `${p.crew} · ~${p.estimatedKg} kg`,
+        bins: p.bins,
+      };
+    });
     return [...local, ...seed].sort((a, b) => a.date.localeCompare(b.date));
   }, [cleanupSchedules, seedPickup]);
 

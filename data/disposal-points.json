@@ -140,9 +140,9 @@
   {
     "id": "DISP-WLG-12",
     "name": "Green Bean Caf\u00e9 Partner",
-    "lat": -34.4258,
-    "lng": 150.8938,
-    "suburb": "Wollongong",
+    "lat": -34.3727,
+    "lng": 150.9065,
+    "suburb": "Corrimal",
     "accepts": [
       "disposables",
       "pods"
@@ -166,8 +166,8 @@
   {
     "id": "DISP-WLG-14",
     "name": "Port Kembla Youth Hub",
-    "lat": -34.4805,
-    "lng": 150.7615,
+    "lat": -34.4815,
+    "lng": 150.759,
     "suburb": "Port Kembla",
     "accepts": [
       "disposables"
