@@ -10,7 +10,7 @@ import {
   getRankNudge,
   hasStreakFlame,
 } from "@/lib/gamification";
-import { getCleanupSchedules, getUser, setNickname, setSuburb, SUBURBS } from "@/lib/user";
+import { getCleanupSchedules, getSchoolNames, getUser, setNickname, setSchool, setSuburb, SUBURBS } from "@/lib/user";
 import { BADGES } from "@/lib/types";
 import type { UserProfile } from "@/lib/types";
 
@@ -42,11 +42,17 @@ export default function ProfilePage() {
     setUser(getUser());
   }
 
+  function handleSchoolChange(school: string) {
+    setSchool(school || null);
+    setUser(getUser());
+  }
+
   const suburbRank = user.suburb ? getSuburbRank(user.suburb) : null;
-  const wasteDiverted = (user.reportsSubmitted + user.disposalsLogged) * 0.012;
   const cleanups = getCleanupSchedules().filter((c) => c.status !== "completed");
   const onFire = hasStreakFlame();
   const schools = getLeaderboard().schools;
+  const schoolOptions = getSchoolNames();
+  const wasteDiverted = (user.reportsSubmitted + user.disposalsLogged) * 0.012;
 
   return (
     <div className="space-y-6">
@@ -87,6 +93,9 @@ export default function ProfilePage() {
         {rankNudge && (
           <p className="mt-2 text-xs text-amber-800">{rankNudge}</p>
         )}
+        <p className="mt-2 text-xs text-teal-600">
+          Most people reach Level 2 after 2–3 activities
+        </p>
       </header>
 
       {schoolNudge && schools.length >= 2 && (
@@ -117,6 +126,27 @@ export default function ProfilePage() {
             {user.suburb} is <strong>#{suburbRank}</strong> in the suburb challenge
           </p>
         )}
+      </section>
+
+      <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
+        <label className="block text-sm font-medium text-teal-900">
+          School (optional)
+        </label>
+        <p className="mt-1 text-xs text-teal-600">
+          Join your school on the leaderboard — skip if you prefer
+        </p>
+        <select
+          value={user.school ?? ""}
+          onChange={(e) => handleSchoolChange(e.target.value)}
+          className="mt-2 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
+        >
+          <option value="">Skip / not in school</option>
+          {schoolOptions.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
       </section>
 
       <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">

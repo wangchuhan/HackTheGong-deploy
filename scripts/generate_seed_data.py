@@ -23,7 +23,7 @@ SUBURB_COORDS: dict[str, dict] = {
     "Thirroul": {"lat": -34.316, "lng": 150.923, "radiusKm": 1.2},
     "Figtree": {"lat": -34.435, "lng": 150.856, "radiusKm": 1.3},
     "Dapto": {"lat": -34.493, "lng": 150.792, "radiusKm": 1.5},
-    "Port Kembla": {"lat": -34.4805, "lng": 150.7615, "radiusKm": 1.2},
+    "Port Kembla": {"lat": -34.4878, "lng": 150.7600, "radiusKm": 1.2},
     "Shellharbour": {"lat": -34.575, "lng": 150.87, "radiusKm": 1.3},
 }
 
@@ -50,12 +50,14 @@ def coords_for_suburb(suburb: str) -> tuple[float, float]:
 
 def generate_reports(count: int = 220) -> list[dict]:
     reports = []
-    base = datetime(2026, 1, 1)
+    end = datetime.now()
+    start = end - timedelta(days=90)
+    span_seconds = int((end - start).total_seconds())
     for i in range(count):
         suburb = random.choice(SUBURBS)
         lat, lng = coords_for_suburb(suburb)
         lat, lng = jitter_around(lat, lng)
-        created = base + timedelta(hours=random.randint(0, 2000))
+        created = start + timedelta(seconds=random.randint(0, max(span_seconds, 1)))
         reports.append(
             {
                 "id": f"VS-2026-{i + 1:04d}",

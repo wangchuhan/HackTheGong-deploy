@@ -36,3 +36,35 @@ export function trendsLastNDays(reports: Report[], days = 30): TrendPoint[] {
   }
   return result;
 }
+
+export interface TrendWindowResult {
+  points: TrendPoint[];
+  label: string;
+}
+
+/** Last N calendar days, or fallback to last N days with activity if all zero */
+export function getTrendWindow(
+  trends: TrendPoint[],
+  days = 7,
+): TrendWindowResult {
+  const recent = trends.slice(-days);
+  const hasActivity = recent.some((t) => t.reports > 0 || t.collections > 0);
+
+  if (hasActivity) {
+    return { points: recent, label: `Last ${days} days` };
+  }
+
+  const withData = trends.filter((t) => t.reports > 0 || t.collections > 0);
+  if (withData.length === 0) {
+    return { points: recent, label: "No activity in range" };
+  }
+
+  return {
+    points: withData.slice(-days),
+    label: "Showing recent activity window",
+  };
+}
+
+export function maxTrendReports(points: TrendPoint[]): number {
+  return Math.max(...points.map((t) => t.reports), 1);
+}

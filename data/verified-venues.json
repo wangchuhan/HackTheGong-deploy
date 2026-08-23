@@ -119,8 +119,8 @@
   {
     "name": "Port Kembla Youth Hub",
     "suburb": "Port Kembla",
-    "lat": -34.4815,
-    "lng": 150.7590,
+    "lat": -34.4878,
+    "lng": 150.76,
     "displayName": "Allan St & Kembla St, Port Kembla",
     "source": "nearest-community",
     "lookupDate": "2026-08-22"

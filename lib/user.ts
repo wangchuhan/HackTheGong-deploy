@@ -8,14 +8,27 @@ import {
 } from "./challenges";
 import {
   applyGamificationBonuses,
+  computeLevel,
   emitPointsToast,
 } from "./gamification";
 import { getSuburbNames } from "./geo";
+import { getLeaderboard } from "./data";
 
 const USER_KEY = "vapesafe-user";
 const REPORTS_KEY = "vapesafe-session-reports";
 const CLEANUP_KEY = "vapesafe-cleanup-schedule";
 const DISPOSALS_KEY = "vapesafe-disposals";
+const REPORT_LIMITS_KEY = "vapesafe-report-limits";
+
+const MAX_PHOTO_REPORTS_PER_DAY = 5;
+const MAX_BIN_LINKED_REPORTS_PER_DAY = 1;
+
+interface ReportLimits {
+  date: string;
+  photoReports: number;
+  binLinkedReports: number;
+  reportedBins: string[];
+}
 
 const DEFAULT_USER: UserProfile = {
   nickname: "EcoCitizen",
@@ -24,6 +37,7 @@ const DEFAULT_USER: UserProfile = {
   badges: [],
   reportsSubmitted: 0,
   suburb: undefined,
+  school: null,
   disposalsLogged: 0,
   cleanupsScheduled: 0,
   weeklyChallengeProgress: 0,
@@ -47,6 +61,34 @@ export interface LogDisposalResult {
   basePoints: number;
   totalPoints: number;
   user: UserProfile;
+}
+
+export interface AddReportResult {
+  success: boolean;
+  error?: string;
+  user: UserProfile;
+  report?: Report;
+}
+
+function getReportLimits(): ReportLimits {
+  const today = todayStr();
+  if (typeof window === "undefined") {
+    return { date: today, photoReports: 0, binLinkedReports: 0, reportedBins: [] };
+  }
+  try {
+    const raw = localStorage.getItem(REPORT_LIMITS_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    if (!parsed || parsed.date !== today) {
+      return { date: today, photoReports: 0, binLinkedReports: 0, reportedBins: [] };
+    }
+    return parsed as ReportLimits;
+  } catch {
+    return { date: today, photoReports: 0, binLinkedReports: 0, reportedBins: [] };
+  }
+}
+
+function saveReportLimits(limits: ReportLimits) {
+  localStorage.setItem(REPORT_LIMITS_KEY, JSON.stringify(limits));
 }
 
 export function getUser(): UserProfile {
@@ -131,23 +173,77 @@ function awardBadges(user: UserProfile): UserProfile {
   return user;
 }
 
-export function addSessionReport(report: Report): UserProfile {
+export function addSessionReport(report: Report): AddReportResult {
+  const hasPhoto = Boolean(report.photoUrl);
+  const binCode = report.linkedBinCode?.toUpperCase();
+  const hasLocationLink = Boolean(binCode || report.linkedDisposalId);
+  const limits = getReportLimits();
+
+  if (hasPhoto) {
+    if (limits.photoReports >= MAX_PHOTO_REPORTS_PER_DAY) {
+      return {
+        success: false,
+        error: "Daily photo report limit reached (5 per day).",
+        user: getUser(),
+      };
+    }
+  } else if (hasLocationLink) {
+    if (limits.binLinkedReports >= MAX_BIN_LINKED_REPORTS_PER_DAY) {
+      return {
+        success: false,
+        error: "Daily location-linked report limit reached (1 per day).",
+        user: getUser(),
+      };
+    }
+    if (binCode && limits.reportedBins.includes(binCode)) {
+      return {
+        success: false,
+        error: `You already reported ${binCode} today.`,
+        user: getUser(),
+      };
+    }
+  } else {
+    return {
+      success: false,
+      error: "Add a photo or link a bin code to submit.",
+      user: getUser(),
+    };
+  }
+
+  const basePoints = hasPhoto ? 10 : 5;
+  const fullReport: Report = { ...report, pointsAwarded: basePoints };
+
   const reports = getSessionReports();
-  reports.unshift(report);
+  reports.unshift(fullReport);
   localStorage.setItem(REPORTS_KEY, JSON.stringify(reports));
 
-  let user = getUser();
-  user.points += report.pointsAwarded;
-  user.reportsSubmitted += 1;
-  user.level = Math.floor(user.points / 100) + 1;
+  if (hasPhoto) {
+    limits.photoReports += 1;
+  } else if (binCode) {
+    limits.binLinkedReports += 1;
+    limits.reportedBins.push(binCode);
+  }
+  saveReportLimits(limits);
 
-  const bonus = applyGamificationBonuses(user, "report", report.pointsAwarded);
-  emitPointsToast(report.pointsAwarded + bonus.totalBonus, bonus.messages.join(" · "));
+  let user = getUser();
+  user.points += basePoints;
+  user.reportsSubmitted += 1;
+  user.level = computeLevel(user.points);
+
+  const bonus = applyGamificationBonuses(user, "report", basePoints);
+  emitPointsToast(
+    basePoints + bonus.totalBonus,
+    bonus.messages.join(" · "),
+  );
 
   incrementChallengeCounters({ weeklyReports: 1, monthlyReports: 1 });
   user = awardBadges(user);
   saveUser(user);
-  return checkAndAwardChallengeCompletions(getUser());
+  return {
+    success: true,
+    user: checkAndAwardChallengeCompletions(getUser()),
+    report: fullReport,
+  };
 }
 
 export function logDisposal(binCode: string, itemCount: number): LogDisposalResult {
@@ -177,7 +273,7 @@ export function logDisposal(binCode: string, itemCount: number): LogDisposalResu
   let user = getUser();
   user.points += basePoints;
   user.disposalsLogged += items;
-  user.level = Math.floor(user.points / 100) + 1;
+  user.level = computeLevel(user.points);
 
   const bonus = applyGamificationBonuses(user, "dispose", basePoints);
   emitPointsToast(basePoints + bonus.totalBonus, `${items} vapes · ${bonus.messages.join(" · ")}`);
@@ -217,6 +313,16 @@ export function setSuburb(suburb: string) {
   const user = getUser();
   user.suburb = suburb;
   saveUser(user);
+}
+
+export function setSchool(school: string | null) {
+  const user = getUser();
+  user.school = school || null;
+  saveUser(user);
+}
+
+export function getSchoolNames(): string[] {
+  return getLeaderboard().schools.map((s) => s.name);
 }
 
 export const SUBURBS = getSuburbNames();
@@ -292,7 +398,7 @@ export function scheduleCleanup(
   let user = getUser();
   user.points += 15;
   user.cleanupsScheduled = (user.cleanupsScheduled ?? 0) + 1;
-  user.level = Math.floor(user.points / 100) + 1;
+  user.level = computeLevel(user.points);
 
   const bonus = applyGamificationBonuses(user, "schedule", 15);
   emitPointsToast(15 + bonus.totalBonus, bonus.messages.join(" · "));

@@ -19,6 +19,7 @@ import {
   getStatsSummary,
   getTrends,
 } from "@/lib/data";
+import { getTrendWindow } from "@/lib/analytics";
 
 export default async function CouncilDashboardPage() {
   const cookieStore = await cookies();
@@ -33,6 +34,7 @@ export default async function CouncilDashboardPage() {
   const trends = getTrends();
   const reports = getSeedReports();
   const criticalBins = bins.filter((b) => b.fillLevel >= 75).length;
+  const trendWindow = getTrendWindow(trends, 7);
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 pb-8">
@@ -85,6 +87,7 @@ export default async function CouncilDashboardPage() {
 
       <section className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
         <h2 className="font-semibold text-slate-900">30-day trend</h2>
+        <p className="mt-1 text-xs text-slate-500">{trendWindow.label}</p>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[320px] text-left text-sm">
             <thead>
@@ -95,7 +98,7 @@ export default async function CouncilDashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {trends.slice(-7).map((row) => (
+              {trendWindow.points.map((row) => (
                 <tr key={row.date} className="border-b border-slate-100">
                   <td className="py-2 pr-4 text-slate-800">{row.date}</td>
                   <td className="py-2 pr-4">{row.reports}</td>

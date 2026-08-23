@@ -146,6 +146,7 @@ export interface UserProfile {
   badges: string[];
   reportsSubmitted: number;
   suburb?: string;
+  school?: string | null;
   disposalsLogged: number;
   cleanupsScheduled?: number;
   weeklyChallengeProgress?: number;

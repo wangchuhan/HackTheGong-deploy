@@ -17,9 +17,14 @@ import {
   getSuburbZones,
   getTrendsWithSession,
 } from "@/lib/data";
-import { getCleanupSchedules, getSessionReports, updateCleanupSchedule } from "@/lib/user";
+import { getTrendWindow, maxTrendReports } from "@/lib/analytics";
 import { nearestSuburb } from "@/lib/geo";
-import type { CleanupScheduleRequest } from "@/lib/types";
+import {
+  getCleanupSchedules,
+  getSessionReports,
+  updateCleanupSchedule,
+} from "@/lib/user";
+import type { CleanupScheduleRequest, Report } from "@/lib/types";
 
 const SuburbHeatmap = dynamic(() => import("@/components/SuburbHeatmap"), {
   ssr: false,
@@ -34,7 +39,7 @@ export default function CouncilPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [tab, setTab] = useState<"overview" | "news">("overview");
-  const [sessionReports, setSessionReports] = useState<ReturnType<typeof getSessionReports>>([]);
+  const [sessionReports, setSessionReports] = useState<Report[]>([]);
   const [cleanupSchedules, setCleanupSchedules] = useState<CleanupScheduleRequest[]>([]);
 
   useEffect(() => {
@@ -141,8 +146,9 @@ export default function CouncilPage() {
     );
   }
 
-  const recentTrend = trends.slice(-7);
-  const maxReports = Math.max(...recentTrend.map((t) => t.reports), 1);
+  const trendWindow = getTrendWindow(trends, 7);
+  const recentTrend = trendWindow.points;
+  const maxReports = maxTrendReports(recentTrend);
 
   return (
     <div className="space-y-6">
@@ -215,18 +221,27 @@ export default function CouncilPage() {
           <section>
             <h2 className="mb-2 font-semibold text-teal-950">Performance trends</h2>
             <p className="mb-2 text-xs text-teal-700">
-              Daily report volume from seed data and live session reports
+              Daily report volume from seed data and live session reports ·{" "}
+              {trendWindow.label}
             </p>
             <div className="flex h-32 items-end gap-1 rounded-xl bg-white p-4 ring-1 ring-teal-100">
-              {recentTrend.map((t) => (
-                <div key={t.date} className="flex flex-1 flex-col items-center gap-1">
-                  <div
-                    className="w-full rounded-t bg-teal-500"
-                    style={{ height: `${(t.reports / maxReports) * 100}%` }}
-                  />
-                  <span className="text-[9px] text-teal-700">{t.date.slice(8)}</span>
-                </div>
-              ))}
+              {recentTrend.length === 0 ? (
+                <p className="w-full text-center text-sm text-teal-600">
+                  No trend data yet — submit a report to see activity.
+                </p>
+              ) : (
+                recentTrend.map((t) => (
+                  <div key={t.date} className="flex flex-1 flex-col items-center gap-1">
+                    <div
+                      className="w-full min-h-[4px] rounded-t bg-teal-500"
+                      style={{
+                        height: `${Math.max(4, (t.reports / maxReports) * 100)}%`,
+                      }}
+                    />
+                    <span className="text-[9px] text-teal-700">{t.date.slice(8)}</span>
+                  </div>
+                ))
+              )}
             </div>
           </section>
 
