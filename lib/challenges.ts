@@ -1,7 +1,7 @@
 "use client";
 
 import { getLeaderboard } from "./data";
-import { getGamificationState, markChallengeCompleteAwarded } from "./gamification";
+import { getGamificationState, markChallengeCompleteAwarded, computeLevel } from "./gamification";
 import { getUser, saveUser } from "./user";
 import type { UserProfile } from "./types";
 
@@ -255,7 +255,7 @@ export function checkAndAwardChallengeCompletions(user: UserProfile): UserProfil
 
   user.weeklyChallengeProgress = progress.weeklyPct;
   user.monthlyChallengeProgress = progress.monthlyPct;
-  user.level = Math.floor(user.points / 100) + 1;
+  user.level = computeLevel(user.points);
   saveUser(user);
   return user;
 }

@@ -55,8 +55,14 @@ body {
   }
 }
 
-.toast-enter {
-  animation: toastIn 0.3s ease-out;
+.qr-reader-host video {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
+}
+
+.qr-reader-host img {
+  display: none;
 }
 
 .leaflet-container {

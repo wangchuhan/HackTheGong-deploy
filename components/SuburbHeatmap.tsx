@@ -6,7 +6,7 @@ import type { Report } from "@/lib/types";
 import { WOLLONGONG_CENTER } from "@/lib/types";
 import type { SuburbZone } from "@/lib/types";
 import { suburbHeatColor } from "@/lib/binUtils";
-import { isOnLandIllawarra } from "@/lib/geo";
+import { isOnLandIllawarra, nearestSuburb } from "@/lib/geo";
 
 interface SuburbHeatmapProps {
   reports: Report[];
@@ -46,7 +46,8 @@ export default function SuburbHeatmap({
   const suburbCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const r of landReports) {
-      counts[r.suburb] = (counts[r.suburb] ?? 0) + 1;
+      const suburb = nearestSuburb(r.lat, r.lng);
+      counts[suburb] = (counts[suburb] ?? 0) + 1;
     }
     return counts;
   }, [landReports]);

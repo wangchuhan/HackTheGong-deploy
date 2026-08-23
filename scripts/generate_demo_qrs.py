@@ -24,6 +24,7 @@ CODES = [
 def main() -> int:
     try:
         import qrcode
+        from qrcode.constants import ERROR_CORRECT_H
     except ImportError:
         print("Installing qrcode…", file=sys.stderr)
         import subprocess
@@ -32,10 +33,19 @@ def main() -> int:
             [sys.executable, "-m", "pip", "install", "qrcode[pil]", "-q"],
         )
         import qrcode
+        from qrcode.constants import ERROR_CORRECT_H
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for code in CODES:
-        img = qrcode.make(code)
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=ERROR_CORRECT_H,
+            box_size=12,
+            border=4,
+        )
+        qr.add_data(code)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
         path = OUT_DIR / f"{code}.png"
         img.save(path)
         print(f"Wrote {path}")

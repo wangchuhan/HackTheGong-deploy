@@ -7,6 +7,9 @@ const GAMIFICATION_KEY = "vapesafe-gamification";
 
 export type ActionType = "report" | "dispose" | "schedule";
 
+/** Points required to advance one level */
+export const POINTS_PER_LEVEL = 125;
+
 export interface GamificationState {
   streakDays: number;
   lastActionDate: string | null;
@@ -38,6 +41,10 @@ const DEFAULT_GAMIFICATION: GamificationState = {
   lastLevel: 1,
 };
 
+export function computeLevel(points: number): number {
+  return Math.floor(points / POINTS_PER_LEVEL) + 1;
+}
+
 export function getLevelTitle(level: number): string {
   if (level >= 10) return "Illawarra Legend";
   if (level >= 8) return "Coastal Cleaner";
@@ -47,11 +54,15 @@ export function getLevelTitle(level: number): string {
   return "Pod Patrol";
 }
 
-export function xpToNextLevel(points: number): { current: number; needed: number; pct: number } {
-  const level = Math.floor(points / 100) + 1;
-  const currentLevelFloor = (level - 1) * 100;
+export function xpToNextLevel(points: number): {
+  current: number;
+  needed: number;
+  pct: number;
+} {
+  const level = computeLevel(points);
+  const currentLevelFloor = (level - 1) * POINTS_PER_LEVEL;
   const current = points - currentLevelFloor;
-  const needed = 100;
+  const needed = POINTS_PER_LEVEL;
   return { current, needed, pct: Math.round((current / needed) * 100) };
 }
 
@@ -115,8 +126,8 @@ export function applyGamificationBonuses(
   }
 
   if (state.morningBoostDate !== today) {
-    bonuses.push({ label: "Morning boost", points: 5 });
-    messages.push("Morning boost +5");
+    bonuses.push({ label: "Morning boost", points: 3 });
+    messages.push("Morning boost +3");
     state.morningBoostDate = today;
   }
 
@@ -151,7 +162,7 @@ export function applyGamificationBonuses(
   const prevLevel = state.lastLevel;
   const totalBonus = bonuses.reduce((s, b) => s + b.points, 0);
   user.points += totalBonus;
-  user.level = Math.floor(user.points / 100) + 1;
+  user.level = computeLevel(user.points);
 
   let levelUp: BonusResult["levelUp"];
   if (user.level > prevLevel) {
@@ -193,7 +204,10 @@ export function emitPointsToast(points: number, message?: string) {
   );
 }
 
-export function emitCelebration(type: "weekly" | "monthly" | "badge", title?: string) {
+export function emitCelebration(
+  type: "weekly" | "monthly" | "badge",
+  title?: string,
+) {
   if (typeof window === "undefined") return;
   window.dispatchEvent(
     new CustomEvent("vapesafe-celebration", {

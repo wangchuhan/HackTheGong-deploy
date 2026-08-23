@@ -14,11 +14,13 @@ export default function LeaderboardPage() {
   const [tab, setTab] = useState<Tab>("individual");
   const [progress, setProgress] = useState(getChallengeProgress());
   const [userPoints, setUserPoints] = useState(0);
+  const [userSchool, setUserSchool] = useState<string | null>(null);
   const [rankNudge, setRankNudge] = useState<string | null>(null);
 
   useEffect(() => {
     const u = getUser();
     setUserPoints(u.points);
+    setUserSchool(u.school ?? null);
     setProgress(getChallengeProgress());
     setRankNudge(getRankNudge(u.points));
   }, [tab]);
@@ -86,11 +88,14 @@ export default function LeaderboardPage() {
               <span className="font-semibold text-teal-800">{entry.points} pts</span>
             </li>
           ))}
-          {userPoints > 0 && (
+          {(userPoints > 0 || userSchool) && (
             <li className="flex items-center gap-3 rounded-xl border-2 border-dashed border-teal-300 bg-teal-50/50 px-4 py-3">
               <span className="w-6 text-center font-bold text-teal-600">—</span>
               <div className="flex-1">
                 <p className="font-medium text-teal-950">You</p>
+                {userSchool && (
+                  <p className="text-xs text-teal-700/70">{userSchool}</p>
+                )}
               </div>
               <span className="font-semibold text-teal-800">{userPoints} pts</span>
             </li>
@@ -100,6 +105,9 @@ export default function LeaderboardPage() {
 
       {tab === "schools" && (
         <ol className="space-y-2">
+          <p className="text-xs text-teal-600">
+            Join a school on your profile to show it on the leaderboard.
+          </p>
           {data.schools.map((school) => (
             <li
               key={school.rank}

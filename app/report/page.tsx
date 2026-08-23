@@ -108,13 +108,19 @@ export default function ReportPage() {
       suburb,
       status: "pending",
       createdAt: new Date().toISOString(),
-      pointsAwarded: 10,
+      pointsAwarded: 0,
       photoUrl: photo ?? undefined,
       linkedBinCode,
       linkedDisposalId,
     };
-    addSessionReport(report);
-    setSubmitted(report);
+    const result = addSessionReport(report);
+    if (!result.success) {
+      setValidationError(result.error ?? "Could not submit report.");
+      isSubmittingRef.current = false;
+      setSubmitting(false);
+      return;
+    }
+    setSubmitted(result.report ?? report);
   }
 
   if (submitted) {
@@ -131,7 +137,12 @@ export default function ReportPage() {
           <p className="mt-1 text-2xl font-mono font-bold text-teal-950">
             {submitted.id}
           </p>
-          <p className="mt-2 text-sm text-teal-700">+10 points earned</p>
+          <p className="mt-2 text-sm text-teal-700">
+            +{submitted.pointsAwarded} points earned
+            {!submitted.photoUrl && submitted.linkedBinCode
+              ? " (bin location verified)"
+              : ""}
+          </p>
         </div>
         <div className="flex flex-col gap-2">
           <Link
@@ -201,6 +212,10 @@ export default function ReportPage() {
           </button>
           {showCodeLookup && (
             <div className="border-t border-teal-100 px-4 pb-4">
+              <p className="pt-3 text-xs text-teal-700">
+                Linking a bin verifies location (+5). Disposing items at the bin earns
+                separate points.
+              </p>
               <CodeLookup
                 compact
                 onBinFound={(code) => {
