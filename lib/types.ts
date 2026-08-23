@@ -2,11 +2,17 @@ export interface CleanupScheduleRequest {
   id: string;
   date: string;
   suburb: string;
+  timeSlot?: "morning" | "afternoon";
   reportIds?: string[];
   bins?: string[];
-  status: "requested" | "scheduled" | "completed";
+  status: "requested" | "scheduled" | "completed" | "cancelled";
   notes?: string;
+  createdAt?: string;
+  pointsAwarded?: number;
 }
+
+/** @deprecated Use CleanupScheduleRequest */
+export type CleanupAppointment = CleanupScheduleRequest;
 
 export interface Report {
   id: string;
@@ -144,6 +150,21 @@ export interface UserProfile {
   cleanupsScheduled?: number;
   weeklyChallengeProgress?: number;
   monthlyChallengeProgress?: number;
+}
+
+export interface ChallengeGoals {
+  reports: number;
+  disposalItems: number;
+  cleanups?: number;
+}
+
+export interface ChallengeSeed {
+  title: string;
+  description: string;
+  endsAt: string;
+  progress: number;
+  goals?: ChallengeGoals;
+  mode?: "or" | "and";
 }
 
 export const WOLLONGONG_CENTER = { lat: -34.4278, lng: 150.8931 };

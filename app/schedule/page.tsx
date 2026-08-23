@@ -11,6 +11,7 @@ import {
   scheduleCleanup,
 } from "@/lib/user";
 import { nextWeekdayDate } from "@/lib/geo";
+import type { CleanupScheduleRequest } from "@/lib/types";
 
 function ScheduleForm() {
   const searchParams = useSearchParams();
@@ -20,11 +21,19 @@ function ScheduleForm() {
   const today = new Date().toISOString().slice(0, 10);
   const [date, setDate] = useState(nextWeekdayDate());
   const [suburb, setSuburb] = useState(prefillSuburb || SUBURBS[0]);
+  const [timeSlot, setTimeSlot] = useState<"morning" | "afternoon">("morning");
   const [notes, setNotes] = useState("");
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
+  const [lastAppointment, setLastAppointment] = useState<CleanupScheduleRequest | null>(null);
   const [animating, setAnimating] = useState(false);
-  const [schedules, setSchedules] = useState(getCleanupSchedules());
+  const [schedules, setSchedules] = useState<CleanupScheduleRequest[]>([]);
   const [user, setUser] = useState(getUser());
+
+  useEffect(() => {
+    setSchedules(getCleanupSchedules());
+    setUser(getUser());
+  }, []);
 
   useEffect(() => {
     if (prefillSuburb) setSuburb(prefillSuburb);
@@ -32,24 +41,36 @@ function ScheduleForm() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError("");
     setAnimating(true);
-    const updated = scheduleCleanup({
+    const result = scheduleCleanup({
       date,
       suburb,
+      timeSlot,
       reportIds: prefillReportId ? [prefillReportId] : undefined,
       notes: notes || undefined,
       status: "requested",
     });
-    setUser(updated);
+    setUser(result.user);
     setSchedules(getCleanupSchedules());
+    if (!result.success) {
+      setError(result.error ?? "Could not schedule.");
+      setSaved(false);
+      setAnimating(false);
+      return;
+    }
+    setLastAppointment(result.appointment ?? null);
     setSaved(true);
     setNotes("");
     setTimeout(() => setAnimating(false), 1200);
   }
 
   const upcoming = schedules
-    .filter((s) => s.date >= today)
+    .filter((s) => s.date >= today && s.status !== "cancelled")
     .sort((a, b) => a.date.localeCompare(b.date));
+  const past = schedules
+    .filter((s) => s.date < today || s.status === "completed")
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <div className="space-y-6">
@@ -82,17 +103,38 @@ function ScheduleForm() {
             type="date"
             min={today}
             value={date}
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => {
+              setDate(e.target.value);
+              setSaved(false);
+            }}
             required
             className="mt-1 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
           />
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-teal-900">Time slot</label>
+          <select
+            value={timeSlot}
+            onChange={(e) => {
+              setTimeSlot(e.target.value as "morning" | "afternoon");
+              setSaved(false);
+            }}
+            className="mt-1 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
+          >
+            <option value="morning">Morning (8am – 12pm)</option>
+            <option value="afternoon">Afternoon (12pm – 5pm)</option>
+          </select>
+        </div>
+
+        <div>
           <label className="block text-sm font-medium text-teal-900">Suburb</label>
           <select
             value={suburb}
-            onChange={(e) => setSuburb(e.target.value)}
+            onChange={(e) => {
+              setSuburb(e.target.value);
+              setSaved(false);
+            }}
             className="mt-1 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
           >
             {SUBURBS.map((s) => (
@@ -121,10 +163,21 @@ function ScheduleForm() {
           Schedule cleanup
         </button>
 
-        {saved && (
-          <div className="flex items-center justify-center gap-2 rounded-lg bg-amber-50 py-3 text-sm font-medium text-amber-900">
-            <CheckCircle className="h-5 w-5 text-amber-600" />
-            Scheduled! +15 points · Council will review your request
+        {error && (
+          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
+        )}
+
+        {saved && lastAppointment && (
+          <div className="space-y-2 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <div className="flex items-center justify-center gap-2 font-medium">
+              <CheckCircle className="h-5 w-5 text-amber-600" />
+              Scheduled! +15 points
+            </div>
+            <p className="text-center text-xs">
+              {lastAppointment.id} · {lastAppointment.date} ·{" "}
+              {lastAppointment.timeSlot === "afternoon" ? "Afternoon" : "Morning"} ·{" "}
+              {lastAppointment.suburb}
+            </p>
           </div>
         )}
       </form>
@@ -132,12 +185,12 @@ function ScheduleForm() {
       <section>
         <h2 className="mb-2 flex items-center gap-2 font-semibold text-teal-950">
           <Award className="h-4 w-4" />
-          Your cleanups
+          Upcoming cleanups
         </h2>
         <ul className="space-y-2">
           {upcoming.length === 0 ? (
             <li className="rounded-lg bg-teal-50 px-4 py-3 text-sm text-teal-800">
-              No cleanups yet — schedule one above to earn points and badges.
+              No upcoming cleanups — schedule one above to earn points and badges.
             </li>
           ) : (
             upcoming.map((job) => (
@@ -151,12 +204,31 @@ function ScheduleForm() {
                     {job.status}
                   </span>
                 </div>
-                <p className="text-teal-800">{job.date}</p>
+                <p className="text-teal-800">
+                  {job.date} · {job.timeSlot === "afternoon" ? "Afternoon" : "Morning"}
+                </p>
+                <p className="text-xs text-teal-600">{job.id}</p>
               </li>
             ))
           )}
         </ul>
       </section>
+
+      {past.length > 0 && (
+        <section>
+          <h2 className="mb-2 font-semibold text-teal-950">Past</h2>
+          <ul className="space-y-2">
+            {past.slice(0, 5).map((job) => (
+              <li
+                key={job.id}
+                className="rounded-lg bg-gray-50 px-4 py-3 text-sm text-teal-800"
+              >
+                {job.suburb} · {job.date}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <Link href="/leaderboard" className="block text-center text-sm text-teal-600 underline">
         View challenges & badges →

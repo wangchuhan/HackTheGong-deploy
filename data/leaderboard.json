@@ -138,21 +138,44 @@
     },
     {
       "rank": 8,
+      "name": "Port Kembla",
+      "points": 1840,
+      "members": 52
+    },
+    {
+      "rank": 9,
       "name": "Keiraville",
       "points": 1760,
       "members": 48
+    },
+    {
+      "rank": 10,
+      "name": "Shellharbour",
+      "points": 1620,
+      "members": 44
     }
   ],
   "monthlyChallenge": {
-    "title": "March Clean Coast",
-    "description": "Report 5 hotspots near the beach strip to unlock the Coastal Champion badge.",
-    "endsAt": "2026-03-31",
-    "progress": 62
+    "title": "Illawarra Clean Coast",
+    "description": "Boss challenge: 10 reports, 3 cleanups scheduled, and 20 items disposed this month.",
+    "endsAt": "2026-08-31",
+    "progress": 62,
+    "goals": {
+      "reports": 10,
+      "cleanups": 3,
+      "disposalItems": 20
+    },
+    "mode": "and"
   },
   "weeklyChallenge": {
     "title": "Beach Strip Blitz",
-    "description": "Report 3 items within 500m of the coast this week.",
-    "endsAt": "2026-03-23",
-    "progress": 45
+    "description": "Report 3 hotspots OR dispose 2+ items at a smart bin this week.",
+    "endsAt": "2026-08-23",
+    "progress": 45,
+    "goals": {
+      "reports": 3,
+      "disposalItems": 2
+    },
+    "mode": "or"
   }
 }

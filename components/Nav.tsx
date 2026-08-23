@@ -5,7 +5,7 @@ import {
   Flame,
   Home,
   MapPin,
-  Newspaper,
+  Trophy,
   User,
 } from "lucide-react";
 
@@ -15,30 +15,24 @@ const links = [
   { href: "/report", label: "Report", icon: Camera },
   { href: "/schedule", label: "Schedule", icon: Calendar },
   { href: "/heatmap", label: "Heat", icon: Flame },
+  { href: "/leaderboard", label: "Ranks", icon: Trophy },
   { href: "/profile", label: "Profile", icon: User },
 ];
 
 export default function Nav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-teal-100 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-lg items-center justify-around px-1 py-2">
+      <div className="mx-auto flex max-w-lg items-center justify-around px-0.5 py-1.5">
         {links.map(({ href, label, icon: Icon }) => (
           <Link
             key={href}
             href={href}
-            className="flex flex-col items-center gap-0.5 px-1 py-1 text-[10px] text-teal-800/70 transition hover:text-teal-600"
+            className="flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 py-1 text-[9px] text-teal-800/70 transition hover:text-teal-600"
           >
-            <Icon className="h-5 w-5" />
-            <span>{label}</span>
+            <Icon className="h-4 w-4 shrink-0" />
+            <span className="truncate">{label}</span>
           </Link>
         ))}
-        <Link
-          href="/news"
-          className="flex flex-col items-center gap-0.5 px-1 py-1 text-[10px] text-teal-800/70 transition hover:text-teal-600"
-        >
-          <Newspaper className="h-5 w-5" />
-          <span>News</span>
-        </Link>
       </div>
     </nav>
   );

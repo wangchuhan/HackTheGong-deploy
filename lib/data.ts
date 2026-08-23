@@ -1,5 +1,6 @@
 import { trendsLastNDays } from "./analytics";
 import type {
+  ChallengeSeed,
   DisposalPoint,
   EnergyStats,
   LeaderboardEntry,
@@ -50,8 +51,8 @@ export function getLeaderboard(): {
   individuals: LeaderboardEntry[];
   schools: SchoolEntry[];
   suburbs: SuburbEntry[];
-  monthlyChallenge: { title: string; description: string; endsAt: string; progress: number };
-  weeklyChallenge: { title: string; description: string; endsAt: string; progress: number };
+  monthlyChallenge: ChallengeSeed;
+  weeklyChallenge: ChallengeSeed;
 } {
   return leaderboardData as ReturnType<typeof getLeaderboard>;
 }

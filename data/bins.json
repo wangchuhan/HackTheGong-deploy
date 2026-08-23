@@ -8,11 +8,11 @@
     "fillLevel": 62,
     "temperature": 19.4,
     "itemsCollected": 127,
-    "lastReading": "2026-08-22T23:09:29.078616",
+    "lastReading": "2026-08-22T23:52:58.105325",
     "cameraImage": "/bins/bin-001.svg",
     "aiFillEstimate": 62,
     "aiConfidence": 0.94,
-    "aiLastScan": "2026-08-22T23:33:29.078622",
+    "aiLastScan": "2026-08-23T00:16:58.105331",
     "aiItemsDetected": 22
   },
   {
@@ -24,11 +24,11 @@
     "fillLevel": 77,
     "temperature": 19.7,
     "itemsCollected": 248,
-    "lastReading": "2026-08-22T23:10:29.078629",
+    "lastReading": "2026-08-22T23:53:58.105337",
     "cameraImage": "/bins/bin-002.svg",
     "aiFillEstimate": 77,
     "aiConfidence": 0.95,
-    "aiLastScan": "2026-08-22T23:33:29.078632",
+    "aiLastScan": "2026-08-23T00:16:58.105340",
     "aiItemsDetected": 69
   },
   {
@@ -40,11 +40,11 @@
     "fillLevel": 73,
     "temperature": 22.4,
     "itemsCollected": 227,
-    "lastReading": "2026-08-22T23:26:29.078638",
+    "lastReading": "2026-08-23T00:09:58.105345",
     "cameraImage": "/bins/bin-003.svg",
     "aiFillEstimate": 73,
     "aiConfidence": 0.91,
-    "aiLastScan": "2026-08-22T23:33:29.078641",
+    "aiLastScan": "2026-08-23T00:16:58.105348",
     "aiItemsDetected": 42
   },
   {
@@ -56,11 +56,11 @@
     "fillLevel": 57,
     "temperature": 29.8,
     "itemsCollected": 135,
-    "lastReading": "2026-08-22T23:09:29.078644",
+    "lastReading": "2026-08-22T23:52:58.105352",
     "cameraImage": "/bins/bin-004.svg",
     "aiFillEstimate": 57,
     "aiConfidence": 0.84,
-    "aiLastScan": "2026-08-22T23:33:29.078646",
+    "aiLastScan": "2026-08-23T00:16:58.105354",
     "aiItemsDetected": 50
   },
   {
@@ -72,11 +72,11 @@
     "fillLevel": 84,
     "temperature": 29.5,
     "itemsCollected": 367,
-    "lastReading": "2026-08-22T22:53:29.078651",
+    "lastReading": "2026-08-22T23:36:58.105358",
     "cameraImage": "/bins/bin-005.svg",
     "aiFillEstimate": 84,
     "aiConfidence": 0.92,
-    "aiLastScan": "2026-08-22T23:33:29.078653",
+    "aiLastScan": "2026-08-23T00:16:58.105361",
     "aiItemsDetected": 18
   },
   {
@@ -88,11 +88,11 @@
     "fillLevel": 52,
     "temperature": 18.4,
     "itemsCollected": 435,
-    "lastReading": "2026-08-22T23:15:29.078656",
+    "lastReading": "2026-08-22T23:58:58.105364",
     "cameraImage": "/bins/bin-006.svg",
     "aiFillEstimate": 52,
     "aiConfidence": 0.93,
-    "aiLastScan": "2026-08-22T23:33:29.078658",
+    "aiLastScan": "2026-08-23T00:16:58.105367",
     "aiItemsDetected": 54
   },
   {
@@ -104,11 +104,11 @@
     "fillLevel": 90,
     "temperature": 20.0,
     "itemsCollected": 172,
-    "lastReading": "2026-08-22T22:50:29.078662",
+    "lastReading": "2026-08-22T23:33:58.105370",
     "cameraImage": "/bins/bin-007.svg",
     "aiFillEstimate": 90,
     "aiConfidence": 0.88,
-    "aiLastScan": "2026-08-22T23:33:29.078664",
+    "aiLastScan": "2026-08-23T00:16:58.105372",
     "aiItemsDetected": 33
   },
   {
@@ -120,11 +120,11 @@
     "fillLevel": 82,
     "temperature": 25.4,
     "itemsCollected": 126,
-    "lastReading": "2026-08-22T23:08:29.078667",
+    "lastReading": "2026-08-22T23:51:58.105376",
     "cameraImage": "/bins/bin-008.svg",
     "aiFillEstimate": 82,
     "aiConfidence": 0.88,
-    "aiLastScan": "2026-08-22T23:33:29.078669",
+    "aiLastScan": "2026-08-23T00:16:58.105378",
     "aiItemsDetected": 58
   }
 ]

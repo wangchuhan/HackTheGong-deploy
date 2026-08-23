@@ -1,4 +1,36 @@
-import type { BinVisionResult } from "./types";
+import type { BinVisionResult, SmartBin } from "./types";
+
+export interface MockAnalyzeOptions {
+  previewItems?: number;
+  itemsLoggedToday?: number;
+  lastLoggedItemCount?: number;
+}
+
+export function mockAnalyzeBin(
+  bin: SmartBin,
+  options: MockAnalyzeOptions = {},
+): BinVisionResult {
+  const itemsLoggedToday = options.itemsLoggedToday ?? 0;
+  const previewItems = options.previewItems;
+  const itemsDetected =
+    previewItems ??
+    options.lastLoggedItemCount ??
+    bin.aiItemsDetected ??
+    Math.max(1, Math.round(bin.fillLevel / 25));
+
+  const baseFill = bin.aiFillEstimate ?? bin.fillLevel;
+  const fillEstimate = Math.min(
+    95,
+    Math.round(baseFill + itemsLoggedToday * 3 + (previewItems ? 0 : 0)),
+  );
+
+  return {
+    fillEstimate,
+    confidence: bin.aiConfidence ?? 0.88,
+    itemsDetected,
+    source: "mock",
+  };
+}
 
 export async function analyzeBinImage(
   file: File,
@@ -15,10 +47,6 @@ export async function analyzeBinImage(
     // fall through to mock
   }
 
-  return mockAnalyze(file);
-}
-
-function mockAnalyze(_file: File): BinVisionResult {
   const fillEstimate = 40 + Math.floor(Math.random() * 50);
   return {
     fillEstimate,

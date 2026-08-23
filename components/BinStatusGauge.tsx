@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   fillStateColor,
   fillStateLabel,
@@ -10,19 +11,42 @@ import {
 interface BinStatusGaugeProps {
   fillLevel: number;
   size?: "sm" | "lg";
+  animate?: boolean;
 }
 
 export default function BinStatusGauge({
   fillLevel,
   size = "lg",
+  animate = true,
 }: BinStatusGaugeProps) {
-  const state = getFillState(fillLevel);
+  const [displayLevel, setDisplayLevel] = useState(fillLevel);
+
+  useEffect(() => {
+    if (!animate) {
+      setDisplayLevel(fillLevel);
+      return;
+    }
+    const start = displayLevel;
+    const diff = fillLevel - start;
+    if (diff === 0) return;
+    const steps = 20;
+    let step = 0;
+    const id = setInterval(() => {
+      step += 1;
+      setDisplayLevel(Math.round(start + (diff * step) / steps));
+      if (step >= steps) clearInterval(id);
+    }, 30);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fillLevel, animate]);
+
+  const state = getFillState(displayLevel);
   const color = fillStateColor(state);
   const dim = size === "lg" ? 120 : 72;
   const stroke = size === "lg" ? 10 : 6;
   const radius = (dim - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (fillLevel / 100) * circumference;
+  const offset = circumference - (displayLevel / 100) * circumference;
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -46,14 +70,14 @@ export default function BinStatusGauge({
             strokeDasharray={circumference}
             strokeDashoffset={offset}
             strokeLinecap="round"
-            className={state === "nearly_full" ? "animate-pulse" : ""}
+            className={`transition-all duration-500 ease-out ${state === "nearly_full" ? "animate-pulse" : ""}`}
           />
         </svg>
         <div
           className="absolute inset-0 flex flex-col items-center justify-center"
           style={{ fontSize: size === "lg" ? "1.25rem" : "0.875rem" }}
         >
-          <span className="font-bold text-teal-950">{fillLevel}%</span>
+          <span className="font-bold text-teal-950">{displayLevel}%</span>
         </div>
       </div>
       <StatusBadge state={state} />

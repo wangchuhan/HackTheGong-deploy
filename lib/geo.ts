@@ -14,6 +14,10 @@ export function getSuburbCentroids(): SuburbCentroid[] {
   return CENTROIDS;
 }
 
+export function getSuburbNames(): string[] {
+  return CENTROIDS.map((c) => c.name);
+}
+
 export function haversineKm(
   lat1: number,
   lng1: number,

@@ -2,11 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import dynamic from "next/dynamic";
+import { MapPin, Search } from "lucide-react";
 import QrScanner from "@/components/QrScanner";
+import { parseScannedCode } from "@/lib/scanUtils";
 import { getBinByCode, getDisposalPointById } from "@/lib/data";
 import { googleMapsDirectionsUrl } from "@/lib/geo";
 import type { DisposalPoint } from "@/lib/types";
+
+const DisposalMapPreview = dynamic(
+  () => import("@/components/DisposalMapPreview"),
+  { ssr: false },
+);
 
 interface CodeLookupProps {
   onBinFound?: (code: string) => void;
@@ -27,7 +34,7 @@ export default function CodeLookup({
   function lookup(inputCode?: string) {
     setError("");
     setDisposalResult(undefined);
-    const trimmed = (inputCode ?? code).trim().toUpperCase();
+    const trimmed = parseScannedCode(inputCode ?? code);
     if (!trimmed) {
       setError("Enter a code to look up.");
       return;
@@ -88,21 +95,27 @@ export default function CodeLookup({
       )}
 
       {disposalResult && (
-        <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-teal-100">
+        <div className="space-y-3 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-teal-100">
           <p className="text-xs font-medium uppercase text-teal-600">Disposal Point</p>
-          <p className="mt-1 text-lg font-semibold text-teal-950">{disposalResult.name}</p>
-          <p className="mt-2 text-sm text-teal-800/70">
+          <p className="text-lg font-semibold text-teal-950">{disposalResult.name}</p>
+          <p className="text-sm text-teal-800/70">
             {disposalResult.suburb} · {disposalResult.hours}
           </p>
           <p className="text-sm text-teal-700">
             Accepts: {disposalResult.accepts.join(", ")}
           </p>
+          <DisposalMapPreview
+            lat={disposalResult.lat}
+            lng={disposalResult.lng}
+            name={disposalResult.name}
+          />
           <a
             href={googleMapsDirectionsUrl(disposalResult.lat, disposalResult.lng)}
             target="_blank"
             rel="noreferrer"
-            className="mt-4 inline-block rounded-xl bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+            className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
           >
+            <MapPin className="h-4 w-4" />
             Get directions
           </a>
         </div>
