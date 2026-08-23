@@ -117,6 +117,10 @@ def generate_disposal_points() -> list[dict]:
             v = verified[name]
             lat, lng = v["lat"], v["lng"]
             suburb = v.get("suburb", suburb)
+            # Reject stale verified coords that land in the wrong suburb
+            if nearest_suburb(lat, lng) != suburb:
+                lat, lng = coords_for_suburb(suburb)
+                lat, lng = jitter_around(lat, lng)
         else:
             lat, lng = coords_for_suburb(suburb)
             lat, lng = jitter_around(lat, lng)

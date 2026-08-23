@@ -41,8 +41,8 @@
   {
     "id": "DISP-WLG-04",
     "name": "University of Wollongong",
-    "lat": -34.4058,
-    "lng": 150.8822,
+    "lat": -34.417504,
+    "lng": 150.875571,
     "suburb": "Gwynneville",
     "accepts": [
       "all"
@@ -153,8 +153,8 @@
   {
     "id": "DISP-WLG-13",
     "name": "Harbourfront Council Depot",
-    "lat": -34.4185,
-    "lng": 150.9055,
+    "lat": -34.428239,
+    "lng": 150.894091,
     "suburb": "Wollongong",
     "accepts": [
       "batteries",
@@ -166,8 +166,8 @@
   {
     "id": "DISP-WLG-14",
     "name": "Port Kembla Youth Hub",
-    "lat": -34.4878,
-    "lng": 150.76,
+    "lat": -34.4756,
+    "lng": 150.9003,
     "suburb": "Port Kembla",
     "accepts": [
       "disposables"
