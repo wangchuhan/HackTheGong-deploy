@@ -48,6 +48,19 @@ def coords_for_suburb(suburb: str) -> tuple[float, float]:
     return c["lat"], c["lng"]
 
 
+def nearest_suburb(lat: float, lng: float) -> str:
+    best_name = SUBURBS[0]
+    best_dist = float("inf")
+    for name, coords in SUBURB_COORDS.items():
+        dlat = coords["lat"] - lat
+        dlng = coords["lng"] - lng
+        dist = dlat * dlat + dlng * dlng
+        if dist < best_dist:
+            best_dist = dist
+            best_name = name
+    return best_name
+
+
 def generate_reports(count: int = 220) -> list[dict]:
     reports = []
     end = datetime.now()
@@ -63,7 +76,7 @@ def generate_reports(count: int = 220) -> list[dict]:
                 "id": f"VS-2026-{i + 1:04d}",
                 "lat": round(lat, 6),
                 "lng": round(lng, 6),
-                "suburb": suburb,
+                "suburb": nearest_suburb(lat, lng),
                 "status": random.choice(["pending", "verified", "verified", "collected"]),
                 "createdAt": created.isoformat(),
                 "pointsAwarded": random.choice([10, 10, 25]),

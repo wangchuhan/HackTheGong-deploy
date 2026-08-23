@@ -131,7 +131,7 @@ export default function SuburbHeatmap({
                 >
                   <Popup>
                     <div className="text-sm">
-                      <p className="font-semibold">{r.suburb}</p>
+                      <p className="font-semibold">{nearestSuburb(r.lat, r.lng)}</p>
                       <p className="text-xs text-gray-600">{r.id}</p>
                       <p className="capitalize">{r.status}</p>
                     </div>

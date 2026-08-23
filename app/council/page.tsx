@@ -231,11 +231,14 @@ export default function CouncilPage() {
                 </p>
               ) : (
                 recentTrend.map((t) => (
-                  <div key={t.date} className="flex flex-1 flex-col items-center gap-1">
+                  <div
+                    key={t.date}
+                    className="flex h-full flex-1 flex-col items-center justify-end gap-1"
+                  >
                     <div
-                      className="w-full min-h-[4px] rounded-t bg-teal-500"
+                      className="w-full rounded-t bg-teal-500"
                       style={{
-                        height: `${Math.max(4, (t.reports / maxReports) * 100)}%`,
+                        height: `${Math.max(4, (t.reports / maxReports) * 112)}px`,
                       }}
                     />
                     <span className="text-[9px] text-teal-700">{t.date.slice(8)}</span>

@@ -41,12 +41,12 @@
   },
   {
     "date": "2026-06-03",
-    "reports": 4,
+    "reports": 3,
     "collections": 2
   },
   {
     "date": "2026-06-04",
-    "reports": 1,
+    "reports": 2,
     "collections": 1
   },
   {
@@ -106,13 +106,13 @@
   },
   {
     "date": "2026-06-18",
-    "reports": 2,
-    "collections": 1
+    "reports": 1,
+    "collections": 0
   },
   {
     "date": "2026-06-19",
-    "reports": 2,
-    "collections": 2
+    "reports": 3,
+    "collections": 3
   },
   {
     "date": "2026-06-20",
@@ -166,12 +166,12 @@
   },
   {
     "date": "2026-07-02",
-    "reports": 3,
+    "reports": 2,
     "collections": 2
   },
   {
     "date": "2026-07-03",
-    "reports": 3,
+    "reports": 4,
     "collections": 2
   },
   {
@@ -231,12 +231,12 @@
   },
   {
     "date": "2026-07-16",
-    "reports": 5,
+    "reports": 4,
     "collections": 4
   },
   {
     "date": "2026-07-17",
-    "reports": 3,
+    "reports": 4,
     "collections": 2
   },
   {
@@ -261,12 +261,12 @@
   },
   {
     "date": "2026-07-22",
-    "reports": 5,
+    "reports": 4,
     "collections": 3
   },
   {
     "date": "2026-07-23",
-    "reports": 2,
+    "reports": 3,
     "collections": 2
   },
   {
@@ -376,13 +376,13 @@
   },
   {
     "date": "2026-08-16",
-    "reports": 3,
-    "collections": 2
+    "reports": 2,
+    "collections": 1
   },
   {
     "date": "2026-08-17",
-    "reports": 2,
-    "collections": 0
+    "reports": 3,
+    "collections": 1
   },
   {
     "date": "2026-08-18",
@@ -406,7 +406,12 @@
   },
   {
     "date": "2026-08-22",
-    "reports": 3,
-    "collections": 3
+    "reports": 2,
+    "collections": 2
+  },
+  {
+    "date": "2026-08-23",
+    "reports": 1,
+    "collections": 1
   }
 ]

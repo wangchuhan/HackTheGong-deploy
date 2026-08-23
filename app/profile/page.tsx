@@ -96,6 +96,9 @@ export default function ProfilePage() {
         <p className="mt-2 text-xs text-teal-600">
           Most people reach Level 2 after 2–3 activities
         </p>
+        {user.school && (
+          <p className="mt-1 text-sm text-teal-700">{user.school}</p>
+        )}
       </header>
 
       {schoolNudge && schools.length >= 2 && (
@@ -103,6 +106,27 @@ export default function ProfilePage() {
           {schoolNudge}
         </p>
       )}
+
+      <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
+        <label className="block text-sm font-medium text-teal-900">
+          School (optional)
+        </label>
+        <p className="mt-1 text-xs text-teal-600">
+          Join your school on the leaderboard — skip if you prefer
+        </p>
+        <select
+          value={user.school ?? ""}
+          onChange={(e) => handleSchoolChange(e.target.value)}
+          className="mt-2 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
+        >
+          <option value="">Skip / not in school</option>
+          {schoolOptions.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      </section>
 
       <section className="rounded-xl bg-teal-50 p-4">
         <label className="flex items-center gap-2 text-sm font-medium text-teal-900">
@@ -126,27 +150,6 @@ export default function ProfilePage() {
             {user.suburb} is <strong>#{suburbRank}</strong> in the suburb challenge
           </p>
         )}
-      </section>
-
-      <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
-        <label className="block text-sm font-medium text-teal-900">
-          School (optional)
-        </label>
-        <p className="mt-1 text-xs text-teal-600">
-          Join your school on the leaderboard — skip if you prefer
-        </p>
-        <select
-          value={user.school ?? ""}
-          onChange={(e) => handleSchoolChange(e.target.value)}
-          className="mt-2 w-full rounded-lg border border-teal-200 px-3 py-2 text-sm"
-        >
-          <option value="">Skip / not in school</option>
-          {schoolOptions.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
       </section>
 
       <section className="rounded-xl bg-white p-4 ring-1 ring-teal-100">
