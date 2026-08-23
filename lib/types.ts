@@ -11,6 +11,11 @@ export interface CleanupScheduleRequest {
   pointsAwarded?: number;
 }
 
+export interface ArchivedCleanupSchedule extends CleanupScheduleRequest {
+  archivedAt: string;
+  archiveReason: "removed" | "completed" | "cancelled";
+}
+
 /** @deprecated Use CleanupScheduleRequest */
 export type CleanupAppointment = CleanupScheduleRequest;
 

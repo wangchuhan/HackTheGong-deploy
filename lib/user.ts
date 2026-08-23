@@ -1,6 +1,11 @@
 "use client";
 
-import type { CleanupScheduleRequest, Report, UserProfile } from "./types";
+import type {
+  ArchivedCleanupSchedule,
+  CleanupScheduleRequest,
+  Report,
+  UserProfile,
+} from "./types";
 import { BADGES } from "./types";
 import {
   checkAndAwardChallengeCompletions,
@@ -17,6 +22,8 @@ import { getLeaderboard } from "./data";
 const USER_KEY = "vapesafe-user";
 const REPORTS_KEY = "vapesafe-session-reports";
 const CLEANUP_KEY = "vapesafe-cleanup-schedule";
+const CLEANUP_ARCHIVE_KEY = "vapesafe-cleanup-archive";
+const HIDDEN_SEED_PICKUPS_KEY = "vapesafe-hidden-seed-pickups";
 const DISPOSALS_KEY = "vapesafe-disposals";
 const REPORT_LIMITS_KEY = "vapesafe-report-limits";
 const DAILY_POINTS_KEY = "vapesafe-daily-points";
@@ -551,4 +558,91 @@ export function updateCleanupSchedule(
     s.id === id ? { ...s, ...patch } : s,
   );
   localStorage.setItem(CLEANUP_KEY, JSON.stringify(schedules));
+}
+
+export function getArchivedCleanupSchedules(): ArchivedCleanupSchedule[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(CLEANUP_ARCHIVE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveArchivedCleanupSchedules(entries: ArchivedCleanupSchedule[]) {
+  localStorage.setItem(CLEANUP_ARCHIVE_KEY, JSON.stringify(entries));
+}
+
+export function archiveCleanupSchedule(
+  id: string,
+  reason: ArchivedCleanupSchedule["archiveReason"] = "removed",
+): boolean {
+  const schedules = getCleanupSchedules();
+  const target = schedules.find((s) => s.id === id);
+  if (!target) return false;
+
+  const archived: ArchivedCleanupSchedule = {
+    ...target,
+    archivedAt: new Date().toISOString(),
+    archiveReason: reason,
+    status: reason === "completed" ? "completed" : "cancelled",
+  };
+
+  const remaining = schedules.filter((s) => s.id !== id);
+  localStorage.setItem(CLEANUP_KEY, JSON.stringify(remaining));
+  saveArchivedCleanupSchedules([archived, ...getArchivedCleanupSchedules()]);
+  return true;
+}
+
+export function restoreCleanupSchedule(id: string): boolean {
+  const archive = getArchivedCleanupSchedules();
+  const target = archive.find((s) => s.id === id);
+  if (!target) return false;
+
+  const { archivedAt: _a, archiveReason: _r, ...rest } = target;
+  const active = getCleanupSchedules();
+  active.unshift(rest);
+  localStorage.setItem(CLEANUP_KEY, JSON.stringify(active));
+  saveArchivedCleanupSchedules(archive.filter((s) => s.id !== id));
+  return true;
+}
+
+export function getHiddenSeedPickups(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(HIDDEN_SEED_PICKUPS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function hideSeedPickup(id: string) {
+  const hidden = new Set(getHiddenSeedPickups());
+  hidden.add(id);
+  localStorage.setItem(HIDDEN_SEED_PICKUPS_KEY, JSON.stringify([...hidden]));
+}
+
+export function exportCleanupBackup(): string {
+  return JSON.stringify(
+    {
+      exportedAt: new Date().toISOString(),
+      active: getCleanupSchedules(),
+      archived: getArchivedCleanupSchedules(),
+      hiddenSeedPickups: getHiddenSeedPickups(),
+    },
+    null,
+    2,
+  );
+}
+
+export function downloadCleanupBackup() {
+  const blob = new Blob([exportCleanupBackup()], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `vapesafe-schedules-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
 }

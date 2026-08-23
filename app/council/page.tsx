@@ -15,13 +15,17 @@ import {
   getNews,
   getPickupSchedule,
   getSuburbZones,
-  getTrendsWithSession,
 } from "@/lib/data";
-import { getTrendWindow } from "@/lib/analytics";
-import TrendBarChart from "@/components/TrendBarChart";
+import PerformanceTrendsPanel from "@/components/PerformanceTrendsPanel";
+import CleanupScheduleList, {
+  ArchivedCleanupSection,
+} from "@/components/CleanupScheduleList";
 import { nearestSuburb } from "@/lib/geo";
 import {
+  archiveCleanupSchedule,
+  getArchivedCleanupSchedules,
   getCleanupSchedules,
+  getHiddenSeedPickups,
   getSessionReports,
   updateCleanupSchedule,
 } from "@/lib/user";
@@ -42,15 +46,24 @@ export default function CouncilPage() {
   const [tab, setTab] = useState<"overview" | "news">("overview");
   const [sessionReports, setSessionReports] = useState<Report[]>([]);
   const [cleanupSchedules, setCleanupSchedules] = useState<CleanupScheduleRequest[]>([]);
+  const [archivedSchedules, setArchivedSchedules] = useState(
+    [] as ReturnType<typeof getArchivedCleanupSchedules>,
+  );
+  const [hiddenSeedIds, setHiddenSeedIds] = useState<string[]>([]);
+
+  function refreshSchedules() {
+    setCleanupSchedules(getCleanupSchedules());
+    setArchivedSchedules(getArchivedCleanupSchedules());
+    setHiddenSeedIds(getHiddenSeedPickups());
+  }
 
   useEffect(() => {
     if (sessionStorage.getItem(AUTH_KEY) === "1") setAuthed(true);
     setSessionReports(getSessionReports());
-    setCleanupSchedules(getCleanupSchedules());
+    refreshSchedules();
   }, []);
 
   const energy = getEnergyStats();
-  const trends = getTrendsWithSession(sessionReports);
   const reports = getAllReportsWithSession(sessionReports);
   const sessionIds = useMemo(
     () => new Set(sessionReports.map((r) => r.id)),
@@ -64,7 +77,12 @@ export default function CouncilPage() {
 
   function approveCleanup(id: string) {
     updateCleanupSchedule(id, { status: "scheduled" });
-    setCleanupSchedules(getCleanupSchedules());
+    refreshSchedules();
+  }
+
+  function dismissCleanup(id: string) {
+    archiveCleanupSchedule(id, "removed");
+    refreshSchedules();
   }
 
   const today = new Date().toISOString().slice(0, 10);
@@ -80,7 +98,10 @@ export default function CouncilPage() {
     const local = cleanupSchedules.filter(
       (s) => s.status !== "completed" && s.date >= today,
     );
-    const seed = seedPickup.map((p) => {
+    const hidden = new Set(hiddenSeedIds);
+    const seed = seedPickup
+      .filter((p) => !hidden.has(p.id))
+      .map((p) => {
       const firstBin = p.bins[0] ? getBinByCode(p.bins[0]) : undefined;
       const suburb = firstBin
         ? nearestSuburb(firstBin.lat, firstBin.lng)
@@ -95,7 +116,9 @@ export default function CouncilPage() {
       };
     });
     return [...local, ...seed].sort((a, b) => a.date.localeCompare(b.date));
-  }, [cleanupSchedules, seedPickup]);
+  }, [cleanupSchedules, seedPickup, hiddenSeedIds]);
+
+  const seedIdSet = useMemo(() => new Set(seedPickup.map((p) => p.id)), [seedPickup]);
 
   const topSuburbs = Object.entries(
     reports.reduce<Record<string, number>>((acc, r) => {
@@ -146,8 +169,6 @@ export default function CouncilPage() {
       </div>
     );
   }
-
-  const trendWindow = getTrendWindow(trends, 7);
 
   return (
     <div className="space-y-6">
@@ -217,13 +238,7 @@ export default function CouncilPage() {
             </ul>
           </section>
 
-          <section>
-            <h2 className="mb-2 font-semibold text-teal-950">Performance trends</h2>
-            <TrendBarChart
-              points={trendWindow.points}
-              label={`Daily report volume from seed data and live session reports · ${trendWindow.label}`}
-            />
-          </section>
+          <PerformanceTrendsPanel reports={reports} />
 
           <section>
             <div className="mb-2 flex items-center justify-between">
@@ -251,13 +266,23 @@ export default function CouncilPage() {
                         <span className="font-medium text-teal-950">{job.suburb}</span>
                         <p className="text-xs text-teal-700">{job.date}</p>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => approveCleanup(job.id)}
-                        className="rounded-lg bg-teal-600 px-3 py-1 text-xs font-medium text-white hover:bg-teal-700"
-                      >
-                        Approve
-                      </button>
+                      <div className="flex gap-1">
+                        <button
+                          type="button"
+                          onClick={() => approveCleanup(job.id)}
+                          className="rounded-lg bg-teal-600 px-3 py-1 text-xs font-medium text-white hover:bg-teal-700"
+                        >
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => dismissCleanup(job.id)}
+                          title="Archive request"
+                          className="rounded-lg px-2 py-1 text-xs text-teal-600 hover:bg-teal-100"
+                        >
+                          Archive
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -269,46 +294,33 @@ export default function CouncilPage() {
                 <h3 className="mb-2 text-sm font-medium text-teal-800">
                   Council scheduled ({councilScheduled.length})
                 </h3>
-                <ul className="space-y-2">
-                  {councilScheduled.map((job) => (
-                    <li
-                      key={job.id}
-                      className="rounded-lg bg-white px-4 py-2 text-sm ring-1 ring-teal-100"
-                    >
-                      <span className="font-medium text-teal-950">{job.suburb}</span>
-                      <p className="text-xs text-teal-700">{job.date}</p>
-                    </li>
-                  ))}
-                </ul>
+                <CleanupScheduleList
+                  items={councilScheduled}
+                  onChange={refreshSchedules}
+                  compact
+                />
               </div>
             )}
 
-            <h3 className="mb-2 text-sm font-medium text-teal-800">Seed pickup jobs</h3>
-            <ul className="space-y-2">
-              {upcomingCleanups.length === 0 ? (
-                <li className="rounded-lg bg-teal-50 px-4 py-3 text-sm text-teal-800">
-                  No cleanups scheduled yet.
-                </li>
-              ) : (
-                upcomingCleanups.slice(0, 5).map((job) => (
-                  <li
-                    key={job.id}
-                    className="rounded-lg bg-white px-4 py-2 text-sm ring-1 ring-teal-100"
-                  >
-                    <div className="flex justify-between">
-                      <span className="font-medium text-teal-950">{job.suburb}</span>
-                      <span className="text-xs capitalize text-teal-600">
-                        {job.status}
-                      </span>
-                    </div>
-                    <p className="text-xs text-teal-700">
-                      {job.date}
-                      {job.notes ? ` · ${job.notes}` : ""}
-                    </p>
-                  </li>
-                ))
-              )}
-            </ul>
+            <h3 className="mb-2 text-sm font-medium text-teal-800">All upcoming</h3>
+            <CleanupScheduleList
+              items={upcomingCleanups.slice(0, 8)}
+              onChange={refreshSchedules}
+              compact
+              seedIds={seedIdSet}
+            />
+            {upcomingCleanups.length > 8 && (
+              <p className="mt-2 text-xs text-teal-600">
+                +{upcomingCleanups.length - 8} more —{" "}
+                <Link href="/council/schedule" className="underline">
+                  view all
+                </Link>
+              </p>
+            )}
+            <ArchivedCleanupSection
+              archived={archivedSchedules}
+              onChange={refreshSchedules}
+            />
           </section>
 
           <section>
