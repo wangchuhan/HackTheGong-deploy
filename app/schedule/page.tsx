@@ -6,10 +6,16 @@ import { useSearchParams } from "next/navigation";
 import { Award, Calendar, CheckCircle, Sparkles } from "lucide-react";
 import {
   SUBURBS,
+  archiveCleanupSchedule,
+  getArchivedCleanupSchedules,
   getCleanupSchedules,
   getUser,
   scheduleCleanup,
 } from "@/lib/user";
+import CleanupScheduleList, {
+  ArchivedCleanupSection,
+  CleanupBackupButton,
+} from "@/components/CleanupScheduleList";
 import { nextWeekdayDate } from "@/lib/geo";
 import type { CleanupScheduleRequest } from "@/lib/types";
 
@@ -28,11 +34,19 @@ function ScheduleForm() {
   const [lastAppointment, setLastAppointment] = useState<CleanupScheduleRequest | null>(null);
   const [animating, setAnimating] = useState(false);
   const [schedules, setSchedules] = useState<CleanupScheduleRequest[]>([]);
+  const [archived, setArchived] = useState(
+    [] as ReturnType<typeof getArchivedCleanupSchedules>,
+  );
   const [user, setUser] = useState(getUser());
 
-  useEffect(() => {
+  function refreshSchedules() {
     setSchedules(getCleanupSchedules());
+    setArchived(getArchivedCleanupSchedules());
     setUser(getUser());
+  }
+
+  useEffect(() => {
+    refreshSchedules();
   }, []);
 
   useEffect(() => {
@@ -52,7 +66,7 @@ function ScheduleForm() {
       status: "requested",
     });
     setUser(result.user);
-    setSchedules(getCleanupSchedules());
+    refreshSchedules();
     if (!result.success) {
       setError(result.error ?? "Could not schedule.");
       setSaved(false);
@@ -183,36 +197,20 @@ function ScheduleForm() {
       </form>
 
       <section>
-        <h2 className="mb-2 flex items-center gap-2 font-semibold text-teal-950">
-          <Award className="h-4 w-4" />
-          Upcoming cleanups
-        </h2>
-        <ul className="space-y-2">
-          {upcoming.length === 0 ? (
-            <li className="rounded-lg bg-teal-50 px-4 py-3 text-sm text-teal-800">
-              No upcoming cleanups — schedule one above to earn points and badges.
-            </li>
-          ) : (
-            upcoming.map((job) => (
-              <li
-                key={job.id}
-                className="rounded-lg bg-white px-4 py-3 text-sm ring-1 ring-teal-100"
-              >
-                <div className="flex justify-between">
-                  <span className="font-medium">{job.suburb}</span>
-                  <span className="text-xs capitalize text-teal-600">
-                    {job.status}
-                  </span>
-                </div>
-                <p className="text-teal-800">
-                  {job.date} · {job.timeSlot === "afternoon" ? "Afternoon" : "Morning"}
-                </p>
-                <p className="text-xs text-teal-600">{job.id}</p>
-              </li>
-            ))
-          )}
-        </ul>
+        <div className="mb-2 flex items-center justify-between">
+          <h2 className="flex items-center gap-2 font-semibold text-teal-950">
+            <Award className="h-4 w-4" />
+            Upcoming cleanups
+          </h2>
+          <CleanupBackupButton />
+        </div>
+        <CleanupScheduleList
+          items={upcoming}
+          onChange={refreshSchedules}
+        />
       </section>
+
+      <ArchivedCleanupSection archived={archived} onChange={refreshSchedules} />
 
       {past.length > 0 && (
         <section>
@@ -221,9 +219,21 @@ function ScheduleForm() {
             {past.slice(0, 5).map((job) => (
               <li
                 key={job.id}
-                className="rounded-lg bg-gray-50 px-4 py-3 text-sm text-teal-800"
+                className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3 text-sm text-teal-800"
               >
-                {job.suburb} · {job.date}
+                <span>
+                  {job.suburb} · {job.date}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    archiveCleanupSchedule(job.id, "completed");
+                    refreshSchedules();
+                  }}
+                  className="text-xs text-teal-600 underline"
+                >
+                  Archive
+                </button>
               </li>
             ))}
           </ul>

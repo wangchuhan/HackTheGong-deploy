@@ -7,9 +7,14 @@ import { getBins } from "@/lib/data";
 import {
   SUBURBS,
   addCleanupSchedule,
+  getArchivedCleanupSchedules,
   getCleanupSchedules,
   updateCleanupSchedule,
 } from "@/lib/user";
+import CleanupScheduleList, {
+  ArchivedCleanupSection,
+  CleanupBackupButton,
+} from "@/components/CleanupScheduleList";
 
 const AUTH_KEY = "vapesafe-council-auth";
 
@@ -21,6 +26,12 @@ export default function CouncilSchedulePage() {
   const [notes, setNotes] = useState("");
   const [saved, setSaved] = useState(false);
   const [schedules, setSchedules] = useState(getCleanupSchedules());
+  const [archived, setArchived] = useState(getArchivedCleanupSchedules());
+
+  function refreshSchedules() {
+    setSchedules(getCleanupSchedules());
+    setArchived(getArchivedCleanupSchedules());
+  }
 
   const bins = getBins();
   const nearFullBins = useMemo(
@@ -59,7 +70,7 @@ export default function CouncilSchedulePage() {
       notes: notes || undefined,
     };
     addCleanupSchedule(entry);
-    setSchedules(getCleanupSchedules());
+    refreshSchedules();
     setSaved(true);
     setNotes("");
     setTimeout(() => setSaved(false), 3000);
@@ -75,7 +86,7 @@ export default function CouncilSchedulePage() {
     updateCleanupSchedule(job.id, { status: "scheduled" });
     setSuburb(job.suburb);
     setDate(job.date);
-    setSchedules(getCleanupSchedules());
+    refreshSchedules();
   }
 
   return (
@@ -200,35 +211,12 @@ export default function CouncilSchedulePage() {
       </form>
 
       <section>
-        <h2 className="mb-2 font-semibold text-teal-950">Scheduled & requested</h2>
-        <ul className="space-y-2">
-          {upcoming.length === 0 ? (
-            <li className="rounded-lg bg-teal-50 px-4 py-3 text-sm text-teal-800">
-              No upcoming cleanups in local storage.
-            </li>
-          ) : (
-            upcoming.map((job) => (
-              <li
-                key={job.id}
-                className="rounded-lg bg-white px-4 py-3 text-sm ring-1 ring-teal-100"
-              >
-                <div className="flex justify-between">
-                  <span className="font-medium text-teal-950">{job.suburb}</span>
-                  <span className="text-xs capitalize text-teal-600">
-                    {job.status}
-                  </span>
-                </div>
-                <p className="text-teal-800">{job.date}</p>
-                {job.bins?.length ? (
-                  <p className="text-xs text-teal-700">Bins: {job.bins.join(", ")}</p>
-                ) : null}
-                {job.notes && (
-                  <p className="text-xs text-teal-600">{job.notes}</p>
-                )}
-              </li>
-            ))
-          )}
-        </ul>
+        <div className="mb-2 flex items-center justify-between">
+          <h2 className="font-semibold text-teal-950">Scheduled & requested</h2>
+          <CleanupBackupButton />
+        </div>
+        <CleanupScheduleList items={upcoming} onChange={refreshSchedules} />
+        <ArchivedCleanupSection archived={archived} onChange={refreshSchedules} />
       </section>
     </div>
   );
