@@ -8,9 +8,15 @@ import type { Report } from "@/lib/types";
 
 const SuburbHeatmap = dynamic(() => import("@/components/SuburbHeatmap"), {
   ssr: false,
+  loading: () => (
+    <div className="min-h-[460px] animate-pulse rounded-xl bg-teal-100/60" />
+  ),
 });
 const HeatmapView = dynamic(() => import("@/components/HeatmapView"), {
   ssr: false,
+  loading: () => (
+    <div className="min-h-[460px] animate-pulse rounded-xl bg-teal-100/60" />
+  ),
 });
 
 type HeatmapMode = "combined" | "rings" | "heat";
@@ -66,17 +72,19 @@ export default function HeatmapPage() {
         ))}
       </div>
 
-      {mode === "heat" ? (
-        <HeatmapView reports={allReports} height="460px" />
-      ) : (
-        <SuburbHeatmap
-          reports={allReports}
-          zones={zones}
-          height="460px"
-          showReportPins={mode === "combined"}
-          sessionReportIds={sessionIds}
-        />
-      )}
+      <div className="min-h-[460px] w-full">
+        {mode === "heat" ? (
+          <HeatmapView reports={allReports} height="460px" />
+        ) : (
+          <SuburbHeatmap
+            reports={allReports}
+            zones={zones}
+            height="460px"
+            showReportPins={mode === "combined"}
+            sessionReportIds={sessionIds}
+          />
+        )}
+      </div>
 
       {sessionReports.length > 0 && (
         <div className="rounded-xl bg-teal-50 px-4 py-3 text-sm text-teal-800">

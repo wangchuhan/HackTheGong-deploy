@@ -8,11 +8,11 @@
     "fillLevel": 62,
     "temperature": 19.4,
     "itemsCollected": 127,
-    "lastReading": "2026-08-23T01:08:31.859247",
+    "lastReading": "2026-08-23T01:23:56.784267",
     "cameraImage": "/bins/bin-001.svg",
     "aiFillEstimate": 62,
     "aiConfidence": 0.94,
-    "aiLastScan": "2026-08-23T01:32:31.859252",
+    "aiLastScan": "2026-08-23T01:47:56.784272",
     "aiItemsDetected": 22
   },
   {
@@ -24,11 +24,11 @@
     "fillLevel": 77,
     "temperature": 19.7,
     "itemsCollected": 248,
-    "lastReading": "2026-08-23T01:09:31.859258",
+    "lastReading": "2026-08-23T01:24:56.784279",
     "cameraImage": "/bins/bin-002.svg",
     "aiFillEstimate": 77,
     "aiConfidence": 0.95,
-    "aiLastScan": "2026-08-23T01:32:31.859261",
+    "aiLastScan": "2026-08-23T01:47:56.784281",
     "aiItemsDetected": 69
   },
   {
@@ -40,27 +40,27 @@
     "fillLevel": 73,
     "temperature": 22.4,
     "itemsCollected": 227,
-    "lastReading": "2026-08-23T01:25:31.859266",
+    "lastReading": "2026-08-23T01:40:56.784286",
     "cameraImage": "/bins/bin-003.svg",
     "aiFillEstimate": 73,
     "aiConfidence": 0.91,
-    "aiLastScan": "2026-08-23T01:32:31.859268",
+    "aiLastScan": "2026-08-23T01:47:56.784289",
     "aiItemsDetected": 42
   },
   {
     "id": "BIN-004",
     "code": "BIN-004",
     "name": "Smart Bin 4 \u2014 Port Kembla",
-    "lat": -34.489872,
-    "lng": 150.759893,
+    "lat": -34.477672,
+    "lng": 150.900193,
     "fillLevel": 57,
     "temperature": 29.8,
     "itemsCollected": 135,
-    "lastReading": "2026-08-23T01:08:31.859272",
+    "lastReading": "2026-08-23T01:23:56.784292",
     "cameraImage": "/bins/bin-004.svg",
     "aiFillEstimate": 57,
     "aiConfidence": 0.84,
-    "aiLastScan": "2026-08-23T01:32:31.859274",
+    "aiLastScan": "2026-08-23T01:47:56.784294",
     "aiItemsDetected": 50
   },
   {
@@ -72,11 +72,11 @@
     "fillLevel": 84,
     "temperature": 29.5,
     "itemsCollected": 367,
-    "lastReading": "2026-08-23T00:52:31.859278",
+    "lastReading": "2026-08-23T01:07:56.784298",
     "cameraImage": "/bins/bin-005.svg",
     "aiFillEstimate": 84,
     "aiConfidence": 0.92,
-    "aiLastScan": "2026-08-23T01:32:31.859280",
+    "aiLastScan": "2026-08-23T01:47:56.784300",
     "aiItemsDetected": 18
   },
   {
@@ -88,11 +88,11 @@
     "fillLevel": 52,
     "temperature": 18.4,
     "itemsCollected": 435,
-    "lastReading": "2026-08-23T01:14:31.859284",
+    "lastReading": "2026-08-23T01:29:56.784304",
     "cameraImage": "/bins/bin-006.svg",
     "aiFillEstimate": 52,
     "aiConfidence": 0.93,
-    "aiLastScan": "2026-08-23T01:32:31.859285",
+    "aiLastScan": "2026-08-23T01:47:56.784306",
     "aiItemsDetected": 54
   },
   {
@@ -104,11 +104,11 @@
     "fillLevel": 90,
     "temperature": 20.0,
     "itemsCollected": 172,
-    "lastReading": "2026-08-23T00:49:31.859289",
+    "lastReading": "2026-08-23T01:04:56.784310",
     "cameraImage": "/bins/bin-007.svg",
     "aiFillEstimate": 90,
     "aiConfidence": 0.88,
-    "aiLastScan": "2026-08-23T01:32:31.859291",
+    "aiLastScan": "2026-08-23T01:47:56.784312",
     "aiItemsDetected": 33
   },
   {
@@ -120,11 +120,11 @@
     "fillLevel": 82,
     "temperature": 25.4,
     "itemsCollected": 126,
-    "lastReading": "2026-08-23T01:07:31.859295",
+    "lastReading": "2026-08-23T01:22:56.784315",
     "cameraImage": "/bins/bin-008.svg",
     "aiFillEstimate": 82,
     "aiConfidence": 0.88,
-    "aiLastScan": "2026-08-23T01:32:31.859297",
+    "aiLastScan": "2026-08-23T01:47:56.784317",
     "aiItemsDetected": 58
   }
 ]

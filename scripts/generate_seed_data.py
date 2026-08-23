@@ -23,7 +23,7 @@ SUBURB_COORDS: dict[str, dict] = {
     "Thirroul": {"lat": -34.316, "lng": 150.923, "radiusKm": 1.2},
     "Figtree": {"lat": -34.435, "lng": 150.856, "radiusKm": 1.3},
     "Dapto": {"lat": -34.493, "lng": 150.792, "radiusKm": 1.5},
-    "Port Kembla": {"lat": -34.4878, "lng": 150.7600, "radiusKm": 1.2},
+    "Port Kembla": {"lat": -34.4756, "lng": 150.9003, "radiusKm": 1.2},
     "Shellharbour": {"lat": -34.575, "lng": 150.87, "radiusKm": 1.3},
 }
 

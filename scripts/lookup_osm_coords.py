@@ -69,11 +69,11 @@ FALLBACKS: dict[str, dict] = {
         "displayName": "Belmore Basin, Wollongong NSW",
     },
     "Port Kembla Youth Hub": {
-        "lat": -34.4805,
-        "lng": 150.7615,
+        "lat": -34.4756,
+        "lng": 150.9003,
         "suburb": "Port Kembla",
-        "source": "nearest-community",
-        "displayName": "Port Kembla, NSW",
+        "source": "osm",
+        "displayName": "Port Kembla Beach / Olympic Blvd, NSW",
     },
     "Shellharbour City Hub": {
         "lat": -34.575,

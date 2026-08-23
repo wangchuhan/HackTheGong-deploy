@@ -17,7 +17,8 @@ import {
   getSuburbZones,
   getTrendsWithSession,
 } from "@/lib/data";
-import { getTrendWindow, maxTrendReports } from "@/lib/analytics";
+import { getTrendWindow } from "@/lib/analytics";
+import TrendBarChart from "@/components/TrendBarChart";
 import { nearestSuburb } from "@/lib/geo";
 import {
   getCleanupSchedules,
@@ -147,8 +148,6 @@ export default function CouncilPage() {
   }
 
   const trendWindow = getTrendWindow(trends, 7);
-  const recentTrend = trendWindow.points;
-  const maxReports = maxTrendReports(recentTrend);
 
   return (
     <div className="space-y-6">
@@ -220,32 +219,10 @@ export default function CouncilPage() {
 
           <section>
             <h2 className="mb-2 font-semibold text-teal-950">Performance trends</h2>
-            <p className="mb-2 text-xs text-teal-700">
-              Daily report volume from seed data and live session reports ·{" "}
-              {trendWindow.label}
-            </p>
-            <div className="flex h-32 items-end gap-1 rounded-xl bg-white p-4 ring-1 ring-teal-100">
-              {recentTrend.length === 0 ? (
-                <p className="w-full text-center text-sm text-teal-600">
-                  No trend data yet — submit a report to see activity.
-                </p>
-              ) : (
-                recentTrend.map((t) => (
-                  <div
-                    key={t.date}
-                    className="flex h-full flex-1 flex-col items-center justify-end gap-1"
-                  >
-                    <div
-                      className="w-full rounded-t bg-teal-500"
-                      style={{
-                        height: `${Math.max(4, (t.reports / maxReports) * 112)}px`,
-                      }}
-                    />
-                    <span className="text-[9px] text-teal-700">{t.date.slice(8)}</span>
-                  </div>
-                ))
-              )}
-            </div>
+            <TrendBarChart
+              points={trendWindow.points}
+              label={`Daily report volume from seed data and live session reports · ${trendWindow.label}`}
+            />
           </section>
 
           <section>

@@ -6,6 +6,7 @@ import ScanTargetOverlay from "@/components/ScanTargetOverlay";
 
 interface QrScannerProps {
   onScan: (code: string) => void;
+  compact?: boolean;
 }
 
 function pickRearCamera(
@@ -17,7 +18,7 @@ function pickRearCamera(
   return rear?.id ?? cameras[cameras.length - 1]?.id;
 }
 
-export default function QrScanner({ onScan }: QrScannerProps) {
+export default function QrScanner({ onScan, compact = false }: QrScannerProps) {
   const reactId = useId().replace(/:/g, "");
   const readerId = `qr-reader-${reactId}`;
   const [active, setActive] = useState(false);
@@ -26,7 +27,6 @@ export default function QrScanner({ onScan }: QrScannerProps) {
   const [error, setError] = useState("");
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const runningRef = useRef(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const safeStopAndClear = useCallback(async () => {
@@ -140,22 +140,25 @@ export default function QrScanner({ onScan }: QrScannerProps) {
   }
 
   return (
-    <div className="space-y-3">
-      <div
-        ref={containerRef}
-        className={`relative overflow-hidden rounded-2xl bg-gray-900 transition-opacity ${
-          active ? "min-h-[300px] opacity-100" : "min-h-[300px] opacity-0 pointer-events-none absolute -z-10 w-full"
-        } ${flash ? "ring-4 ring-green-400" : ""}`}
-        aria-hidden={!active}
-      >
-        <div id={readerId} className="qr-reader-host w-full" />
-        {active && <ScanTargetOverlay scanning={scanning} />}
-        {scanning && (
-          <p className="absolute bottom-2 left-0 right-0 text-center text-xs text-white/90">
-            Starting camera…
-          </p>
-        )}
-      </div>
+    <div className={compact ? "space-y-2" : "space-y-3"}>
+      {active ? (
+        <div
+          className={`relative min-h-[300px] overflow-hidden rounded-2xl bg-gray-900 ${
+            flash ? "ring-4 ring-green-400" : ""
+          }`}
+        >
+          <div id={readerId} className="qr-reader-host w-full" />
+          <ScanTargetOverlay scanning={scanning} />
+          {scanning && (
+            <p className="absolute bottom-2 left-0 right-0 text-center text-xs text-white/90">
+              Starting camera…
+            </p>
+          )}
+        </div>
+      ) : (
+        <div id={readerId} className="h-0 w-0 overflow-hidden" aria-hidden />
+      )}
+
       {!active ? (
         <button
           type="button"
@@ -190,12 +193,14 @@ export default function QrScanner({ onScan }: QrScannerProps) {
         </button>
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
-      <p className="text-center text-xs text-teal-600">
-        Demo: BIN-001, DISP-WLG-09 ·{" "}
-        <a href="/demo-qr" className="underline">
-          Printable QRs
-        </a>
-      </p>
+      {!compact && (
+        <p className="text-center text-xs text-teal-600">
+          Demo: BIN-001, DISP-WLG-09 ·{" "}
+          <a href="/demo-qr" className="underline">
+            Printable QRs
+          </a>
+        </p>
+      )}
     </div>
   );
 }
