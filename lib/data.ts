@@ -96,6 +96,11 @@ export function getSuburbRank(suburbName: string): number | null {
   return entry?.rank ?? null;
 }
 
+export function getSuburbLeaderboardEntry(suburbName: string): SuburbEntry | null {
+  const entry = getLeaderboard().suburbs.find((s) => s.name === suburbName);
+  return entry ?? null;
+}
+
 export function getStatsSummary() {
   const reports = getSeedReports();
   const bins = getBins();

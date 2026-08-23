@@ -89,6 +89,20 @@ FALLBACKS: dict[str, dict] = {
         "source": "osm",
         "displayName": "Ribbonwood Centre, 93 Princes Hwy, Dapto NSW",
     },
+    "North Beach Surf Club": {
+        "lat": -34.4145,
+        "lng": 150.9012,
+        "suburb": "North Wollongong",
+        "source": "osm",
+        "displayName": "North Beach Surf Life Saving Club, NSW",
+    },
+    "Fairy Meadow Community Hall": {
+        "lat": -34.3945,
+        "lng": 150.892,
+        "suburb": "Fairy Meadow",
+        "source": "nearest-community",
+        "displayName": "Fairy Meadow community area, NSW",
+    },
 }
 
 

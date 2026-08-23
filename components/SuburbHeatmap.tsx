@@ -6,6 +6,7 @@ import type { Report } from "@/lib/types";
 import { WOLLONGONG_CENTER } from "@/lib/types";
 import type { SuburbZone } from "@/lib/types";
 import { suburbHeatColor } from "@/lib/binUtils";
+import { getSuburbLeaderboardEntry } from "@/lib/data";
 import { isOnLandIllawarra, nearestSuburb } from "@/lib/geo";
 
 interface SuburbHeatmapProps {
@@ -85,6 +86,7 @@ export default function SuburbHeatmap({
           {ranked.map((zone) => {
             const norm = zone.count / maxCount;
             const rank = ranked.findIndex((z) => z.name === zone.name) + 1;
+            const lb = getSuburbLeaderboardEntry(zone.name);
             const label =
               rank === 1
                 ? "Hotspot"
@@ -109,6 +111,11 @@ export default function SuburbHeatmap({
                     <p>
                       {zone.count} reports · {label}
                     </p>
+                    {lb && (
+                      <p className="text-xs text-gray-600">
+                        Suburb challenge #{lb.rank} · {lb.points} pts
+                      </p>
+                    )}
                   </div>
                 </Popup>
               </Circle>
