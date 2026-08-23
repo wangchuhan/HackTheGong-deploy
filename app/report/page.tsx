@@ -1,14 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Calendar, CheckCircle, ChevronDown, ChevronUp, Loader2, MapPin } from "lucide-react";
 import {
   clampToIllawarra,
   generateReportId,
   nearestSuburb,
-  nextWeekdayDate,
 } from "@/lib/geo";
 import { addSessionReport } from "@/lib/user";
 import type { DisposalPoint, Report } from "@/lib/types";
@@ -26,6 +26,20 @@ const CodeLookup = dynamic(() => import("@/components/CodeLookup"), {
 });
 
 export default function ReportPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="py-12 text-center text-sm text-teal-700">Loading report form…</div>
+      }
+    >
+      <ReportForm />
+    </Suspense>
+  );
+}
+
+function ReportForm() {
+  const searchParams = useSearchParams();
+  const initialCode = searchParams.get("code") ?? undefined;
   const [photo, setPhoto] = useState<string | null>(null);
   const [lat, setLat] = useState(WOLLONGONG_CENTER.lat);
   const [lng, setLng] = useState(WOLLONGONG_CENTER.lng);
@@ -33,7 +47,7 @@ export default function ReportPage() {
   const [gpsStatus, setGpsStatus] = useState("Locating…");
   const [submitted, setSubmitted] = useState<Report | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [showCodeLookup, setShowCodeLookup] = useState(false);
+  const [showCodeLookup, setShowCodeLookup] = useState(Boolean(initialCode));
   const [linkedBinCode, setLinkedBinCode] = useState<string | undefined>();
   const [linkedDisposalId, setLinkedDisposalId] = useState<string | undefined>();
   const [locationPinned, setLocationPinned] = useState(false);
@@ -141,7 +155,9 @@ export default function ReportPage() {
             +{submitted.pointsAwarded} points earned
             {!submitted.photoUrl && submitted.linkedBinCode
               ? " (bin location verified)"
-              : ""}
+              : !submitted.photoUrl && submitted.linkedDisposalId
+                ? " (disposal location verified)"
+                : ""}
           </p>
         </div>
         <div className="flex flex-col gap-2">
@@ -171,7 +187,12 @@ export default function ReportPage() {
       <header>
         <h1 className="text-2xl font-bold text-teal-950">Report Litter</h1>
         <p className="mt-1 text-sm text-teal-800/70">
-          Take a photo, set your location, or link a nearby bin / disposal point.
+          Take a photo, set your location, or manually link a bin / disposal code.
+          To log items deposited, use the{" "}
+          <Link href="/scan" className="underline">
+            Scan page
+          </Link>
+          .
         </p>
       </header>
 
@@ -213,11 +234,12 @@ export default function ReportPage() {
           {showCodeLookup && (
             <div className="border-t border-teal-100 px-4 pb-4">
               <p className="pt-3 text-xs text-teal-700">
-                Linking a bin verifies location (+5). Disposing items at the bin earns
-                separate points.
+                Manual entry links a location for this litter report (+5). Camera scan
+                opens the bin/disposal page to log deposited items.
               </p>
               <CodeLookup
                 compact
+                initialCode={initialCode}
                 onBinFound={(code) => {
                   setLinkedBinCode(code);
                   setLinkedDisposalId(undefined);

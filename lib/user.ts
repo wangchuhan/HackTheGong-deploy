@@ -11,7 +11,7 @@ import {
   computeLevel,
   emitPointsToast,
 } from "./gamification";
-import { getSuburbNames } from "./geo";
+import { getSuburbNames, nearestSuburb } from "./geo";
 import { getLeaderboard } from "./data";
 
 const USER_KEY = "vapesafe-user";
@@ -133,15 +133,23 @@ function todayStr(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+function disposalLogKey(id: string): string {
+  return id.trim().toUpperCase();
+}
+
 export function getBinDisposalLog(binCode: string): BinDisposalLog | null {
   const logs = getDisposalLogs();
-  const entry = logs[binCode.toUpperCase()];
+  const entry = logs[disposalLogKey(binCode)];
   if (!entry || entry.date !== todayStr()) return null;
   return entry;
 }
 
-export function getItemsLoggedToday(binCode: string): number {
-  const log = getBinDisposalLog(binCode);
+export function getDisposalPointLog(disposalId: string): BinDisposalLog | null {
+  return getBinDisposalLog(disposalId);
+}
+
+export function getItemsLoggedToday(locationId: string): number {
+  const log = getBinDisposalLog(locationId);
   if (!log) return 0;
   return log.visits.reduce((s, v) => s + v.items, 0);
 }
@@ -205,13 +213,17 @@ export function addSessionReport(report: Report): AddReportResult {
   } else {
     return {
       success: false,
-      error: "Add a photo or link a bin code to submit.",
+      error: "Add a photo or link a bin / disposal code to submit.",
       user: getUser(),
     };
   }
 
   const basePoints = hasPhoto ? 10 : 5;
-  const fullReport: Report = { ...report, pointsAwarded: basePoints };
+  const fullReport: Report = {
+    ...report,
+    suburb: nearestSuburb(report.lat, report.lng),
+    pointsAwarded: basePoints,
+  };
 
   const reports = getSessionReports();
   reports.unshift(fullReport);
@@ -219,9 +231,11 @@ export function addSessionReport(report: Report): AddReportResult {
 
   if (hasPhoto) {
     limits.photoReports += 1;
-  } else if (binCode) {
+  } else if (hasLocationLink) {
     limits.binLinkedReports += 1;
-    limits.reportedBins.push(binCode);
+    if (binCode) {
+      limits.reportedBins.push(binCode);
+    }
   }
   saveReportLimits(limits);
 
@@ -246,19 +260,23 @@ export function addSessionReport(report: Report): AddReportResult {
   };
 }
 
-export function logDisposal(binCode: string, itemCount: number): LogDisposalResult {
-  const code = binCode.toUpperCase();
+function logDisposalAtLocation(
+  locationId: string,
+  itemCount: number,
+  locationLabel: string,
+): LogDisposalResult {
+  const key = disposalLogKey(locationId);
   const items = Math.max(1, Math.min(5, Math.floor(itemCount)));
   const today = todayStr();
   const logs = getDisposalLogs();
-  const existing = logs[code];
+  const existing = logs[key];
   const log: BinDisposalLog =
     existing?.date === today ? existing : { date: today, visits: [] };
 
   if (log.visits.length >= 2) {
     return {
       success: false,
-      error: "Max 2 visits per bin per day. Try again tomorrow or use another bin.",
+      error: `Max 2 visits per ${locationLabel} per day. Try again tomorrow or use another location.`,
       basePoints: 0,
       totalPoints: 0,
       user: getUser(),
@@ -267,7 +285,7 @@ export function logDisposal(binCode: string, itemCount: number): LogDisposalResu
 
   const basePoints = items * 10;
   log.visits.push({ items, points: basePoints, at: new Date().toISOString() });
-  logs[code] = log;
+  logs[key] = log;
   saveDisposalLogs(logs);
 
   let user = getUser();
@@ -293,6 +311,17 @@ export function logDisposal(binCode: string, itemCount: number): LogDisposalResu
     totalPoints: basePoints + bonus.totalBonus,
     user: finalUser,
   };
+}
+
+export function logDisposal(binCode: string, itemCount: number): LogDisposalResult {
+  return logDisposalAtLocation(binCode, itemCount, "bin");
+}
+
+export function logDisposalAtPoint(
+  disposalId: string,
+  itemCount: number,
+): LogDisposalResult {
+  return logDisposalAtLocation(disposalId, itemCount, "disposal point");
 }
 
 export function redeemReward(cost: number): boolean {

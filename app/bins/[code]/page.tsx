@@ -26,8 +26,14 @@ export default function BinPage({
     items: number;
   } | null>(null);
   const [disposeError, setDisposeError] = useState("");
+  const [visitsToday, setVisitsToday] = useState<number | null>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mountedRef = useRef(false);
+
+  useEffect(() => {
+    if (!bin) return;
+    setVisitsToday(getBinDisposalLog(bin.code)?.visits.length ?? 0);
+  }, [bin]);
 
   const runScan = useCallback(
     async (opts: {
@@ -84,9 +90,8 @@ export default function BinPage({
     );
   }
 
-  const visitLog = getBinDisposalLog(bin.code);
-  const visitsToday = visitLog?.visits.length ?? 0;
-  const canDispose = visitsToday < 2 && !disposeResult;
+  const atDailyLimit = visitsToday !== null && visitsToday >= 2;
+  const canDispose = visitsToday !== null && visitsToday < 2 && !disposeResult;
 
   function handleDispose() {
     if (!bin) return;
@@ -97,6 +102,7 @@ export default function BinPage({
       return;
     }
     setDisposeResult({ points: result.totalPoints, items: itemCount });
+    setVisitsToday((v) => (v ?? 0) + 1);
     runScan({
       previewItems: itemCount,
       durationMs: 1500,
@@ -145,7 +151,8 @@ export default function BinPage({
             How many items did you drop?
           </p>
           <p className="mt-1 text-xs text-teal-600">
-            +10 pts each · max 5 per visit · {visitsToday}/2 visits today
+            +10 pts each · max 5 per visit ·{" "}
+            {visitsToday === null ? "…" : `${visitsToday}/2`} visits today
           </p>
           <div className="mt-3 flex items-center justify-center gap-4">
             <button
@@ -168,6 +175,12 @@ export default function BinPage({
           </div>
         </div>
       ) : null}
+
+      {atDailyLimit && !disposeResult && (
+        <p className="rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          Daily limit reached (2 visits). Try again tomorrow or use another bin.
+        </p>
+      )}
 
       {disposeError && (
         <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">

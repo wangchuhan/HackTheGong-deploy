@@ -19,7 +19,7 @@ import {
   getStatsSummary,
   getTrends,
 } from "@/lib/data";
-import { getTrendWindow } from "@/lib/analytics";
+import { getTrendWindow, maxTrendReports } from "@/lib/analytics";
 
 export default async function CouncilDashboardPage() {
   const cookieStore = await cookies();
@@ -35,6 +35,7 @@ export default async function CouncilDashboardPage() {
   const reports = getSeedReports();
   const criticalBins = bins.filter((b) => b.fillLevel >= 75).length;
   const trendWindow = getTrendWindow(trends, 7);
+  const maxReports = maxTrendReports(trendWindow.points);
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 pb-8">
@@ -84,6 +85,27 @@ export default async function CouncilDashboardPage() {
         <StatCard label="Bins ≥75% full" value={criticalBins} icon={<Thermometer className="h-4 w-4 text-orange-500" />} />
         <StatCard label="kWh saved (est.)" value={energy.kwhSaved} icon={<Zap className="h-4 w-4 text-amber-500" />} />
       </div>
+
+      <section className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
+        <h2 className="font-semibold text-slate-900">7-day report volume</h2>
+        <p className="mt-1 text-xs text-slate-500">{trendWindow.label}</p>
+        <div className="mt-3 flex h-32 items-end gap-1 rounded-lg bg-slate-50 p-3">
+          {trendWindow.points.map((t) => (
+            <div
+              key={t.date}
+              className="flex h-full flex-1 flex-col items-center justify-end gap-1"
+            >
+              <div
+                className="w-full rounded-t bg-teal-600"
+                style={{
+                  height: `${Math.max(4, (t.reports / maxReports) * 112)}px`,
+                }}
+              />
+              <span className="text-[9px] text-slate-600">{t.date.slice(8)}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
         <h2 className="font-semibold text-slate-900">30-day trend</h2>
