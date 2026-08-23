@@ -19,9 +19,19 @@ const REPORTS_KEY = "vapesafe-session-reports";
 const CLEANUP_KEY = "vapesafe-cleanup-schedule";
 const DISPOSALS_KEY = "vapesafe-disposals";
 const REPORT_LIMITS_KEY = "vapesafe-report-limits";
+const DAILY_POINTS_KEY = "vapesafe-daily-points";
 
 const MAX_PHOTO_REPORTS_PER_DAY = 5;
 const MAX_BIN_LINKED_REPORTS_PER_DAY = 1;
+const DAILY_POINTS_CAP = 120;
+const DISPOSAL_COOLDOWN_MS = 30_000;
+const BONUS_HEADROOM = 35;
+
+interface DailyPointsState {
+  date: string;
+  earned: number;
+  lastDisposalAt: Record<string, string>;
+}
 
 interface ReportLimits {
   date: string;
@@ -89,6 +99,60 @@ function getReportLimits(): ReportLimits {
 
 function saveReportLimits(limits: ReportLimits) {
   localStorage.setItem(REPORT_LIMITS_KEY, JSON.stringify(limits));
+}
+
+function getDailyPoints(): DailyPointsState {
+  const today = todayStr();
+  if (typeof window === "undefined") {
+    return { date: today, earned: 0, lastDisposalAt: {} };
+  }
+  try {
+    const raw = localStorage.getItem(DAILY_POINTS_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    if (!parsed || parsed.date !== today) {
+      return { date: today, earned: 0, lastDisposalAt: {} };
+    }
+    return parsed as DailyPointsState;
+  } catch {
+    return { date: today, earned: 0, lastDisposalAt: {} };
+  }
+}
+
+function saveDailyPoints(state: DailyPointsState) {
+  localStorage.setItem(DAILY_POINTS_KEY, JSON.stringify(state));
+}
+
+function dailyCapError(): string {
+  return "Daily earning limit reached — great work today! Come back tomorrow.";
+}
+
+function checkDailyPointsCap(estimatedPoints: number): string | null {
+  const state = getDailyPoints();
+  if (state.earned + estimatedPoints > DAILY_POINTS_CAP) {
+    return dailyCapError();
+  }
+  return null;
+}
+
+function recordDailyPoints(points: number, locationId?: string) {
+  const state = getDailyPoints();
+  state.earned += points;
+  if (locationId) {
+    state.lastDisposalAt[disposalLogKey(locationId)] = new Date().toISOString();
+  }
+  saveDailyPoints(state);
+}
+
+function checkDisposalCooldown(locationId: string): string | null {
+  const state = getDailyPoints();
+  const last = state.lastDisposalAt[disposalLogKey(locationId)];
+  if (!last) return null;
+  const elapsed = Date.now() - new Date(last).getTime();
+  if (elapsed < DISPOSAL_COOLDOWN_MS) {
+    const secs = Math.ceil((DISPOSAL_COOLDOWN_MS - elapsed) / 1000);
+    return `Please wait ${secs}s before logging again at this location.`;
+  }
+  return null;
 }
 
 export function getUser(): UserProfile {
@@ -219,6 +283,11 @@ export function addSessionReport(report: Report): AddReportResult {
   }
 
   const basePoints = hasPhoto ? 10 : 5;
+  const capError = checkDailyPointsCap(basePoints + BONUS_HEADROOM);
+  if (capError) {
+    return { success: false, error: capError, user: getUser() };
+  }
+
   const fullReport: Report = {
     ...report,
     suburb: nearestSuburb(report.lat, report.lng),
@@ -245,6 +314,7 @@ export function addSessionReport(report: Report): AddReportResult {
   user.level = computeLevel(user.points);
 
   const bonus = applyGamificationBonuses(user, "report", basePoints);
+  recordDailyPoints(basePoints + bonus.totalBonus);
   emitPointsToast(
     basePoints + bonus.totalBonus,
     bonus.messages.join(" · "),
@@ -267,6 +337,30 @@ function logDisposalAtLocation(
 ): LogDisposalResult {
   const key = disposalLogKey(locationId);
   const items = Math.max(1, Math.min(5, Math.floor(itemCount)));
+
+  const cooldownError = checkDisposalCooldown(locationId);
+  if (cooldownError) {
+    return {
+      success: false,
+      error: cooldownError,
+      basePoints: 0,
+      totalPoints: 0,
+      user: getUser(),
+    };
+  }
+
+  const basePoints = items * 10;
+  const capError = checkDailyPointsCap(basePoints + BONUS_HEADROOM);
+  if (capError) {
+    return {
+      success: false,
+      error: capError,
+      basePoints: 0,
+      totalPoints: 0,
+      user: getUser(),
+    };
+  }
+
   const today = todayStr();
   const logs = getDisposalLogs();
   const existing = logs[key];
@@ -283,7 +377,6 @@ function logDisposalAtLocation(
     };
   }
 
-  const basePoints = items * 10;
   log.visits.push({ items, points: basePoints, at: new Date().toISOString() });
   logs[key] = log;
   saveDisposalLogs(logs);
@@ -294,6 +387,7 @@ function logDisposalAtLocation(
   user.level = computeLevel(user.points);
 
   const bonus = applyGamificationBonuses(user, "dispose", basePoints);
+  recordDailyPoints(basePoints + bonus.totalBonus, locationId);
   emitPointsToast(basePoints + bonus.totalBonus, `${items} vapes · ${bonus.messages.join(" · ")}`);
 
   incrementChallengeCounters({
@@ -410,6 +504,11 @@ export function scheduleCleanup(
     };
   }
 
+  const capError = checkDailyPointsCap(15 + BONUS_HEADROOM);
+  if (capError) {
+    return { success: false, error: capError, user: getUser() };
+  }
+
   const full: CleanupScheduleRequest = {
     id: entry.id ?? `APT-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`,
     status: entry.status ?? "requested",
@@ -430,6 +529,7 @@ export function scheduleCleanup(
   user.level = computeLevel(user.points);
 
   const bonus = applyGamificationBonuses(user, "schedule", 15);
+  recordDailyPoints(15 + bonus.totalBonus);
   emitPointsToast(15 + bonus.totalBonus, bonus.messages.join(" · "));
 
   incrementChallengeCounters({ monthlyCleanups: 1 });

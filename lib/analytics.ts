@@ -49,14 +49,26 @@ export function getTrendWindow(
 ): TrendWindowResult {
   const recent = trends.slice(-days);
   const hasActivity = recent.some((t) => t.reports > 0 || t.collections > 0);
+  const recentMax = Math.max(...recent.map((t) => t.reports), 0);
 
-  if (hasActivity) {
+  if (hasActivity && recentMax >= 2) {
     return { points: recent, label: `Last ${days} days` };
   }
 
   const withData = trends.filter((t) => t.reports > 0 || t.collections > 0);
   if (withData.length === 0) {
     return { points: recent, label: "No activity in range" };
+  }
+
+  if (hasActivity && recentMax < 2) {
+    const wider = trends.slice(-Math.max(days * 2, 14));
+    const widerHasData = wider.some((t) => t.reports > 0);
+    if (widerHasData) {
+      return {
+        points: wider.filter((t) => t.reports > 0).slice(-days),
+        label: "Showing recent activity window",
+      };
+    }
   }
 
   return {

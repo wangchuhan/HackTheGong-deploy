@@ -245,13 +245,7 @@ export function checkAndAwardChallengeCompletions(user: UserProfile): UserProfil
     user.points += 50;
     markChallengeCompleteAwarded("weekly", 50);
   }
-  if (progress.monthly.complete && !gState.monthlyCompleteAwarded) {
-    user.points += 150;
-    if (!user.badges.includes("coastal-champion")) {
-      user.badges.push("coastal-champion");
-    }
-    markChallengeCompleteAwarded("monthly", 150);
-  }
+  // Monthly boss challenge is display-only (community goal) — no local +150 payout
 
   user.weeklyChallengeProgress = progress.weeklyPct;
   user.monthlyChallengeProgress = progress.monthlyPct;

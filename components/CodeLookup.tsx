@@ -76,7 +76,7 @@ export default function CodeLookup({
 
   return (
     <div className={compact ? "space-y-3" : "space-y-6"}>
-      <QrScanner onScan={(scanned) => lookup(scanned, "scan")} />
+      <QrScanner compact={compact} onScan={(scanned) => lookup(scanned, "scan")} />
 
       <div className="space-y-3">
         <label className="block text-sm font-medium text-teal-900">
